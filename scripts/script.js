@@ -11,10 +11,10 @@ function startGame() {
             this.width = width;
             this.height = height;
             this.player = new Player(this);
-            //this.input = new InputHandler();
+            this.input = new InputHandler();
         }
         update(){
-            //this.player.update(this.input.keys);
+            this.player.update(this.input.keys);
         }
         draw(ctx){
             this.player.draw(ctx);

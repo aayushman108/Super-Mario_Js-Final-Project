@@ -23,7 +23,7 @@ class Player{
 
         //vertical movement
         this.y += this.vy;
-        if(input.includes('ArrowUp') && this.onGround()){
+        if(input.includes('Space') && this.onGround()){
             this.vy = -30;
         }else if(!this.onGround()){
             this.vy += this.gravity;

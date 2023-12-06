@@ -3,27 +3,23 @@ class InputHandler {
       this.keys = [];
   
       window.addEventListener('keydown', (e) => {
-        if (
-          (e.key === 'ArrowUp' ||
-            e.key === 'ArrowDown' ||
-            e.key === 'ArrowLeft' ||
-            e.key === 'ArrowRight' ||
-            e.key === 'Space') &&
-          this.keys.indexOf(e.key) === -1
+        if ( 
+           (e.code === 'ArrowLeft' ||
+            e.code === 'ArrowRight' ||
+            e.code === 'Space') &&
+          this.keys.indexOf(e.code) === -1
         ) {
-          this.keys.push(e.key);
+          this.keys.push(e.code);
         }
       });
   
       window.addEventListener('keyup', (e) => {
         if (
-          e.key === 'ArrowUp' ||
-          e.key === 'ArrowDown' ||
-          e.key === 'ArrowLeft' ||
-          e.key === 'ArrowRight' ||
-          e.key === 'Space'
+          e.code === 'ArrowLeft' ||
+          e.code === 'ArrowRight' ||
+          e.code === 'Space'
         ) {
-          this.keys.splice(this.keys.indexOf(e.key), 1);
+          this.keys.splice(this.keys.indexOf(e.code), 1);
         }
       });
     }

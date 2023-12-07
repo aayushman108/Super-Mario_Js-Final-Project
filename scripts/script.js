@@ -1,4 +1,5 @@
-function startGame() {
+//Start the game
+function startGame(images) {
     // Get the canvas element and its context
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
@@ -10,14 +11,15 @@ function startGame() {
         constructor(width, height){
             this.width = width;
             this.height = height;
-            this.player = new Player(this);
+            this.mario = new Mario(this);
             this.input = new InputHandler();
+            this.images = images;
         }
         update(){
-            this.player.update(this.input.keys);
+            this.mario.update(this.input.keys, this.images);
         }
         draw(ctx){
-            this.player.draw(ctx);
+            this.mario.draw(ctx, this.images);
         }
     }
 
@@ -40,4 +42,3 @@ function startGame() {
     // Start the game loop
     gameLoop();
 }
-startGame();

@@ -11,9 +11,9 @@ function startGame(images) {
         constructor(width, height){
             this.width = width;
             this.height = height;
-            this.mario = new Mario(this);
             this.input = new InputHandler();
             this.images = images;
+            this.mario = new Mario(this);
         }
         update(){
             this.mario.update(this.input.keys, this.images);

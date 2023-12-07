@@ -1,6 +1,12 @@
 class Mario{
     constructor(game){
         this.game = game;
+        //this.spritesheet = 0;
+        this.sx = 80;
+        this.sy =32.5;
+        this.swidth = 15;
+        this.sheight = 15;
+
         this.width = 45;
         this.height = 48;
         this.x = 0;
@@ -17,14 +23,13 @@ class Mario{
         this.x += this.speed;
         if(input.includes('ArrowRight')){
             this.speed = this.maxSpeed;
-            this.currentState = this.states[3];
-            console.log(this.currentState);
+            this.currentState = this.states[2];
         }else if(input.includes('ArrowLeft')){
             this.speed = -this.maxSpeed;
-            this.currentState = this.states[2]
-            console.log(this.currentState);
+            this.currentState = this.states[3];
         }else{
             this.speed = 0;
+            this.currentState = this.states[2];
         }
 
         //vertical movement
@@ -40,7 +45,12 @@ class Mario{
     draw(ctx, images){
         // ctx.fillStyle = "blue";
         // ctx.fillRect( this.x, this.y, this.width, this.height);
-        ctx.drawImage(images[0], 80, 32.5, 15, 16, this.x, this.y, this.width, this.height);
+        if(this.currentState === "runningRight"){
+            ctx.drawImage(images[0], this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+        }
+        if(this.currentState === "runningLeft"){
+            ctx.drawImage(images[1], this.sx, this.sy, this.swidth, this.sheight, this.x, this.y, this.width, this.height);
+        }
     }
 
     //checks if the player is on Ground

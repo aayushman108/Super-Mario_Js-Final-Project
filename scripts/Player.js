@@ -4,10 +4,10 @@ class Mario{
         this.game = game;
         this.spritesheets = this.game.images;
         this.image = new Sprite(this.spritesheets.marioRight, 80, 32.5, 15, 15);
-        this.width = 45;
-        this.height = 48;
+        this.width = 18;
+        this.height = 18;
         this.x = 0;
-        this.y = 500 - this.height;//this.game.height - this.height;
+        this.y = 192 - this.height;//this.game.height - this.height;
         this.speed = 0;
         this.maxSpeed = 10;
         this.vy = 0;
@@ -39,15 +39,12 @@ class Mario{
         }
     }
 
-    update(input, images){
-        //console.log(images);
-        //console.log(this.spritesheets);
+    update(input, images, canvas){
         //horizontal movement
         this.x += this.speed;
         if(input.includes('ArrowRight')){
             this.lastKey = [...input];
             this.speed = this.maxSpeed;
-            //this.currentState = this.states[3];
             if(this.onGround()){
                 this.image = this.stateObject.runningRight.frames[this.stateObject.runningRight.count];
                 this.stateObject.runningRight.count++;
@@ -55,10 +52,9 @@ class Mario{
                     this.stateObject.runningRight.count = 0;
                 }
             }
-        }else if(input.includes('ArrowLeft')){
+        }else if(input.includes('ArrowLeft') && this.x > 0){
             this.lastKey = [...input];
             this.speed = -this.maxSpeed;
-            //this.currentState = this.states[2];
             if(this.onGround()){
                 this.image = this.stateObject.runningLeft.frames[this.stateObject.runningLeft.count];
                 this.stateObject.runningLeft.count++;
@@ -78,7 +74,7 @@ class Mario{
         //vertical movement
         this.y += this.vy;
         if(input.includes('Space') && this.onGround()){
-            this.vy = -30;
+            this.vy = -15;
             if(this.lastKey.includes("ArrowLeft")){
                 this.image = this.stateObject.jumpingLeft;
             }else{
@@ -104,6 +100,6 @@ class Mario{
 
     //checks if the player is on Ground
     onGround(){
-        return this.y >= 500 - this.height;//this.game.height - this.height;
+        return this.y >= 192 - this.height;//this.game.height - this.height;
     }
 }

@@ -1,46 +1,71 @@
-//Start the game
+
+// Start the game
 function startGame(images) {
     // Get the canvas element and its context
     const canvas = document.getElementById("canvas");
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
-    canvas.height =window.innerHeight;
+    canvas.height = window.innerHeight;
     canvas.style.backgroundColor = "pink";
+    
+    // Camera
+    const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
-    class Game{
-        constructor(width, height){
-            this.width = width;
-            this.height = height;
-            this.input = new InputHandler();
-            this.images = images;
-            this.mario = new Mario(this);
-            this.level = new Level(levelOne, this.images);
+    //scaling
+    const scaleFactor = 2;
+  
+    class Game {
+      constructor(width, height) {
+        this.width = width;
+        this.height = height;
+        this.input = new InputHandler();
+        this.images = images;
+        this.mario = new Mario(this);
+        this.level = new Level(levelOne, this.images);
+      }
+  
+      update() {
+        // Set the camera target to the Mario character
+        camera.target = this.mario;
+  
+        // Update camera position based on target position
+        if (camera.target) {
+          camera.x = Math.max(0, camera.target.x - canvas.width / (2 * scaleFactor));
         }
-        update(){
-            this.mario.update(this.input.keys, this.images);
-        }
-        draw(ctx){
-            this.mario.draw(ctx);
-            this.level.draw(ctx);
-        }
+  
+        this.mario.update(this.input.keys, this.images, canvas);
+      }
+  
+      draw(ctx) {
+        // Translate the context based on the camera position
+        ctx.translate(-camera.x, -camera.y);
+  
+        this.level.draw(ctx);
+        this.mario.draw(ctx);
+  
+        // Reset the translation
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+      }
     }
-
+  
     const game = new Game(canvas.width, canvas.height);
-
+  
     // Game loop
     function gameLoop() {
-        //Clear the canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        // Update game state
-        game.update();
-
-        // Draw game objects
-        game.draw(ctx);
-
-        requestAnimationFrame(gameLoop);
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.scale(scaleFactor, scaleFactor);
+  
+      // Update game state
+      game.update();
+  
+      // Draw game objects
+      game.draw(ctx);
+  
+      requestAnimationFrame(gameLoop);
     }
-
+  
     // Start the game loop
     gameLoop();
-}
+  }
+  

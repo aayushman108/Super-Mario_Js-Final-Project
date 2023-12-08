@@ -16,12 +16,17 @@ function preloadImages(imagePaths) {
 }
 
 // Array of image paths to preload
-const imagePaths = ["../assets/marioLeft.png", "../assets/marioRight.png"];
+const imagePaths = ["../assets/marioLeft.png", "../assets/marioRight.png", "../assets/tiles.png"];
 
 // Preload images before starting the game
 preloadImages(imagePaths)
     .then((images) => {
-        startGame(images);
+        const imageObj = {
+            marioLeft : images[0],
+            marioRight : images[1],
+            tiles : images[2],
+        }
+        startGame(imageObj);
     })
     .catch((error) => {
         alert("Error loading images...")

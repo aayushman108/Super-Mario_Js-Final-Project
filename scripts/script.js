@@ -14,12 +14,14 @@ function startGame(images) {
             this.input = new InputHandler();
             this.images = images;
             this.mario = new Mario(this);
+            this.level = new Level(levelOne, this.images);
         }
         update(){
             this.mario.update(this.input.keys, this.images);
         }
         draw(ctx){
-            this.mario.draw(ctx, this.images);
+            this.mario.draw(ctx);
+            this.level.draw(ctx);
         }
     }
 

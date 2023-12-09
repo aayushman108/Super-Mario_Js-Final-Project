@@ -61,7 +61,6 @@ class Goomba extends Entity{
 
                 //Collision with pipe
                 if(item.type === "pipe" || item.type === "stair"){
-                    console.log("pipe collision")
                     //left
                     if(this.x < item.x && this.y >= item.y){
                         this.x = item.x - this.width;

@@ -7,12 +7,16 @@ function startGame(images) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     canvas.style.backgroundColor = "pink";
+
     
     // Camera
     const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
-    //scaling
+    //Scaling
     const scaleFactor = 3;
+
+    //Animate frame
+    let animateFrame = 0;
   
     class Game {
       constructor(width, height) {
@@ -24,7 +28,7 @@ function startGame(images) {
         this.mario = new Mario(this);
       }
   
-      update() {
+      update(animateFrame) {
         // Set the camera target to the Mario character
         camera.target = this.mario;
   
@@ -33,8 +37,8 @@ function startGame(images) {
           camera.x = Math.max(0, camera.target.x - canvas.width / (2 * scaleFactor));
         }
   
-        this.level.update();
-        this.mario.update(this.input.keys);
+        this.level.update(animateFrame);
+        this.mario.update(this.input.keys, animateFrame);
       }
   
       draw(ctx) {
@@ -53,12 +57,15 @@ function startGame(images) {
   
     // Game loop
     function gameLoop() {
+      //Animate frame
+      animateFrame++;
+
       // Clear the canvas
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.scale(scaleFactor, scaleFactor);
   
       // Update game state
-      game.update();
+      game.update(animateFrame);
   
       // Draw game objects
       game.draw(ctx);

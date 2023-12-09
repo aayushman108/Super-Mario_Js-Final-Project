@@ -91,10 +91,10 @@ class Level{
 
     }
 
-    update(){
+    update(animateFrame){
       this.enemies.forEach(item => {
         if(item.type === "goomba" || item.type === "koopa"){
-          item.update();
+          item.update(animateFrame);
         }
       })
     }

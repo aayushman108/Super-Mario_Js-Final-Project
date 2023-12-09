@@ -26,23 +26,27 @@ class Koopa extends Entity{
         };
     }
 
-    update(){
+    update(animateFrame){
         this.checkCollision();
 
         //horizontal motion
         if(this.direction === "left"){
             this.x -= this.speed;
-            this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
-            this.stateObject.movingLeft.count++;
-            if(this.stateObject.movingLeft.count > 2){
-                this.stateObject.movingLeft.count = 0;
+            if(animateFrame % 8 === 0){
+                this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
+                this.stateObject.movingLeft.count++;
+                if(this.stateObject.movingLeft.count > 2){
+                    this.stateObject.movingLeft.count = 0;
+                }
             }
         }else{
             this.x += this.speed;
-            this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
-            this.stateObject.movingRight.count++;
-            if(this.stateObject.movingRight.count > 2){
-                this.stateObject.movingRight.count = 0;
+            if(animateFrame % 8 ===0){
+                this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
+                this.stateObject.movingRight.count++;
+                if(this.stateObject.movingRight.count > 2){
+                    this.stateObject.movingRight.count = 0;
+                }
             }
         }
 
@@ -75,7 +79,6 @@ class Koopa extends Entity{
 
                 //Collision with pipe
                 if(item.type === "pipe" || item.type === "stair"){
-                    console.log("pipe collision")
                     //left
                     if(this.x < item.x && this.y >= item.y){
                         this.x = item.x - this.width;

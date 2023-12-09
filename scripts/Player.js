@@ -43,14 +43,14 @@ class Mario{
     }
 
     //Update
-    update(input){
+    update(input, animateFrame){
         this.checkCollision();
         //horizontal movement
         this.x += this.speed;
         if(input.includes('ArrowRight')){
             this.lastKey = [...input];
             this.speed = this.maxSpeed;
-            if(!this.isJumping){
+            if(!this.isJumping && animateFrame % 3 === 0){
                 this.image = this.stateObject.runningRight.frames[this.stateObject.runningRight.count];
                 this.stateObject.runningRight.count++;
                 if(this.stateObject.runningRight.count > 2){
@@ -60,7 +60,7 @@ class Mario{
         }else if(input.includes('ArrowLeft') && this.x > 0){
             this.lastKey = [...input];
             this.speed = -this.maxSpeed;
-            if(!this.isJumping){
+            if(!this.isJumping && animateFrame % 3 === 0){
                 this.image = this.stateObject.runningLeft.frames[this.stateObject.runningLeft.count];
                 this.stateObject.runningLeft.count++;
                 if(this.stateObject.runningLeft.count > 2){
@@ -126,7 +126,6 @@ class Mario{
                         this.y = item.y - this.height + 0.5;
                         this.vy = 0;
                         this.isJumping = false;
-                        console.log("collision detected")
                     }
                 }
 

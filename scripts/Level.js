@@ -2,10 +2,15 @@
 class Level{
     constructor(level, images){
         this.nature = [];
+        this.ground = [];
 
         //Ground........................................
         level.ground.forEach((cord) => {
             this.nature.push(
+              new Ground(images.tiles, cord[0], cord[1], cord[2], cord[3])
+            )
+
+            this.ground.push(
               new Ground(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })

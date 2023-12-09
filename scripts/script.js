@@ -13,6 +13,9 @@ function startGame(images) {
 
     //scaling
     const scaleFactor = 2;
+
+    //timestamp
+    let timeStamp = 0;
   
     class Game {
       constructor(width, height) {
@@ -20,8 +23,8 @@ function startGame(images) {
         this.height = height;
         this.input = new InputHandler();
         this.images = images;
-        this.mario = new Mario(this);
         this.level = new Level(levelOne, this.images);
+        this.mario = new Mario(this);
       }
   
       update() {
@@ -33,7 +36,7 @@ function startGame(images) {
           camera.x = Math.max(0, camera.target.x - canvas.width / (2 * scaleFactor));
         }
   
-        this.mario.update(this.input.keys, this.images, canvas);
+        this.mario.update(this.input.keys);
       }
   
       draw(ctx) {

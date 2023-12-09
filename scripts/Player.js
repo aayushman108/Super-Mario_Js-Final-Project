@@ -9,12 +9,14 @@ class Mario{
         this.x = 0;
         this.y = 192 - this.height;//this.game.height - this.height;
         this.speed = 0;
-        this.maxSpeed = 10;
+        this.maxSpeed = 5;
         this.vy = 0;
         this.gravity = 1;
         //this.states = ["standingLeft", "standingRight", "runningLeft", "runningRight", "jumpingLeft", "jumpingRight"];
         //this.currentState = this.states[0];
         this.lastKey = [];
+        this.nature = this.game.level.nature;
+        this.isJumping = false;
 
         //Mario states
         this.stateObject = {
@@ -36,16 +38,18 @@ class Mario{
 
             jumpingRight : new Sprite(this.spritesheets.marioRight, 160, 32.5, 16, 16),
 
-        }
+        };
+
     }
 
-    update(input, images, canvas){
+    update(input){
+        this.checkCollision();
         //horizontal movement
         this.x += this.speed;
         if(input.includes('ArrowRight')){
             this.lastKey = [...input];
             this.speed = this.maxSpeed;
-            if(this.onGround()){
+            if(!this.isJumping){
                 this.image = this.stateObject.runningRight.frames[this.stateObject.runningRight.count];
                 this.stateObject.runningRight.count++;
                 if(this.stateObject.runningRight.count > 2){
@@ -55,7 +59,7 @@ class Mario{
         }else if(input.includes('ArrowLeft') && this.x > 0){
             this.lastKey = [...input];
             this.speed = -this.maxSpeed;
-            if(this.onGround()){
+            if(!this.isJumping){
                 this.image = this.stateObject.runningLeft.frames[this.stateObject.runningLeft.count];
                 this.stateObject.runningLeft.count++;
                 if(this.stateObject.runningLeft.count > 2){
@@ -73,23 +77,32 @@ class Mario{
 
         //vertical movement
         this.y += this.vy;
-        if(input.includes('Space') && this.onGround()){
-            this.vy = -15;
-            if(this.lastKey.includes("ArrowLeft")){
-                this.image = this.stateObject.jumpingLeft;
-            }else{
-                this.image = this.stateObject.jumpingRight;
-            }
-        }else if(!this.onGround()){
-            this.vy += this.gravity;
-            if(input.includes("ArrowLeft") || this.lastKey.includes("ArrowLeft")){
-                this.image = this.stateObject.jumpingLeft;
-            }else{
-                this.image = this.stateObject.jumpingRight;
+        if(input.includes('Space')){
+            if(!this.isJumping){
+                this.vy = -15;
+                this.isJumping = true;
+                if(this.lastKey.includes("ArrowLeft")){
+                    this.image = this.stateObject.jumpingLeft;
+                }else{
+                    this.image = this.stateObject.jumpingRight;
+                }
+            }else if(this.isJumping){
+                this.vy += this.gravity;
+                if(input.includes("ArrowLeft") || this.lastKey.includes("ArrowLeft")){
+                    this.image = this.stateObject.jumpingLeft;
+                }else{
+                    this.image = this.stateObject.jumpingRight;
+                }
             }
         }else{
-            this.vy = 0;
+            if(!this.isJumping){
+                this.vy = 0;
+                this.isJumping = true;
+            }else{
+                this.vy += this.gravity;
+            }
         }
+        
     }
     
     draw(ctx){
@@ -98,8 +111,42 @@ class Mario{
         ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
     }
 
-    //checks if the player is on Ground
-    onGround(){
-        return this.y >= 192 - this.height;//this.game.height - this.height;
+    //Collision
+    checkCollision(){
+        this.nature.forEach( item => {
+            if(collisionDetection(item, this)){
+
+                //Ground collision
+                if(item.type === "ground"){
+                    if(this.y < item.y && this.vy >=0){
+                        this.y = item.y - this.height + 1;
+                        this.vy = 0;
+                        this.isJumping = false;
+                        console.log("collision detected")
+                    }
+                }
+
+
+                //Collision with pipe
+                if(item.type === "pipe"){
+                    //left
+                    if(this.x < item.x && this.y >= item.y){
+                        this.x = item.x - this.width;
+                        console.log("hellow")
+                    }
+                    //right
+                    if(this.x > item.x && this.y >= item.y){
+                        this.x = item.x + item.width;
+                    }
+                    //top
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >=0){
+                        this.y = item.y - this.height + 1;
+                        this.vy = 0;
+                        this.image = this.stateObject.standingRight;
+                    }
+                } 
+
+            }
+        })
     }
 }

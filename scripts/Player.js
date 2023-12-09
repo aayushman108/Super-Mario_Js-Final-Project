@@ -4,14 +4,14 @@ class Mario{
         this.game = game;
         this.spritesheets = this.game.images;
         this.image = new Sprite(this.spritesheets.marioRight, 80, 32.5, 15, 15);
-        this.width = 18;
-        this.height = 18;
+        this.width = 16;
+        this.height = 16;
         this.x = 0;
-        this.y = 192 - this.height;//this.game.height - this.height;
+        this.y = 10;//this.game.height - this.height;
         this.speed = 0;
-        this.maxSpeed = 5;
+        this.maxSpeed = 2;
         this.vy = 0;
-        this.gravity = 1;
+        this.gravity = 0.6;
         //this.states = ["standingLeft", "standingRight", "runningLeft", "runningRight", "jumpingLeft", "jumpingRight"];
         //this.currentState = this.states[0];
         this.lastKey = [];
@@ -42,6 +42,7 @@ class Mario{
 
     }
 
+    //Update
     update(input){
         this.checkCollision();
         //horizontal movement
@@ -79,7 +80,7 @@ class Mario{
         this.y += this.vy;
         if(input.includes('Space')){
             if(!this.isJumping){
-                this.vy = -15;
+                this.vy = -10;
                 this.isJumping = true;
                 if(this.lastKey.includes("ArrowLeft")){
                     this.image = this.stateObject.jumpingLeft;
@@ -100,14 +101,17 @@ class Mario{
                 this.isJumping = true;
             }else{
                 this.vy += this.gravity;
+                if(input.includes("ArrowLeft") || this.lastKey.includes("ArrowLeft")){
+                    this.image = this.stateObject.jumpingLeft;
+                }else{
+                    this.image = this.stateObject.jumpingRight;
+                }
             }
         }
-        
     }
     
+    //Draw
     draw(ctx){
-        // ctx.fillStyle = "blue";
-        // ctx.fillRect( this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
     }
 
@@ -119,30 +123,28 @@ class Mario{
                 //Ground collision
                 if(item.type === "ground"){
                     if(this.y < item.y && this.vy >=0){
-                        this.y = item.y - this.height + 1;
+                        this.y = item.y - this.height + 0.5;
                         this.vy = 0;
                         this.isJumping = false;
                         console.log("collision detected")
                     }
                 }
 
-
                 //Collision with pipe
-                if(item.type === "pipe"){
+                if(item.type === "pipe" || item.type === "stair"){
                     //left
                     if(this.x < item.x && this.y >= item.y){
                         this.x = item.x - this.width;
-                        console.log("hellow")
                     }
                     //right
                     if(this.x > item.x && this.y >= item.y){
                         this.x = item.x + item.width;
                     }
                     //top
-                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >=0){
-                        this.y = item.y - this.height + 1;
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
+                        this.y = item.y - this.height + 0.5;
                         this.vy = 0;
-                        this.image = this.stateObject.standingRight;
+                        this.isJumping = false;
                     }
                 } 
 

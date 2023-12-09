@@ -12,10 +12,7 @@ function startGame(images) {
     const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
     //scaling
-    const scaleFactor = 2;
-
-    //timestamp
-    let timeStamp = 0;
+    const scaleFactor = 3;
   
     class Game {
       constructor(width, height) {
@@ -36,6 +33,7 @@ function startGame(images) {
           camera.x = Math.max(0, camera.target.x - canvas.width / (2 * scaleFactor));
         }
   
+        this.level.update();
         this.mario.update(this.input.keys);
       }
   

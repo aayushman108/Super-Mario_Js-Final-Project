@@ -2,15 +2,11 @@
 class Level{
     constructor(level, images){
         this.nature = [];
-        this.ground = [];
+        this.enemies = [];
 
         //Ground........................................
         level.ground.forEach((cord) => {
             this.nature.push(
-              new Ground(images.tiles, cord[0], cord[1], cord[2], cord[3])
-            )
-
-            this.ground.push(
               new Ground(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
@@ -78,10 +74,33 @@ class Level{
         //     )
         // })
 
+        //Goomba...................................
+        level.goombas.forEach((cord) => {
+          this.enemies.push(
+            new Goomba(this, images.enemies, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
 
+        //Koopa..................................
+        level.koopas.forEach((cord) => {
+          this.enemies.push(
+            new Koopa(this, images.enemies, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
+
+
+    }
+
+    update(){
+      this.enemies.forEach(item => {
+        if(item.type === "goomba" || item.type === "koopa"){
+          item.update();
+        }
+      })
     }
 
     draw(ctx){
         this.nature.forEach(item => item.draw(ctx));
+        this.enemies.forEach(item => item.draw(ctx));
     }
 }

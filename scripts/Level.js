@@ -3,6 +3,7 @@ class Level{
     constructor(level, images){
         this.nature = [];
         this.enemies = [];
+        this.rewards = [];
 
         //Ground........................................
         level.ground.forEach((cord) => {
@@ -53,6 +54,21 @@ class Level{
             )
         })
 
+        //Coins...........................................................
+        level.coins.forEach((cord) => {
+          this.rewards.push(
+            new Coin(this, images.items, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
+
+        //Mystery box
+        level.mysteryBoxes.forEach((cord) => {
+          this.rewards.push(
+            new MysteryBox(this, images.tiles, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
+
+
         // //Flag
         // level.largeClouds.forEach((cord) => {
         //     this.nature.push(
@@ -97,10 +113,16 @@ class Level{
           item.update(animateFrame);
         }
       })
+      this.rewards.forEach(item => {
+        if(item.type === "coin" || item.type === "mystery box"){
+          item.update(animateFrame);
+        }
+      })
     }
 
     draw(ctx){
         this.nature.forEach(item => item.draw(ctx));
         this.enemies.forEach(item => item.draw(ctx));
+        this.rewards.forEach(item => item.draw(ctx));
     }
 }

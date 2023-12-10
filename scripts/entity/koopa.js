@@ -6,7 +6,7 @@ class Koopa extends Entity{
         super(image, "koopa", x, y, width, height);
         this.level = level;
         this.vy = 0.5;
-        this.speed = 0.3;
+        this.speed = 0.5;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;

@@ -16,7 +16,7 @@ function preloadImages(imagePaths) {
 }
 
 // Array of image paths to preload
-const imagePaths = ["../assets/marioLeft.png", "../assets/marioRight.png", "../assets/tiles.png", "../assets/enemies.png"];
+const imagePaths = ["../assets/marioLeft.png", "../assets/marioRight.png", "../assets/tiles.png", "../assets/enemies.png", "../assets/items.png"];
 
 // Preload images before starting the game
 preloadImages(imagePaths)
@@ -26,6 +26,7 @@ preloadImages(imagePaths)
             marioRight : images[1],
             tiles : images[2],
             enemies : images[3],
+            items : images[4],
         }
         startGame(imageObj);
     })

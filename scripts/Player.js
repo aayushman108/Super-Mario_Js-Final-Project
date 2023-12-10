@@ -123,6 +123,7 @@ class Mario{
     
     //Draw
     draw(ctx){
+        ctx.strokeRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
     }
 
@@ -159,6 +160,30 @@ class Mario{
                         this.isJumping = false;
                     }
                 } 
+
+                //Collision with bricks
+                if(item.type === "brick"){
+                    //left
+                    if(this.x < item.x && this.y >= item.y){
+                        this.x = item.x - this.width + 0.2;
+                    }
+                    //right
+                    if(this.x > item.x && this.y >= item.y){
+                        this.x = item.x + item.width - 0.2;
+                    }
+                    //top
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
+                        this.y = item.y - this.height + 0.5;
+                        this.vy = 0;
+                        this.isJumping = false;
+                    }
+                    //bottom
+                    if(this.y > item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy <= 0){
+                        this.y = item.y + item.height;
+                        this.vy = 1;
+                    }
+
+                }
             }
 
         })
@@ -187,5 +212,26 @@ class Mario{
                 if( item.type === "koopa"){}
             }
         })
+
+        //Rewards
+        this.level.rewards.forEach( item => {
+            if(collisionDetection(item, this)){
+                //collision with coin
+                if(item.type === "coin"){
+                    item.removeCoin = true;
+                }
+
+                if(item.type === "mystery box"){
+
+                    //bottom collision
+                    if(this.y > item.y){
+                        this.y = item.y + item.height;
+                        this.vy = 1;
+                        item.emptyBox = true;
+                    }
+                }
+            }
+        })
+
     }
 }

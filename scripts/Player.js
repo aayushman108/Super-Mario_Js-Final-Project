@@ -2,6 +2,7 @@
 class Mario{
     constructor(game){
         this.game = game;
+        this.ctx = this.game.ctx;
         this.spritesheets = this.game.images;
         this.image = new Sprite(this.spritesheets.marioRight, 80, 32.5, 15, 15);
         this.width = 16;
@@ -15,8 +16,9 @@ class Mario{
         //this.states = ["standingLeft", "standingRight", "runningLeft", "runningRight", "jumpingLeft", "jumpingRight"];
         //this.currentState = this.states[0];
         this.lastKey = [];
-        this.nature = this.game.level.nature;
+        this.level = this.game.level;
         this.isJumping = false;
+        this.isDead = false;
 
         //Mario states
         this.stateObject = {
@@ -37,6 +39,8 @@ class Mario{
             jumpingLeft : new Sprite(this.spritesheets.marioLeft, 160, 32.5, 16, 16),
 
             jumpingRight : new Sprite(this.spritesheets.marioRight, 160, 32.5, 16, 16),
+
+            marioDead : new Sprite(this.spritesheets.marioLeft, 176, 32, 16, 16),
 
         };
 
@@ -77,8 +81,15 @@ class Mario{
         }
 
         //vertical movement
-        this.y += this.vy;
-        if(input.includes('Space')){
+        if(this.isDead){
+            this.image = this.stateObject.marioDead;
+            this.y += this.vy;
+            this.vy = 2;
+            this.vy -= this.gravity;
+        }else{
+            this.y += this.vy;
+        }
+        if(input.includes('Space') && !this.isDead){
             if(!this.isJumping){
                 this.vy = -10;
                 this.isJumping = true;
@@ -95,7 +106,7 @@ class Mario{
                     this.image = this.stateObject.jumpingRight;
                 }
             }
-        }else{
+        }else if(!this.isDead){
             if(!this.isJumping){
                 this.vy = 0;
                 this.isJumping = true;
@@ -117,19 +128,21 @@ class Mario{
 
     //Collision
     checkCollision(){
-        this.nature.forEach( item => {
+        this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){
 
                 //Ground collision
                 if(item.type === "ground"){
                     if(this.y < item.y && this.vy >=0){
-                        this.y = item.y - this.height + 0.5;
-                        this.vy = 0;
-                        this.isJumping = false;
+                        if(!this.isDead){
+                            this.y = item.y - this.height + 0.5;
+                            this.vy = 0;
+                            this.isJumping = false;
+                        }
                     }
                 }
 
-                //Collision with pipe
+                //Collision with pipe and stair
                 if(item.type === "pipe" || item.type === "stair"){
                     //left
                     if(this.x < item.x && this.y >= item.y){
@@ -146,7 +159,32 @@ class Mario{
                         this.isJumping = false;
                     }
                 } 
+            }
 
+        })
+
+        this.level.enemies.forEach( item => {
+            if(collisionDetection(item, this)){
+                
+                //collision with Goomba
+                if( item.type === "goomba"){
+                    //Left collision
+                    if( this.x < item.x && this.y >= item.y && item.dead === false){
+                        this.isDead = true;
+                    }
+                    //Right collision
+                    if( this.x > item.x && this.y >= item.y && item.dead === false){
+                        this.isDead = true;
+                    }
+                    //Top collision
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
+                        item.dead = true;
+                        item.speed = 0;
+                    }
+                }
+
+                //Collision with Koopa
+                if( item.type === "koopa"){}
             }
         })
     }

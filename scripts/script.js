@@ -13,7 +13,7 @@ function startGame(images) {
     const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
     //Scaling
-    const scaleFactor = 3;
+    const scaleFactor = 2;
 
     //Animate frame
     let animateFrame = 0;
@@ -22,6 +22,7 @@ function startGame(images) {
       constructor(width, height) {
         this.width = width;
         this.height = height;
+        this.ctx = ctx;
         this.input = new InputHandler();
         this.images = images;
         this.level = new Level(levelOne, this.images);

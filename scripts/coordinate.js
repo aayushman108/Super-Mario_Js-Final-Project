@@ -1,7 +1,7 @@
 const levelOne = {
-  flag: [3185, 24, 16, 24],
-  flagpole: [3185, 48, 16, 135],
-  castle: [3263, 112, 80, 80],
+  flag: [[3185, 24, 16, 24],],
+  flagpole: [[3185, 48, 10, 130],],
+  castle: [[3263, 112, 80, 80],],
   
 
   smallClouds: [

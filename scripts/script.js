@@ -27,6 +27,7 @@ function startGame(images) {
         this.images = images;
         this.level = new Level(levelOne, this.images);
         this.mario = new Mario(this);
+        this.gameOver = false; 
       }
   
       update(animateFrame) {
@@ -58,6 +59,17 @@ function startGame(images) {
   
     // Game loop
     function gameLoop() {
+      //game sound
+      if(!game.mario.isDead && !game.gameOver){
+        start.play();
+      }else if(game.mario.isDead && !game.gameOver){
+        start.pause();
+        setTimeout(() => location.reload(), 2000);
+      }else if(game.gameOver){
+        start.pause();
+        setTimeout(() => location.reload(), 6000);
+      }
+
       //Animate frame
       animateFrame++;
 

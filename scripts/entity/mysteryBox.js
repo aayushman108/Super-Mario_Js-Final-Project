@@ -7,6 +7,7 @@ class MysteryBox extends Entity{
         this.level = level;
         this.images = images;
         this.emptyBox = false;
+        this.collisionCount = 0;
 
         this.stateObject = {
             filledBox : new Sprite(spritesheet, 384, 0, 16, 15),
@@ -26,7 +27,7 @@ class MysteryBox extends Entity{
     }
 
     generateMushroom(){
-        let mushroom = new Mushroom(this.level, this.images.items, this.x + 4, this.y - 16, 16, 16);
+        let mushroom = new Mushroom(this.level, this.images.items, this.x, this.y - 16, 16, 16);
         this.level.mushrooms.push(mushroom);
     }
 }

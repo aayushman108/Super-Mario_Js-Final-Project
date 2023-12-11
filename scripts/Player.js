@@ -2,6 +2,7 @@
 class Mario{
     constructor(game){
         this.game = game;
+        this.gameHeight = this.game.height;
         this.ctx = this.game.ctx;
         this.spritesheets = this.game.images;
         this.image = new Sprite(this.spritesheets.marioRight, 80, 32.5, 15, 15);
@@ -51,7 +52,7 @@ class Mario{
         this.checkCollision();
         //horizontal movement
         this.x += this.speed;
-        if(input.includes('ArrowRight')){
+        if(input.includes('ArrowRight') && this.x < 3300){
             this.lastKey = [...input];
             this.speed = this.maxSpeed;
             if(!this.isJumping && animateFrame % 3 === 0){
@@ -90,6 +91,7 @@ class Mario{
             this.y += this.vy;
         }
         if(input.includes('Space') && !this.isDead){
+            //jump.play();
             if(!this.isJumping){
                 this.vy = -10;
                 this.isJumping = true;
@@ -119,11 +121,24 @@ class Mario{
                 }
             }
         }
+
+        if(this.y > this.gameHeight){
+            this.isDead = true;
+        }
+
+        if(this.isDead){
+            marioDeath.play();
+        }
+
+        if(this.x >= 3300){
+            this.game.gameOver = true;
+            complete.play();
+        }
     }
     
     //Draw
     draw(ctx){
-        ctx.strokeRect(this.x, this.y, this.width, this.height);
+        //ctx.strokeRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
     }
 
@@ -205,6 +220,7 @@ class Mario{
                     if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
                         item.dead = true;
                         item.speed = 0;
+                        killEnemy.play();
                     }
                 }
 
@@ -219,16 +235,31 @@ class Mario{
                 //collision with coin
                 if(item.type === "coin"){
                     item.removeCoin = true;
+                    coin.currentTime = 0;
+                    coin.play();
                 }
 
                 if(item.type === "mystery box"){
 
+                    //top collision
+                    if(this.y < item.y){
+                        this.y = item.y - this.height + 0.5;
+                        this.vy = 0;
+                        this.isJumping = false;
+                    }
+
                     //bottom collision
                     if(this.y > item.y){
+                        item.collisionCount++;
                         this.y = item.y + item.height;
                         this.vy = 1;
                         item.emptyBox = true;
-                        item.generateMushroom();
+                        
+                        if(item.collisionCount === 1){
+                            jump.currentTime = 0;
+                            jump.play();
+                            item.generateMushroom();
+                        }
                     }
                 }
             }
@@ -238,7 +269,6 @@ class Mario{
         this.level.mushrooms.forEach( item => {
             if(collisionDetection(item, this)){
                 if(item.type === "mushroom"){
-                    console.log("good");
                     item.isConsumed = true;
                 }
             }

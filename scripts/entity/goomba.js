@@ -5,7 +5,7 @@ class Goomba extends Entity{
         super(image, "goomba", x, y, width, height);
         this.level = level;
         this.vy = 0.5;
-        this.speed = 0.3;
+        this.speed = 2;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;

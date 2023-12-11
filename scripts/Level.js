@@ -70,26 +70,26 @@ class Level{
         })
 
 
-        // //Flag
-        // level.largeClouds.forEach((cord) => {
+        // //Flag.................................
+        // level.flag.forEach((cord) => {
         //     this.nature.push(
-        //       new LargeCloud(images.tiles, cord[0], cord[1], cord[2], cord[3])
+        //       new Flag(images.items, cord[0], cord[1], cord[2], cord[3])
         //     )
         // })
 
-        // //Flag pole
-        // level.largeClouds.forEach((cord) => {
-        //     this.nature.push(
-        //       new LargeCloud(images.tiles, cord[0], cord[1], cord[2], cord[3])
-        //     )
-        // })
+        //Flag pole...............................
+        level.flagpole.forEach((cord) => {
+            this.nature.push(
+              new Flagpole(images.tiles, cord[0], cord[1], cord[2], cord[3])
+            )
+        })
 
-        // //Castle
-        // level.largeClouds.forEach((cord) => {
-        //     this.nature.push(
-        //       new LargeCloud(images.tiles, cord[0], cord[1], cord[2], cord[3])
-        //     )
-        // })
+        //Castle......................................
+        level.castle.forEach((cord) => {
+            this.nature.push(
+              new Castle(images.castle, cord[0], cord[1], cord[2], cord[3])
+            )
+        })
 
         //Goomba...................................
         level.goombas.forEach((cord) => {

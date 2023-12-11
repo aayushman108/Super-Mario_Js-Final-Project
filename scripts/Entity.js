@@ -96,7 +96,7 @@ class Stair extends Entity{
 // //Flag
 // class Flag extends Entity{
 //     constructor(spritesheet, x, y, width, height){
-//         let image = new Sprite(spritesheet, 0, 0, 16, 16);
+//         let image = new Sprite(spritesheet, 127, 32, 17, 16);
 //         super(image, "flag", x, y, width, height);
 //     }
 
@@ -105,26 +105,26 @@ class Stair extends Entity{
 //     }
 // }
 
-// //Flag pole
-// class Flagpole extends Entity{
-//     constructor(spritesheet, x, y, width, height){
-//         let image = new Sprite(spritesheet, 0, 0, 16, 16);
-//         super(image, "flag pole", x, y, width, height);
-//     }
+//Flag pole
+class Flagpole extends Entity{
+    constructor(spritesheet, x, y, width, height){
+        let image = new Sprite(spritesheet, 260, 136, 8, 24);
+        super(image, "flag pole", x, y, width, height);
+    }
 
-//     draw(ctx){
-//         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
-//     }
-// }
+    draw(ctx){
+        ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
+    }
+}
 
-// //Castle
-// class Castle extends Entity{
-//     constructor(spritesheet, x, y, width, height){
-//         let image = new Sprite(spritesheet, 0, 0, 16, 16);
-//         super(image, "castle", x, y, width, height);
-//     }
+//Castle
+class Castle extends Entity{
+    constructor(spritesheet, x, y, width, height){
+        let image = new Sprite(spritesheet, 0, 0, 80, 80);
+        super(image, "castle", x, y, width, height);
+    }
 
-//     draw(ctx){
-//         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
-//     }
-// }
+    draw(ctx){
+        ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
+    }
+}

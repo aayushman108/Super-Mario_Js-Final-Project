@@ -228,7 +228,18 @@ class Mario{
                         this.y = item.y + item.height;
                         this.vy = 1;
                         item.emptyBox = true;
+                        item.generateMushroom();
                     }
+                }
+            }
+        })
+        
+        //Mushrooms
+        this.level.mushrooms.forEach( item => {
+            if(collisionDetection(item, this)){
+                if(item.type === "mushroom"){
+                    console.log("good");
+                    item.isConsumed = true;
                 }
             }
         })

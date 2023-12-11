@@ -4,6 +4,7 @@ class Level{
         this.nature = [];
         this.enemies = [];
         this.rewards = [];
+        this.mushrooms = [];
 
         //Ground........................................
         level.ground.forEach((cord) => {
@@ -64,7 +65,7 @@ class Level{
         //Mystery box
         level.mysteryBoxes.forEach((cord) => {
           this.rewards.push(
-            new MysteryBox(this, images.tiles, cord[0], cord[1], cord[2], cord[3])
+            new MysteryBox(this, images.tiles, images, cord[0], cord[1], cord[2], cord[3])
           )
         })
 
@@ -118,11 +119,15 @@ class Level{
           item.update(animateFrame);
         }
       })
+      this.mushrooms.forEach(item => {
+        item.update();
+      })
     }
 
     draw(ctx){
         this.nature.forEach(item => item.draw(ctx));
         this.enemies.forEach(item => item.draw(ctx));
         this.rewards.forEach(item => item.draw(ctx));
+        this.mushrooms.forEach(item => item.draw(ctx));
     }
 }

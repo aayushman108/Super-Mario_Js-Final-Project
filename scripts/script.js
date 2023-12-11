@@ -7,6 +7,7 @@ function startGame(images) {
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
     canvas.style.backgroundColor = "pink";
+    ctx.font = '400 30px Creepster, sans-serif';
 
     
     // Camera
@@ -49,9 +50,19 @@ function startGame(images) {
   
         this.level.draw(ctx);
         this.mario.draw(ctx);
-  
+
         // Reset the translation
         ctx.setTransform(1, 0, 0, 1, 0, 0);
+      }
+
+      gameComplete(){
+        ctx.fillStyle = 'Green';
+        ctx.fillRect(canvas.width/2 - 250, canvas.height/2 - 150, 500, 300);
+
+        ctx.fillStyle = '#000';
+        ctx.font = '400 30px Creepster, sans-serif';
+        ctx.textAlign = 'center';
+        ctx.fillText('Game Over', canvas.width / 2, canvas.height/2);
       }
     }
   
@@ -59,29 +70,35 @@ function startGame(images) {
   
     // Game loop
     function gameLoop() {
+
+      // Clear the canvas
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // Update game state
+      game.update(animateFrame);
+  
+      // Draw game objects
+      game.draw(ctx);
+
+      //Score
+      ctx.fillText(`score: 50`, 70, 50);
+
       //game sound
       if(!game.mario.isDead && !game.gameOver){
-        start.play();
+        //start.play();
       }else if(game.mario.isDead && !game.gameOver){
         start.pause();
         setTimeout(() => location.reload(), 2000);
       }else if(game.gameOver){
         start.pause();
         setTimeout(() => location.reload(), 6000);
+        game.gameComplete();
       }
 
       //Animate frame
       animateFrame++;
 
-      // Clear the canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
       ctx.scale(scaleFactor, scaleFactor);
-  
-      // Update game state
-      game.update(animateFrame);
-  
-      // Draw game objects
-      game.draw(ctx);
   
       requestAnimationFrame(gameLoop);
     }

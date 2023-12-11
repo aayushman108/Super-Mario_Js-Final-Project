@@ -30,4 +30,9 @@ class MysteryBox extends Entity{
         let mushroom = new Mushroom(this.level, this.images.items, this.x, this.y - 16, 16, 16);
         this.level.mushrooms.push(mushroom);
     }
+
+    generateCoin(){
+        let coin = new Coin(this.level, this.images.items, this.x, this.y - 16, 16, 16);
+        this.level.rewards.push(coin);
+    }
 }

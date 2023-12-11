@@ -127,6 +127,7 @@ class Mario{
         }
 
         if(this.isDead){
+            console.log("hellow hellow");
             marioDeath.play();
         }
 
@@ -180,11 +181,11 @@ class Mario{
                 if(item.type === "brick"){
                     //left
                     if(this.x < item.x && this.y >= item.y){
-                        this.x = item.x - this.width + 0.2;
+                        this.x = item.x - this.width + 0.01;
                     }
                     //right
                     if(this.x > item.x && this.y >= item.y){
-                        this.x = item.x + item.width - 0.2;
+                        this.x = item.x + item.width - 0.01;
                     }
                     //top
                     if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
@@ -195,7 +196,7 @@ class Mario{
                     //bottom
                     if(this.y > item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy <= 0){
                         this.y = item.y + item.height;
-                        this.vy = 1;
+                        this.vy = 0.5;
                     }
 
                 }
@@ -209,23 +210,39 @@ class Mario{
                 //collision with Goomba
                 if( item.type === "goomba"){
                     //Left collision
-                    if( this.x < item.x && this.y >= item.y && item.dead === false){
+                    if( this.x < item.x && this.y >= item.y && item.isDead === false){
                         this.isDead = true;
                     }
                     //Right collision
-                    if( this.x > item.x && this.y >= item.y && item.dead === false){
+                    if( this.x > item.x && this.y >= item.y && item.isDead === false){
                         this.isDead = true;
                     }
                     //Top collision
                     if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
-                        item.dead = true;
+                        item.isDead = true;
                         item.speed = 0;
                         killEnemy.play();
                     }
                 }
 
                 //Collision with Koopa
-                if( item.type === "koopa"){}
+                if( item.type === "koopa"){
+                    //Left collision
+                    if( this.x < item.x && this.y >= item.y && item.isDead === false){
+                        this.isDead = true;
+                    }
+                    //Right collision
+                    if( this.x > item.x && this.y >= item.y && item.isDead === false){
+                        this.isDead = true;
+                    }
+                    //Top collision
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
+                        item.isDead = true;
+                        item.speed = 0;
+                        killEnemy.play();
+                    }
+
+                }
             }
         })
 
@@ -256,9 +273,14 @@ class Mario{
                         item.emptyBox = true;
                         
                         if(item.collisionCount === 1){
+                            let random = getRandomNumber(1, 2);
                             jump.currentTime = 0;
                             jump.play();
-                            item.generateMushroom();
+                            if(random === 1){
+                                item.generateMushroom();
+                            }else if(random === 2){
+                                item.generateCoin();
+                            }
                         }
                     }
                 }

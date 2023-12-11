@@ -6,10 +6,11 @@ class Koopa extends Entity{
         super(image, "koopa", x, y, width, height);
         this.level = level;
         this.vy = 0.5;
-        this.speed = 0.5;
+        this.speed = 0.8;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;
+        this.isDead = false;
 
         this.stateObject = {
             movingLeft : {frames : [new Sprite(this.spritesheet, 89, 89, 16, 25),
@@ -30,24 +31,28 @@ class Koopa extends Entity{
         this.checkCollision();
 
         //horizontal motion
-        if(this.direction === "left"){
-            this.x -= this.speed;
-            if(animateFrame % 8 === 0){
-                this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
-                this.stateObject.movingLeft.count++;
-                if(this.stateObject.movingLeft.count > 2){
-                    this.stateObject.movingLeft.count = 0;
+        if(!this.isDead){
+            if(this.direction === "left"){
+                this.x -= this.speed;
+                if(animateFrame % 8 === 0){
+                    this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
+                    this.stateObject.movingLeft.count++;
+                    if(this.stateObject.movingLeft.count > 2){
+                        this.stateObject.movingLeft.count = 0;
+                    }
+                }
+            }else{
+                this.x += this.speed;
+                if(animateFrame % 8 ===0){
+                    this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
+                    this.stateObject.movingRight.count++;
+                    if(this.stateObject.movingRight.count > 2){
+                        this.stateObject.movingRight.count = 0;
+                    }
                 }
             }
         }else{
-            this.x += this.speed;
-            if(animateFrame % 8 ===0){
-                this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
-                this.stateObject.movingRight.count++;
-                if(this.stateObject.movingRight.count > 2){
-                    this.stateObject.movingRight.count = 0;
-                }
-            }
+            this.sprite = this.stateObject.dead;
         }
 
         //vertical motion

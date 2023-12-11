@@ -6,3 +6,7 @@ function collisionDetection(a, b) {
       a.y + a.height > b.y
     );
 }
+
+function getRandomNumber(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}

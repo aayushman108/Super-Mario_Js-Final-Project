@@ -9,7 +9,7 @@ class Goomba extends Entity{
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;
-        this.dead = false;
+        this.isDead = false;
 
         this.stateObject = {
             movingLeft : new Sprite(this.spritesheet, 0, 3, 16, 16),
@@ -25,7 +25,7 @@ class Goomba extends Entity{
         this.checkCollision();
 
         //horizontal motion
-        if(!this.dead){
+        if(!this.isDead){
             if(this.direction === "left"){
                 this.x -= this.speed;
                 this.sprite = this.stateObject.movingRight;

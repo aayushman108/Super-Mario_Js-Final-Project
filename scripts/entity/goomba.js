@@ -11,6 +11,7 @@ class Goomba extends Entity{
         this.onGround = true;
         this.isDead = false;
 
+        //sprites
         this.stateObject = {
             movingLeft : new Sprite(this.spritesheet, 0, 3, 16, 16),
         
@@ -22,6 +23,8 @@ class Goomba extends Entity{
     }
 
     update(){
+
+        //Call for collision check
         this.checkCollision();
 
         //horizontal motion
@@ -51,11 +54,12 @@ class Goomba extends Entity{
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 
+    //function to check collision
     checkCollision(){
 
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){
-                //Ground collision
+                //Collision with ground
                 if(item.type === "ground"){
                     if(this.y < item.y && this.vy >=0){
                         this.y = item.y - this.height + 0.5;
@@ -64,7 +68,7 @@ class Goomba extends Entity{
                     }
                 }
 
-                //Collision with pipe
+                //Collision with pipes and stairs
                 if(item.type === "pipe" || item.type === "stair"){
                     //left
                     if(this.x < item.x && this.y >= item.y){

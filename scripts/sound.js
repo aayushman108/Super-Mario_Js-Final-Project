@@ -1,4 +1,5 @@
 
+//Game sounds
 const start = new Audio("../assets/sounds/mario_theme.mp3");
 const complete = new Audio("../assets/sounds/level_complete.mp3");
 const coin = new Audio("../assets/sounds/coin.wav");

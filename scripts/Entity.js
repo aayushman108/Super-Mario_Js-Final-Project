@@ -9,7 +9,7 @@ class Entity{
     }
 }
 
-//Ground........................................................................
+//Ground.........................................................
 class Ground extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 0, 0, 16, 16);
@@ -21,10 +21,10 @@ class Ground extends Entity{
     }
 }
 
-//Grasses...........................................................................
+//Grasses..........................................................
 class Grasses extends Entity{
     constructor(spritesheet, x, y, width, height){
-        let image = new Sprite(spritesheet, 184, 144, 32, 16);
+        let image = new Sprite(spritesheet, 184, 144.3, 32, 16);
         super(image, "grasses", x, y, width, height);
     }
 
@@ -33,7 +33,7 @@ class Grasses extends Entity{
     }
 }
 
-//Large Cloud............................................................................
+//Large Cloud.........................................................
 class LargeCloud extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 127, 353, 50, 16);
@@ -45,7 +45,7 @@ class LargeCloud extends Entity{
     }
 }
 
-//Small Cloud...............................................................................
+//Small Cloud...........................................................
 class SmallCloud extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 7, 350, 34, 25);
@@ -57,7 +57,7 @@ class SmallCloud extends Entity{
     }
 }
 
-//Brick.....................................
+//Brick................................................................
 class Brick extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 15, 0, 15, 15);
@@ -69,7 +69,7 @@ class Brick extends Entity{
     }
 }
 
-//Pipe............................
+//Pipe...............................................................
 class Pipe extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 0, 160, 32, 32);
@@ -81,7 +81,7 @@ class Pipe extends Entity{
     }
 }
 
-//Stair.........................
+//Stair............................................................
 class Stair extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 0, 15, 15, 15);
@@ -105,7 +105,7 @@ class Stair extends Entity{
 //     }
 // }
 
-//Flag pole
+//Flag pole.....................................................
 class Flagpole extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 260, 136, 8, 24);
@@ -117,7 +117,7 @@ class Flagpole extends Entity{
     }
 }
 
-//Castle
+//Castle.........................................................
 class Castle extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 0, 0, 80, 80);

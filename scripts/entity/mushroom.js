@@ -6,15 +6,14 @@ class Mushroom extends Entity{
         super(image, "mushroom", x, y, width, height);
         this.spritesheet = spritesheet;
         this.level = level;
-        //this.speed = 1;
         this.isConsumed = false;
     }
 
     update(ctx){
-        //this.x += this.speed;
+        
+        //Removes mushroom if it is consumed
         if(this.isConsumed){
-            mushroom.play();
-            this.level.mushrooms.splice(this.level.mushrooms.indexOf(this), 1);
+            this.level.rewards.splice(this.level.rewards.indexOf(this), 1);
         }
     }
 

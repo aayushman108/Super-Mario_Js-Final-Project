@@ -1,3 +1,4 @@
+
 class Sprite{
     constructor(image, sx, sy, sw, sh){
         this.image = image;

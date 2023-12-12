@@ -9,13 +9,11 @@ class Mario{
         this.width = 16;
         this.height = 16;
         this.x = 0;
-        this.y = 10;//this.game.height - this.height;
+        this.y = 10;
         this.speed = 0;
         this.maxSpeed = 2;
         this.vy = 0;
         this.gravity = 0.6;
-        //this.states = ["standingLeft", "standingRight", "runningLeft", "runningRight", "jumpingLeft", "jumpingRight"];
-        //this.currentState = this.states[0];
         this.lastKey = [];
         this.level = this.game.level;
         this.isJumping = false;
@@ -38,9 +36,9 @@ class Mario{
                             new Sprite(this.spritesheets.marioLeft, 128, 32.5, 15, 16)],
                         count: 0},
         
-            runningRight : {frames: [new Sprite(this.spritesheets.marioRight, 96, 32, 15, 16),
-                             new Sprite(this.spritesheets.marioRight, 113, 32, 15, 16),
-                             new Sprite(this.spritesheets.marioRight, 128, 32, 15, 16)],
+            runningRight : {frames: [new Sprite(this.spritesheets.marioRight, 96, 32.5, 15, 16),
+                             new Sprite(this.spritesheets.marioRight, 113, 32.5, 15, 16),
+                             new Sprite(this.spritesheets.marioRight, 128, 32.5, 15, 16)],
                             count: 0},
             
             jumpingLeft : new Sprite(this.spritesheets.marioLeft, 160, 32.5, 16, 16),
@@ -55,8 +53,13 @@ class Mario{
 
     //Update
     update(input, animateFrame){
+
+        //call for collision check
         this.checkCollision();
+
+        //call for score check
         this.checkScore();
+
         //horizontal movement
         this.x += this.speed;
         if(input.includes('ArrowRight') && this.x < 3300){
@@ -98,7 +101,6 @@ class Mario{
             this.y += this.vy;
         }
         if(input.includes('Space') && !this.isDead){
-            //jump.play();
             if(!this.isJumping){
                 this.vy = -10;
                 if(this.score >= 100){
@@ -153,16 +155,15 @@ class Mario{
     
     //Draw
     draw(ctx){
-        //ctx.strokeRect(this.x, this.y, this.width, this.height);
         ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
     }
 
-    //Collision
+    //function to check collision
     checkCollision(){
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){
 
-                //Ground collision
+                //Collision with grounds
                 if(item.type === "ground"){
                     if(this.y < item.y && this.vy >=0){
                         if(!this.isDead){
@@ -173,7 +174,7 @@ class Mario{
                     }
                 }
 
-                //Collision with pipe and stair
+                //Collision with pipes and stairs
                 if(item.type === "pipe" || item.type === "stair"){
                     //left
                     if(this.x < item.x && this.y >= item.y){
@@ -219,6 +220,7 @@ class Mario{
 
         })
 
+        //Enemies
         this.level.enemies.forEach( item => {
             if(collisionDetection(item, this)){
                 
@@ -237,6 +239,7 @@ class Mario{
                         item.isDead = true;
                         item.speed = 0;
                         this.score = this.score + 10;
+                        killEnemy.currentTime = 0;
                         killEnemy.play();
                     }
                 }
@@ -256,6 +259,7 @@ class Mario{
                         item.isDead = true;
                         item.speed = 0;
                         this.score = this.score + 10;
+                        killEnemy.currentTime = 0;
                         killEnemy.play();
                     }
 
@@ -269,11 +273,12 @@ class Mario{
                 //collision with coin
                 if(item.type === "coin"){
                     item.removeCoin = true;
-                    coin.currentTime = 0;
                     this.score = this.score + 10;
+                    coin.currentTime = 0;
                     coin.play();
                 }
 
+                //collision with Mystery box
                 if(item.type === "mystery box"){
 
                     //top collision
@@ -302,29 +307,27 @@ class Mario{
                         }
                     }
                 }
-            }
-        })
-        
-        //Mushrooms
-        this.level.mushrooms.forEach( item => {
-            if(collisionDetection(item, this)){
+
+                //Collision with mushroom
                 if(item.type === "mushroom"){
                     item.isConsumed = true;
                     this.score = this.score + 25;
+                    mushroom.currentTime = 0;
+                    mushroom.play();
                 }
             }
         })
 
     }
 
-    //Power up
+    //Check power up and play sound
     checkPowerUp(score) {
         if (this.powerUpOccurred[score] === false) {
             powerUp.play();
             this.powerUpOccurred[score] = true;
         }
     }
-      
+    //Check score 
     checkScore() {
         if (this.score >= 50) {
             this.width = 20;

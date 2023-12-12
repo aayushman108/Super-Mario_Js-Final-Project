@@ -1,6 +1,8 @@
+
 class InputHandler {
     constructor() {
       this.keys = [];
+      this.isGamePaused = false;
   
       window.addEventListener('keydown', (e) => {
         if ( 
@@ -11,6 +13,12 @@ class InputHandler {
         ) {
           this.keys.push(e.code);
         }
+
+        if (e.code === 'Enter') {
+          console.log("enter");
+          this.isGamePaused = !this.isGamePaused;
+          console.log(this.isGamePaused);
+      }
       });
   
       window.addEventListener('keyup', (e) => {

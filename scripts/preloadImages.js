@@ -29,6 +29,8 @@ preloadImages(imagePaths)
             items : images[4],
             castle : images[5],
         }
+
+        //start game
         startGame(imageObj);
     })
     .catch((error) => {

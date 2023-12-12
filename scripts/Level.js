@@ -4,101 +4,99 @@ class Level{
         this.nature = [];
         this.enemies = [];
         this.rewards = [];
-        this.mushrooms = [];
 
-        //Ground........................................
+        //Ground.........................
         level.ground.forEach((cord) => {
             this.nature.push(
               new Ground(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Grasses.........................................
+        //Grasses.........................
         level.grasses.forEach((cord) => {
             this.nature.push(
               new Grasses(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Small clouds......................................
+        //Small clouds........................
         level.smallClouds.forEach((cord) => {
             this.nature.push(
               new SmallCloud(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Large clouds...................................................
+        //Large clouds.......................
         level.largeClouds.forEach((cord) => {
             this.nature.push(
               new SmallCloud(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Bricks...........................................................
+        //Bricks.........................
         level.bricks.forEach((cord) => {
             this.nature.push(
               new Brick(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Pipes..........................................................
+        //Pipes.........................
         level.pipes.forEach((cord) => {
             this.nature.push(
               new Pipe(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Stairs.........................................................
+        //Stairs.........................
         level.stairs.forEach((cord) => {
             this.nature.push(
               new Stair(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Coins...........................................................
+        //Coins.........................
         level.coins.forEach((cord) => {
           this.rewards.push(
             new Coin(this, images.items, cord[0], cord[1], cord[2], cord[3])
           )
         })
 
-        //Mystery box
+        //Mystery box.........................
         level.mysteryBoxes.forEach((cord) => {
           this.rewards.push(
             new MysteryBox(this, images.tiles, images, cord[0], cord[1], cord[2], cord[3])
           )
         })
 
-
-        // //Flag.................................
+        // //Flag.........................
         // level.flag.forEach((cord) => {
         //     this.nature.push(
         //       new Flag(images.items, cord[0], cord[1], cord[2], cord[3])
         //     )
         // })
 
-        //Flag pole...............................
+        //Flag pole.......................
         level.flagpole.forEach((cord) => {
             this.nature.push(
               new Flagpole(images.tiles, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Castle......................................
+        //Castle........................
         level.castle.forEach((cord) => {
             this.nature.push(
               new Castle(images.castle, cord[0], cord[1], cord[2], cord[3])
             )
         })
 
-        //Goomba...................................
+        //Goomba..........................
         level.goombas.forEach((cord) => {
           this.enemies.push(
             new Goomba(this, images.enemies, cord[0], cord[1], cord[2], cord[3])
           )
         })
 
-        //Koopa..................................
+        //Koopa..........................
         level.koopas.forEach((cord) => {
           this.enemies.push(
             new Koopa(this, images.enemies, cord[0], cord[1], cord[2], cord[3])
@@ -115,12 +113,9 @@ class Level{
         }
       })
       this.rewards.forEach(item => {
-        if(item.type === "coin" || item.type === "mystery box"){
+        if(item.type === "coin" || item.type === "mystery box" || item.type === "mushroom"){
           item.update(animateFrame);
         }
-      })
-      this.mushrooms.forEach(item => {
-        item.update();
       })
     }
 
@@ -128,6 +123,5 @@ class Level{
         this.nature.forEach(item => item.draw(ctx));
         this.enemies.forEach(item => item.draw(ctx));
         this.rewards.forEach(item => item.draw(ctx));
-        this.mushrooms.forEach(item => item.draw(ctx));
     }
 }

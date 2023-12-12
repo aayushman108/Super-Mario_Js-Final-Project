@@ -7,6 +7,7 @@ class Coin extends Entity{
         this.level = level;
         this.removeCoin = false;
 
+        //sprites
         this.stateObject = {
             frames : [new Sprite(this.spritesheet, 2, 98, 10, 15),
                 new Sprite(this.spritesheet, 20, 113, 8, 15), 
@@ -16,6 +17,7 @@ class Coin extends Entity{
     }
 
     update(animateFrame){
+
         if(animateFrame % 10 === 0){
             this.sprite = this.stateObject.frames[this.stateObject.count]
             this.stateObject.count++;
@@ -24,6 +26,7 @@ class Coin extends Entity{
             }
         }
 
+        //Removes coin if it is consumed
         if(this.removeCoin){
             this.level.rewards.splice(this.level.rewards.indexOf(this), 1);
         }

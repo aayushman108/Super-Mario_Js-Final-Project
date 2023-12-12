@@ -26,11 +26,13 @@ class MysteryBox extends Entity{
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 
+    //function to generate mushroom
     generateMushroom(){
         let mushroom = new Mushroom(this.level, this.images.items, this.x, this.y - 16, 16, 16);
-        this.level.mushrooms.push(mushroom);
+        this.level.rewards.push(mushroom);
     }
 
+    //function to generate coin
     generateCoin(){
         let coin = new Coin(this.level, this.images.items, this.x, this.y - 16, 16, 16);
         this.level.rewards.push(coin);

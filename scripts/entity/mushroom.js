@@ -13,7 +13,7 @@ class Mushroom extends Entity{
     update(ctx){
         //this.x += this.speed;
         if(this.isConsumed){
-            powerUp.play();
+            mushroom.play();
             this.level.mushrooms.splice(this.level.mushrooms.indexOf(this), 1);
         }
     }

@@ -14,7 +14,7 @@ function startGame(images) {
     const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
     //Scaling
-    const scaleFactor = 2;
+    const scaleFactor = 2.5;
 
     //Animate frame
     let animateFrame = 0;
@@ -81,11 +81,11 @@ function startGame(images) {
       game.draw(ctx);
 
       //Score
-      ctx.fillText(`score: 50`, 70, 50);
+      ctx.fillText(`score: ${game.mario.score}`, 70, 50);
 
       //game sound
       if(!game.mario.isDead && !game.gameOver){
-        //start.play();
+        start.play();
       }else if(game.mario.isDead && !game.gameOver){
         start.pause();
         setTimeout(() => location.reload(), 2000);

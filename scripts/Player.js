@@ -20,6 +20,12 @@ class Mario{
         this.level = this.game.level;
         this.isJumping = false;
         this.isDead = false;
+        this.score = 0;
+        this.powerUpOccurred = {
+            50: false,
+            100: false,
+            200: false
+        };
 
         //Mario states
         this.stateObject = {
@@ -50,6 +56,7 @@ class Mario{
     //Update
     update(input, animateFrame){
         this.checkCollision();
+        this.checkScore();
         //horizontal movement
         this.x += this.speed;
         if(input.includes('ArrowRight') && this.x < 3300){
@@ -94,6 +101,9 @@ class Mario{
             //jump.play();
             if(!this.isJumping){
                 this.vy = -10;
+                if(this.score >= 100){
+                    this.vy = -12;
+                }
                 this.isJumping = true;
                 if(this.lastKey.includes("ArrowLeft")){
                     this.image = this.stateObject.jumpingLeft;
@@ -127,8 +137,12 @@ class Mario{
         }
 
         if(this.isDead){
-            console.log("hellow hellow");
+            this.score = 0;
             marioDeath.play();
+        }
+
+        if(this.score < -10){
+            this.isDead = true;
         }
 
         if(this.x >= 3300){
@@ -197,6 +211,7 @@ class Mario{
                     if(this.y > item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy <= 0){
                         this.y = item.y + item.height;
                         this.vy = 0.5;
+                        this.score = this.score - 5;
                     }
 
                 }
@@ -208,37 +223,39 @@ class Mario{
             if(collisionDetection(item, this)){
                 
                 //collision with Goomba
-                if( item.type === "goomba"){
+                if( item.type === "goomba" && item.isDead === false){
                     //Left collision
-                    if( this.x < item.x && this.y >= item.y && item.isDead === false){
+                    if( this.x < item.x && this.y >= item.y){
                         this.isDead = true;
                     }
                     //Right collision
-                    if( this.x > item.x && this.y >= item.y && item.isDead === false){
+                    if( this.x > item.x && this.y >= item.y){
                         this.isDead = true;
                     }
                     //Top collision
                     if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
                         item.isDead = true;
                         item.speed = 0;
+                        this.score = this.score + 10;
                         killEnemy.play();
                     }
                 }
 
                 //Collision with Koopa
-                if( item.type === "koopa"){
+                if( item.type === "koopa" && item.isDead === false){
                     //Left collision
-                    if( this.x < item.x && this.y >= item.y && item.isDead === false){
+                    if( this.x < item.x && this.y >= item.y){
                         this.isDead = true;
                     }
                     //Right collision
-                    if( this.x > item.x && this.y >= item.y && item.isDead === false){
+                    if( this.x > item.x && this.y >= item.y){
                         this.isDead = true;
                     }
                     //Top collision
                     if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
                         item.isDead = true;
                         item.speed = 0;
+                        this.score = this.score + 10;
                         killEnemy.play();
                     }
 
@@ -253,6 +270,7 @@ class Mario{
                 if(item.type === "coin"){
                     item.removeCoin = true;
                     coin.currentTime = 0;
+                    this.score = this.score + 10;
                     coin.play();
                 }
 
@@ -292,9 +310,32 @@ class Mario{
             if(collisionDetection(item, this)){
                 if(item.type === "mushroom"){
                     item.isConsumed = true;
+                    this.score = this.score + 25;
                 }
             }
         })
 
+    }
+
+    //Power up
+    checkPowerUp(score) {
+        if (this.powerUpOccurred[score] === false) {
+            powerUp.play();
+            this.powerUpOccurred[score] = true;
+        }
+    }
+      
+    checkScore() {
+        if (this.score >= 50) {
+            this.width = 20;
+            this.height = 20;
+            this.checkPowerUp(50);
+        }
+        if (this.score >= 100) {
+            this.checkPowerUp(100);
+        }
+        if (this.score >= 200) {
+            this.checkPowerUp(200);
+        }
     }
 }

@@ -25,6 +25,8 @@ class Mario{
             200: false
         };
 
+        this.visible = true;
+
         //Mario states
         this.stateObject = {
             standingLeft : new Sprite(this.spritesheets.marioLeft, 80, 32.5, 15, 16),
@@ -135,6 +137,7 @@ class Mario{
         }
 
         if(this.y > this.gameHeight){
+            console.log(this.gameHeight);
             this.isDead = true;
         }
 
@@ -155,7 +158,9 @@ class Mario{
     
     //Draw
     draw(ctx){
-        ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
+        if(this.visible){
+            ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
+        }
     }
 
     //function to check collision
@@ -212,7 +217,18 @@ class Mario{
                     if(this.y > item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy <= 0){
                         this.y = item.y + item.height;
                         this.vy = 0.5;
-                        this.score = this.score - 5;
+
+                        if(this.score >= 100){
+                            //Break the brick
+                            this.level.nature.splice(this.level.nature.indexOf(item), 1);
+                            let brickParticle = new ParticleSystem(this.spritesheets.tiles, item.x, item.y - 8, 2);
+                            if (brickParticle) {
+                                brickParticle.update();
+                                brickParticle.draw(this.ctx);
+                            }
+                        }else{
+                            this.score = this.score - 5;
+                        }
                     }
 
                 }
@@ -325,6 +341,17 @@ class Mario{
         if (this.powerUpOccurred[score] === false) {
             powerUp.play();
             this.powerUpOccurred[score] = true;
+
+            //Mario blinking during power increase
+            let blinkInterval = setInterval(() => {
+                this.visible = !this.visible;
+            }, 50);
+        
+            // After blinkDuration, make Mario completely visible
+            setTimeout(() => {
+                this.visible = true;
+                clearInterval(blinkInterval);
+            }, 1500);
         }
     }
     //Check score 

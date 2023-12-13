@@ -13,7 +13,7 @@ function startGame(images) {
     const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
     //Scaling
-    const scaleFactor = 2.5;
+    const scaleFactor = 2;
 
     //Animate frame
     let animateFrame = 0;
@@ -38,6 +38,11 @@ function startGame(images) {
         // Update camera position based on target position
         if (camera.target) {
           camera.x = Math.max(0, camera.target.x - canvas.width / (2 * scaleFactor));
+
+          // // Track Mario's y-position when entering the underground
+          // if (camera.target.y > canvas.height / (2 * scaleFactor)) {
+          //   camera.y = Math.max(0, camera.target.y - canvas.height / (2 * scaleFactor));
+          // }
         }
   
         this.level.update(animateFrame);
@@ -73,37 +78,37 @@ function startGame(images) {
     function gameLoop() {
 
       if(!game.input.isGamePaused){
-      //Animate frame
-      animateFrame++;
+        //Animate frame
+        animateFrame++;
 
-      // Clear the canvas
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // Update game state
-      game.update(animateFrame);
+        // Update game state
+        game.update(animateFrame);
   
-      // Draw game objects
-      game.draw(ctx);
+        // Draw game objects
+        game.draw(ctx);
 
-      //Score
-      ctx.fillText(`score: ${game.mario.score}`, 70, 50);
+        //Score
+        ctx.fillText(`score: ${game.mario.score}`, 70, 50);
 
-      //game sound
-      if(!game.mario.isDead && !game.gameOver){
-        start.play();
-      }else if(game.mario.isDead && !game.gameOver){
-        start.pause();
-        setTimeout(() => location.reload(), 2000);
-      }else if(game.gameOver){
-        start.pause();
-        setTimeout(() => location.reload(), 6000);
-        game.gameComplete();
+        //game sound
+        if(!game.mario.isDead && !game.gameOver){
+          //start.play();
+        }else if(game.mario.isDead && !game.gameOver){
+          start.pause();
+          setTimeout(() => location.reload(), 2000);
+        }else if(game.gameOver){
+          start.pause();
+          setTimeout(() => location.reload(), 6000);
+          game.gameComplete();
+        }
       }
-    }
 
-    if(game.input.isGamePaused){
-      start.pause();
-    }
+      if(game.input.isGamePaused){
+        start.pause();
+      }
 
       //scale playground
       ctx.scale(scaleFactor, scaleFactor);

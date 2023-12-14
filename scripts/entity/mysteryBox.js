@@ -37,4 +37,10 @@ class MysteryBox extends Entity{
         let coin = new Coin(this.level, this.images.items, this.x, this.y - 16, 16, 16);
         this.level.rewards.push(coin);
     }
+
+    //function to generate flower
+    generateFlower(){
+        let flower = new Flower(this.level, this.images.items, this.x, this.y - 24, 16, 24);
+        this.level.rewards.push(flower);
+    }
 }

@@ -4,6 +4,7 @@ class Level{
         this.nature = [];
         this.enemies = [];
         this.rewards = [];
+        this.bullets = [];
 
         //Ground.........................
         level.ground.forEach((cord) => {
@@ -113,9 +114,12 @@ class Level{
         }
       })
       this.rewards.forEach(item => {
-        if(item.type === "coin" || item.type === "mystery box" || item.type === "mushroom"){
+        if(item.type === "coin" || item.type === "mystery box" || item.type === "mushroom" || item.type === "flower"){
           item.update(animateFrame);
         }
+      })
+      this.bullets.forEach(item => {
+        item.update();
       })
     }
 
@@ -123,5 +127,6 @@ class Level{
         this.nature.forEach(item => item.draw(ctx));
         this.enemies.forEach(item => item.draw(ctx));
         this.rewards.forEach(item => item.draw(ctx));
+        this.bullets.forEach(item => item.draw(ctx));
     }
 }

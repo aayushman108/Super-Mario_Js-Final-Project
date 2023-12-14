@@ -19,13 +19,24 @@ class Mario{
         this.isJumping = false;
         this.isDead = false;
         this.score = 0;
-        this.powerUpOccurred = {
-            50: false,
-            100: false,
-            200: false
-        };
+        this.marioPowerState = "small"; //"small", "medium", "large"
 
+        //blinking effect of mario on power gain
         this.visible = true;
+        //for breaking brick
+        this.brickParticle = null;
+        //reward consumed
+        this.noOfMushroomConsumed = 0;
+        this.noOfFlowerConsumed = 0;
+
+        //Fire bullet
+        this.canFireBullet = false;
+        this.isbulletFired = false;
+        document.addEventListener('keyup', (e) => {
+            if (e.code === 'KeyB') {
+              this.isBulletFired = true;
+            }
+          });
 
         //Mario states
         this.stateObject = {
@@ -55,12 +66,15 @@ class Mario{
 
     //Update
     update(input, animateFrame){
+        if (this.brickParticle) {
+            this.brickParticle.update();
+        }
 
         //call for collision check
         this.checkCollision();
 
-        //call for score check
-        this.checkScore();
+        // //call for score check
+        // this.checkScore();
 
         //horizontal movement
         this.x += this.speed;
@@ -105,8 +119,8 @@ class Mario{
         if(input.includes('Space') && !this.isDead){
             if(!this.isJumping){
                 this.vy = -10;
-                if(this.score >= 100){
-                    this.vy = -12;
+                if(this.noOfMushroomConsumed >= 1){
+                    this.vy = -12
                 }
                 this.isJumping = true;
                 if(this.lastKey.includes("ArrowLeft")){
@@ -137,7 +151,6 @@ class Mario{
         }
 
         if(this.y > this.gameHeight){
-            console.log(this.gameHeight);
             this.isDead = true;
         }
 
@@ -146,20 +159,54 @@ class Mario{
             marioDeath.play();
         }
 
-        if(this.score < -10){
-            this.isDead = true;
-        }
+        // if(this.score < -10){
+        //     this.isDead = true;
+        // }
 
         if(this.x >= 3300){
             this.game.gameOver = true;
             complete.play();
         }
+
+        //Bullet fire
+        if(this.canFireBullet && this.isBulletFired){
+            let speed;
+            let bulletX;
+            if(input.includes("ArrowLeft") || this.lastKey.includes("ArrowLeft")){
+                speed = -3;
+                bulletX = this.x;
+            }else{
+                speed = 3;
+                bulletX = this.x + this.width;
+            }
+                
+            let bullet = new Bullet(this.level, this.spritesheets.enemies, bulletX, this.y + this.height/3, 10, 10, speed);
+
+            this.level.bullets.push(bullet);
+            this.isBulletFired = false;
+        }
+
+        //Power state and size
+        if(this.marioPowerState === "small"){
+            this.width = 16;
+            this.height = 16;
+        }else if(this.marioPowerState === "medium"){
+            this.width = 18;
+            this.height =20;
+        }else if(this.marioPowerState === "large"){
+            this.width = 18;
+            this.height = 24;
+        }
+
     }
     
     //Draw
     draw(ctx){
         if(this.visible){
             ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
+        }
+        if (this.brickParticle) {
+            this.brickParticle.draw(this.ctx);
         }
     }
 
@@ -218,16 +265,10 @@ class Mario{
                         this.y = item.y + item.height;
                         this.vy = 0.5;
 
-                        if(this.score >= 100){
+                        if(this.marioPowerState === "medium" || this.marioPowerState === "large"){
                             //Break the brick
                             this.level.nature.splice(this.level.nature.indexOf(item), 1);
-                            let brickParticle = new ParticleSystem(this.spritesheets.tiles, item.x, item.y - 8, 2);
-                            if (brickParticle) {
-                                brickParticle.update();
-                                brickParticle.draw(this.ctx);
-                            }
-                        }else{
-                            this.score = this.score - 5;
+                            this.brickParticle = new ParticleSystem(this.spritesheets.tiles, item.x, item.y - 8, 4);
                         }
                     }
 
@@ -240,45 +281,117 @@ class Mario{
         this.level.enemies.forEach( item => {
             if(collisionDetection(item, this)){
                 
-                //collision with Goomba
-                if( item.type === "goomba" && item.isDead === false){
+                //collision with Goomba and Koopa
+                if( (item.type === "goomba" || item.type === "koopa") && item.isDead === false){
                     //Left collision
-                    if( this.x < item.x && this.y >= item.y){
-                        this.isDead = true;
+                    if( this.x < item.x && this.vy <= 0){
+                        if(this.marioPowerState === "small"){
+                            this.isDead = true;
+                        }else if(this.marioPowerState === "medium"){
+                            item.speed = 0;
+                            item.x = item.x + item.width/2;
+                            powerDown.play();
+                            
+                            //Mario blinking during power increase
+                            let blinkInterval = setInterval(() => {
+                                this.visible = !this.visible;
+                                }, 50);
+            
+                            // After blinkDuration, make Mario completely visible
+                            setTimeout(() => {
+                                this.marioPowerState = "small";
+                                this.visible = true;
+                                if(item.type === "goomba"){
+                                    item.speed = 2;
+                                }else if(item.type === "koopa"){
+                                    item.speed = 0.8;
+                                }
+                                clearInterval(blinkInterval);
+                            }, 1500)
+                            
+                        }else if(this.marioPowerState === "large"){
+                            item.speed = 0;
+                            item.x = item.x + item.width/2;
+                            powerDown.play();
+                            
+                            //Mario blinking during power increase
+                            let blinkInterval = setInterval(() => {
+                                this.visible = !this.visible;
+                                }, 50);
+            
+                            // After blinkDuration, make Mario completely visible
+                            setTimeout(() => {
+                                this.marioPowerState = "medium";
+                                this.visible = true;
+                                if(item.type === "goomba"){
+                                    item.speed = 2;
+                                }else if(item.type === "koopa"){
+                                    item.speed = 0.8;
+                                }
+                                clearInterval(blinkInterval);
+                            }, 1500);
+                            
+                        }
+                       
                     }
                     //Right collision
-                    if( this.x > item.x && this.y >= item.y){
-                        this.isDead = true;
+                    if( this.x > item.x && this.vy <= 0){
+                        if(this.marioPowerState === "small"){
+                            this.isDead = true;
+                        }else if(this.marioPowerState === "medium"){
+                            item.speed = 0;
+                            item.x = item.x - item.width/2;
+                            powerDown.play();
+                            
+                            //Mario blinking during power increase
+                            let blinkInterval = setInterval(() => {
+                                this.visible = !this.visible;
+                                }, 50);
+            
+                            // After blinkDuration, make Mario completely visible
+                            setTimeout(() => {
+                                this.marioPowerState = "small";
+                                this.visible = true;
+                                if(item.type === "goomba"){
+                                    item.speed = 2;
+                                }else if(item.type === "koopa"){
+                                    item.speed = 0.8;
+                                }
+                                clearInterval(blinkInterval);
+                            }, 1500);
+                                
+                        }else if(this.marioPowerState === "large"){
+                            item.speed = 0;
+                            item.x = item.x - item.width/2;
+                            powerDown.play();
+                            
+                            //Mario blinking during power increase
+                            let blinkInterval = setInterval(() => {
+                                this.visible = !this.visible;
+                                }, 50);
+            
+                            // After blinkDuration, make Mario completely visible
+                            setTimeout(() => {
+                                this.marioPowerState = "medium";
+                                this.visible = true;
+                                if(item.type === "goomba"){
+                                    item.speed = 2;
+                                }else if(item.type === "koopa"){
+                                    item.speed = 0.8;
+                                }
+                                clearInterval(blinkInterval);
+                            }, 1500);
+                            
+                        }
                     }
                     //Top collision
-                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy > 0){
                         item.isDead = true;
                         item.speed = 0;
-                        this.score = this.score + 10;
+                        //this.score = this.score + 10;
                         killEnemy.currentTime = 0;
                         killEnemy.play();
                     }
-                }
-
-                //Collision with Koopa
-                if( item.type === "koopa" && item.isDead === false){
-                    //Left collision
-                    if( this.x < item.x && this.y >= item.y){
-                        this.isDead = true;
-                    }
-                    //Right collision
-                    if( this.x > item.x && this.y >= item.y){
-                        this.isDead = true;
-                    }
-                    //Top collision
-                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
-                        item.isDead = true;
-                        item.speed = 0;
-                        this.score = this.score + 10;
-                        killEnemy.currentTime = 0;
-                        killEnemy.play();
-                    }
-
                 }
             }
         })
@@ -289,7 +402,7 @@ class Mario{
                 //collision with coin
                 if(item.type === "coin"){
                     item.removeCoin = true;
-                    this.score = this.score + 10;
+                    //this.score = this.score + 10;
                     coin.currentTime = 0;
                     coin.play();
                 }
@@ -312,22 +425,70 @@ class Mario{
                         item.emptyBox = true;
                         
                         if(item.collisionCount === 1){
-                            let random = getRandomNumber(1, 2);
+                            let random = getRandomNumber(1, 3);
                             jump.currentTime = 0;
                             jump.play();
-                            if(random === 1){
-                                item.generateMushroom();
-                            }else if(random === 2){
-                                item.generateCoin();
+                            // if(random === 1){
+                            //     if(this.noOfMushroomConsumed < 2){
+                            //         item.generateMushroom();
+                            //     }else{
+                            //         item.generateFlower();
+                            //     }
+                            // }else if(random === 2){
+                            //     item.generateCoin();
+                            // }
+
+                            if(this.marioPowerState === "large"){
+                                if(random === 1){
+                                    item.generateFlower();
+                                }else if(random === 2){
+                                    item.generateMushroom();
+                                }else{
+                                    item.generateCoin();
+                                }
+                            }else if(this.marioPowerState === "medium"){
+                                if(random === 1){
+                                    item.generateFlower();
+                                }else if(random === 2){
+                                    item.generateMushroom();
+                                }else{
+                                    item.generateCoin();
+                                }
+                            }else{
+                                if(random === 1){
+                                    item.generateCoin();
+                                }else{
+                                    item.generateMushroom();
+                                }
                             }
                         }
                     }
                 }
 
                 //Collision with mushroom
-                if(item.type === "mushroom"){
+                if(item.type === "mushroom" || item.type === "flower"){
+                    if(item.type === "mushroom"){
+                        this.marioPowerState = "medium";
+                        this.noOfMushroomConsumed++;
+                    } else{
+                        this.marioPowerState = "large";
+                        this.noOfFlowerConsumed++;
+                        this.canFireBullet = true;
+                    }
+                    
+                    //Mario blinking during power increase
+                    let blinkInterval = setInterval(() => {
+                        this.visible = !this.visible;
+                    }, 50);
+        
+                    // After blinkDuration, make Mario completely visible
+                    setTimeout(() => {
+                        this.visible = true;
+                        clearInterval(blinkInterval);
+                    }, 1500);
+        
                     item.isConsumed = true;
-                    this.score = this.score + 25;
+                    //this.score = this.score + 25;
                     mushroom.currentTime = 0;
                     mushroom.play();
                 }
@@ -336,36 +497,36 @@ class Mario{
 
     }
 
-    //Check power up and play sound
-    checkPowerUp(score) {
-        if (this.powerUpOccurred[score] === false) {
-            powerUp.play();
-            this.powerUpOccurred[score] = true;
+    // //Check power up and play sound
+    // checkPowerUp(score) {
+    //     if (this.powerUpOccurred[score] === false) {
+    //         powerUp.play();
+    //         this.powerUpOccurred[score] = true;
 
-            //Mario blinking during power increase
-            let blinkInterval = setInterval(() => {
-                this.visible = !this.visible;
-            }, 50);
+    //         //Mario blinking during power increase
+    //         let blinkInterval = setInterval(() => {
+    //             this.visible = !this.visible;
+    //         }, 50);
         
-            // After blinkDuration, make Mario completely visible
-            setTimeout(() => {
-                this.visible = true;
-                clearInterval(blinkInterval);
-            }, 1500);
-        }
-    }
-    //Check score 
-    checkScore() {
-        if (this.score >= 50) {
-            this.width = 20;
-            this.height = 20;
-            this.checkPowerUp(50);
-        }
-        if (this.score >= 100) {
-            this.checkPowerUp(100);
-        }
-        if (this.score >= 200) {
-            this.checkPowerUp(200);
-        }
-    }
+    //         // After blinkDuration, make Mario completely visible
+    //         setTimeout(() => {
+    //             this.visible = true;
+    //             clearInterval(blinkInterval);
+    //         }, 1500);
+    //     }
+    // }
+    // //Check score 
+    // checkScore() {
+    //     if (this.score >= 50) {
+    //         this.width = 20;
+    //         this.height = 20;
+    //         this.checkPowerUp(50);
+    //     }
+    //     if (this.score >= 100) {
+    //         this.checkPowerUp(100);
+    //     }
+    //     if (this.score >= 200) {
+    //         this.checkPowerUp(200);
+    //     }
+    // }
 }

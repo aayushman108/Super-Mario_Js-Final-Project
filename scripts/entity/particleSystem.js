@@ -2,18 +2,21 @@ class Particle extends Entity{
     constructor(spritesheet, x, y, width, height){
         let image = new Sprite(spritesheet, 15, 0, 7.5, 7.5);
         super(image, "particle", x, y, width, height);
-        // this.vx = 0.2;
-        // this.vy = -0.1;
+        this.vx = findRandomNumber(-1, 1);
+        this.vy = findRandomNumber(-6, -4);
+        this.gravity = 0.5;
     }
 
     update(){
-        //this.x += this.vx;
-        console.log("update")
+        //horizontzal motion
+        this.x += this.vx;
+
+        //vertical motion
+        this.y += this.vy;
+        this.vy += this.gravity;
     }
 
     draw(ctx){
-        console.log("hellow draw", this.sprite.image);
-
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 }
@@ -26,18 +29,21 @@ class ParticleSystem{
         this.noOfParticles = noOfParticles;
         this.particles = [];
 
-        for (let i = 0; i < noOfParticles; i++) {
+        for (let i = 0; i < this.noOfParticles; i++) {
+            console.log(this.noOfParticles);
             this.particles.push(new Particle(this.sprite, this.x, this.y, 8, 8));
+
         }
     }
 
     update(){
         this.particles.forEach(item => item.update())
-        console.log(this.particles[0])
+        setTimeout( ()=> {
+            this.particles = [];
+        }, 500);
     }
 
     draw(ctx){
-        console.log("draw")
         this.particles.forEach(item => item.draw(ctx));
     }
 }

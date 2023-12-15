@@ -8,7 +8,7 @@ class MapMaker{
         this.currentImage = null;
         this.image = new Image();
 
-        //Color array
+        //entity array
         this.brickArray = [];
         this.groundArray = [];
         this.stairArray = [];
@@ -52,19 +52,24 @@ class MapMaker{
     }
 
     clickHandler(e) {
+
+      //Coordinate x
       const x = Math.floor((e.clientX - this.canvas.getBoundingClientRect().left) / this.compartmentSize) * this.compartmentSize;
+
+      //Coordinate y
       const y = Math.floor((e.clientY - this.canvas.getBoundingClientRect().top) / this.compartmentSize) * this.compartmentSize;
 
+      //Draw entity image
       this.ctx.drawImage(this.image, x, y, this.compartmentSize, this.compartmentSize);
 
-      // Calculate the width and height of the clicked compartment
+      // Width and height of the clicked compartment
       const widthOfCompartment = this.compartmentSize;
       const heightOfCompartment = this.compartmentSize;
 
       //Create co-ordinate
       const coordinate = [x, y, widthOfCompartment, heightOfCompartment];
 
-      // Push the coordinates into the appropriate array based on the color
+      // Push the coordinates into the appropriate array
       switch (this.currentImage) {
         case 'assets/images/brick.png':
           this.brickArray.push(coordinate);

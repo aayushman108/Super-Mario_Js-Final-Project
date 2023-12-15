@@ -95,7 +95,7 @@ function startGame(images) {
 
         //game sound
         if(!game.mario.isDead && !game.gameOver){
-          //start.play();
+          start.play();
         }else if(game.mario.isDead && !game.gameOver){
           start.pause();
           setTimeout(() => location.reload(), 2000);

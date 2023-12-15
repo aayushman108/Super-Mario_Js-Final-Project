@@ -16,7 +16,7 @@ function preloadImages(imagePaths) {
 }
 
 // Array of image paths to preload
-const imagePaths = ["../assets/images/marioLeft.png", "../assets/images/marioRight.png", "../assets/images/tiles.png", "../assets/images/enemies.png", "../assets/images/items.png", "../assets/images/castle.png"];
+const imagePaths = ["assets/images/marioLeft.png", "assets/images/marioRight.png", "assets/images/tiles.png", "assets/images/enemies.png", "assets/images/items.png", "assets/images/castle.png"];
 
 // Preload images before starting the game
 preloadImages(imagePaths)

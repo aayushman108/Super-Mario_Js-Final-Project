@@ -7,9 +7,13 @@ class MapMaker{
         this.colorPalette = document.getElementById('colorPalette');
         this.currentColor = 'black';
 
+        //Color array
         this.redArray = [];
         this.greenArray = [];
         this.blueArray = [];
+
+        //Eventlistener
+        this.canvas.addEventListener('click', (e) => this.clickHandler(e));
     }
 
     drawMap() {
@@ -36,6 +40,21 @@ class MapMaker{
         this.ctx.stroke();
       }
     }
+
+    clickHandler(e) {
+      const x = Math.floor((e.clientX - this.canvas.getBoundingClientRect().left) / this.compartmentSize) * this.compartmentSize;
+      const y = Math.floor((e.clientY - this.canvas.getBoundingClientRect().top) / this.compartmentSize) * this.compartmentSize;
+
+      this.ctx.fillStyle = this.currentColor;
+      this.ctx.fillRect(x, y, this.compartmentSize, this.compartmentSize);
+
+      // Calculate the width and height of the clicked compartment
+      const widthOfCompartment = this.compartmentSize;
+      const heightOfCompartment = this.compartmentSize;
+
+      console.log(`Coordinates: [${x}, ${y}, ${widthOfCompartment}, ${heightOfCompartment}]`);
+    }
+
 }
 
 const mapMaker = new MapMaker("map-canvas", 30);

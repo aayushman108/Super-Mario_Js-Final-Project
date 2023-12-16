@@ -10,8 +10,7 @@ class Mario{
         this.height = 16;
         this.x = 0;
         this.y = 10;
-        this.speed = 0;
-        this.maxSpeed = 2;
+        this.vx = 0;
         this.vy = 0;
         this.gravity = 0.6;
         this.lastKey = [];
@@ -77,10 +76,10 @@ class Mario{
         // this.checkScore();
 
         //horizontal movement
-        this.x += this.speed;
+        this.x += this.vx;
         if(input.includes('ArrowRight') && this.x < 3300){
             this.lastKey = [...input];
-            this.speed = this.maxSpeed;
+            this.vx = 2;
             if(!this.isJumping && animateFrame % 3 === 0){
                 this.image = this.stateObject.runningRight.frames[this.stateObject.runningRight.count];
                 this.stateObject.runningRight.count++;
@@ -90,7 +89,7 @@ class Mario{
             }
         }else if(input.includes('ArrowLeft') && this.x > 0){
             this.lastKey = [...input];
-            this.speed = -this.maxSpeed;
+            this.vx = -2;
             if(!this.isJumping && animateFrame % 3 === 0){
                 this.image = this.stateObject.runningLeft.frames[this.stateObject.runningLeft.count];
                 this.stateObject.runningLeft.count++;
@@ -99,7 +98,7 @@ class Mario{
                 }
             }
         }else{
-            this.speed = 0;
+            this.vx = 0;
             if(this.lastKey.includes("ArrowLeft")){
                 this.image = this.stateObject.standingLeft;
             }else{
@@ -118,9 +117,9 @@ class Mario{
         }
         if(input.includes('Space') && !this.isDead){
             if(!this.isJumping){
-                this.vy = -10;
-                if(this.noOfMushroomConsumed >= 1){
-                    this.vy = -12
+                this.vy = -8.5;
+                if(this.marioPowerState === "medium" || this.marioPowerState === "large"){
+                    this.vy = -11;
                 }
                 this.isJumping = true;
                 if(this.lastKey.includes("ArrowLeft")){
@@ -192,9 +191,9 @@ class Mario{
             this.height = 16;
         }else if(this.marioPowerState === "medium"){
             this.width = 18;
-            this.height =20;
+            this.height = 20;
         }else if(this.marioPowerState === "large"){
-            this.width = 18;
+            this.width = 20;
             this.height = 24;
         }
 
@@ -428,15 +427,6 @@ class Mario{
                             let random = getRandomNumber(1, 3);
                             jump.currentTime = 0;
                             jump.play();
-                            // if(random === 1){
-                            //     if(this.noOfMushroomConsumed < 2){
-                            //         item.generateMushroom();
-                            //     }else{
-                            //         item.generateFlower();
-                            //     }
-                            // }else if(random === 2){
-                            //     item.generateCoin();
-                            // }
 
                             if(this.marioPowerState === "large"){
                                 if(random === 1){

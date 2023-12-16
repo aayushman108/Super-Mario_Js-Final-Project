@@ -14,6 +14,8 @@ class MapMaker{
       this.stairArray = [];
       this.coinArray = [];
       this.mysteryArray = [];
+      this.milesArray = [];
+      this.bridgeArray = [];
 
       //Eventlisteners........
       //handle click on the canvas
@@ -44,7 +46,9 @@ class MapMaker{
       ...this.groundArray,
       ...this.stairArray,
       ...this.coinArray,
-      ...this.mysteryArray
+      ...this.mysteryArray,
+      ...this.milesArray, 
+      ...this.bridgeArray,
     ];
   }
   
@@ -92,6 +96,10 @@ class MapMaker{
 
     const jsonString = JSON.stringify(savedData);
     localStorage.setItem('mapData', jsonString);
+  }
+
+  clearLocalStorage() {
+    localStorage.removeItem('mapData');
   }
 
   clickHandler(e) {
@@ -195,6 +203,36 @@ class MapMaker{
           this.draw(x,y);
         }
         break;  
+        case './assets/images/miles.png':
+          let milesCoordinateFound = false;
+          for (let value of this.milesArray) {
+            if (value[0] === x && value[1] === y) {
+              this.milesArray.splice(this.milesArray.indexOf(value), 1);
+              this.clear(x,y);
+              milesCoordinateFound = true;
+              break;
+            }
+          }
+          if (!milesCoordinateFound && !isOccupied) {
+            this.milesArray.push(coordinate);
+            this.draw(x,y);
+          }
+          break;
+          case './assets/images/bridge.png':
+            let bridgeCoordinateFound = false;
+            for (let value of this.bridgeArray) {
+              if (value[0] === x && value[1] === y) {
+                this.bridgeArray.splice(this.bridgeArray.indexOf(value), 1);
+                this.clear(x,y);
+                bridgeCoordinateFound = true;
+                break;
+              }
+            }
+            if (!bridgeCoordinateFound && !isOccupied) {
+              this.bridgeArray.push(coordinate);
+              this.draw(x,y);
+            }
+            break;
     }
 
     console.log(`Coordinates: [${x}, ${y}, ${widthOfCompartment}, ${heightOfCompartment}]`);
@@ -203,6 +241,8 @@ class MapMaker{
     console.log(`Stair Array:`, this.stairArray);
     console.log(`Coin Array:`, this.coinArray);
     console.log(`Mystery Array:`, this.mysteryArray);
+    console.log(`Miles Array:`, this.milesArray);
+    console.log(`Bridge Array:`, this.bridgeArray);
     console.log(this.currentImage);
     console.log(isOccupied);
     console.log(Array.isArray(this.paletteImages));
@@ -212,5 +252,6 @@ class MapMaker{
 
 }
 
-const mapMaker = new MapMaker("map-canvas", 30);
+const mapMaker = new MapMaker("map-canvas", 16);
 mapMaker.drawMap();
+//mapMaker.clearLocalStorage();

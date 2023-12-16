@@ -4,7 +4,7 @@ class Particle extends Entity{
         super(image, "particle", x, y, width, height);
         this.vx = findRandomNumber(-1, 1);
         this.vy = findRandomNumber(-6, -4);
-        this.gravity = 0.5;
+        this.gravity = GRAVITY;
     }
 
     update(){

@@ -5,8 +5,8 @@ class Koopa extends Entity{
         let image = new Sprite(spritesheet, 89, 90, 16, 25);
         super(image, "koopa", x, y, width, height);
         this.level = level;
-        this.vy = 0.5;
-        this.speed = 0.8;
+        this.vy = 0;
+        this.vx = KOOPA_SPEED;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;
@@ -36,7 +36,7 @@ class Koopa extends Entity{
         //horizontal motion
         if(!this.isDead){
             if(this.direction === "left"){
-                this.x -= this.speed;
+                this.x -= this.vx;
                 if(animateFrame % 8 === 0){
                     this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
                     this.stateObject.movingLeft.count++;
@@ -45,7 +45,7 @@ class Koopa extends Entity{
                     }
                 }
             }else{
-                this.x += this.speed;
+                this.x += this.vx;
                 if(animateFrame % 8 ===0){
                     this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
                     this.stateObject.movingRight.count++;
@@ -64,7 +64,7 @@ class Koopa extends Entity{
             this.vy = 0;
             this.onGround = false;
         }else{
-            this.vy = 5;
+            this.vy = KOOPA_VERTICAL_VELOCITY;
         }
     }
 

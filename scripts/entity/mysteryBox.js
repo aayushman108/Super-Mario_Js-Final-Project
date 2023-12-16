@@ -28,19 +28,19 @@ class MysteryBox extends Entity{
 
     //function to generate mushroom
     generateMushroom(){
-        let mushroom = new Mushroom(this.level, this.images.items, this.x, this.y - 16, 16, 16);
+        let mushroom = new Mushroom(this.level, this.images.items, this.x, this.y - MUSHROOM_HEIGHT, MUSHROOM_WIDTH, MUSHROOM_HEIGHT);
         this.level.rewards.push(mushroom);
     }
 
     //function to generate coin
     generateCoin(){
-        let coin = new Coin(this.level, this.images.items, this.x, this.y - 16, 16, 16);
+        let coin = new Coin(this.level, this.images.items, this.x, this.y - COIN_HEIGHT, COIN_WIDTH, COIN_HEIGHT);
         this.level.rewards.push(coin);
     }
 
     //function to generate flower
     generateFlower(){
-        let flower = new Flower(this.level, this.images.items, this.x, this.y - 24, 16, 24);
+        let flower = new Flower(this.level, this.images.items, this.x, this.y - FLOWER_HEIGHT, FLOWER_WIDTH, FLOWER_HEIGHT);
         this.level.rewards.push(flower);
     }
 }

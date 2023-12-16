@@ -13,7 +13,7 @@ function startGame(images) {
     const camera = { x: 0, y: 0, target: null, easing: 0.1 };
 
     //Scaling
-    const scaleFactor = 2.75;
+    const scaleFactor = GAME_SCALE;
 
     //Animate frame
     let animateFrame = 0;

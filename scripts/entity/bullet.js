@@ -8,8 +8,8 @@ class Bullet extends Entity{
         this.spritesheet = spritesheet;
         this.level = level;
         this.speed = speed;
-        this.gravity = 0.5;
-        this.vy = -4;
+        this.gravity = GRAVITY;
+        this.vy = -VERTICAL_BULLET_VELOCITY;
         // this.isConsumed = false;
     }
 
@@ -41,15 +41,14 @@ class Bullet extends Entity{
                     console.log("ground");
                     if(this.y < item.y && this.vy >= 0){
                         this.y = item.y - this.height;
-                        this.vy = -4;
+                        this.vy = -VERTICAL_BULLET_VELOCITY;
                     }
                 }
 
                 //Collision with pipes, stairs and bricks
                 if(item.type === "pipe" || item.type === "stair" || item.type === "brick"){
-                    this.height = 16;
-                    this.width = 16;
-
+                    this.width = COLLISION_BULLET_WIDTH;
+                    this.height = COLLISION_BULLET_HEIGHT;
                     setTimeout(()=> {
                         this.level.bullets.splice(this.level.bullets.indexOf(this), 1);
                     }, 100);

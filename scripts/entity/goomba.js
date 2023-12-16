@@ -4,8 +4,8 @@ class Goomba extends Entity{
         let image = new Sprite(spritesheet, 0, 3, 16, 16);
         super(image, "goomba", x, y, width, height);
         this.level = level;
-        this.vy = 0.5;
-        this.speed = 2;
+        this.vy = 0;
+        this.vx = GOOMBA_SPEED;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;
@@ -30,10 +30,10 @@ class Goomba extends Entity{
         //horizontal motion
         if(!this.isDead){
             if(this.direction === "left"){
-                this.x -= this.speed;
+                this.x -= this.vx;
                 this.sprite = this.stateObject.movingRight;
             }else{
-                this.x += this.speed;
+                this.x += this.vx;
                 this.sprite = this.stateObject.movingLeft;
             }
         }else{
@@ -46,7 +46,7 @@ class Goomba extends Entity{
             this.vy = 0;
             this.onGround = false;
         }else{
-            this.vy = 5;
+            this.vy = GOOMBA_VERTICAL_VELOCITY;
         }
     }
 

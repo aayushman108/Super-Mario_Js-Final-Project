@@ -6,10 +6,10 @@ class Mushroom extends Entity{
         super(image, "mushroom", x, y, width, height);
         this.spritesheet = spritesheet;
         this.level = level;
-        this.speed = 1;
+        this.vx = MUSHROOM_SPEED;
         this.isConsumed = false;
-        this.vy = -5;
-        this.gravity = 0.5;
+        this.vy = -MUSHROOM_VERTICAL_VELOCITY;
+        this.gravity = GRAVITY;
         this.direction = "right";
     }
 
@@ -20,9 +20,9 @@ class Mushroom extends Entity{
 
         //horizontal
         if(this.direction === "left"){
-            this.x -= this.speed;
+            this.x -= this.vx;
         }else if(this.direction === "right"){
-            this.x += this.speed;
+            this.x += this.vx;
         }
 
         //vertical

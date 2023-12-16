@@ -81,6 +81,19 @@ class MapMaker{
     }
   }
 
+  saveDataToLocalStorage() {
+    const savedData = {
+      brick: this.brickArray,
+      ground: this.groundArray,
+      stair: this.stairArray,
+      coin: this.coinArray,
+      mystery: this.mysteryArray,
+    };
+
+    const jsonString = JSON.stringify(savedData);
+    localStorage.setItem('mapData', jsonString);
+  }
+
   clickHandler(e) {
 
     //Coordinate x
@@ -193,6 +206,8 @@ class MapMaker{
     console.log(this.currentImage);
     console.log(isOccupied);
     console.log(Array.isArray(this.paletteImages));
+
+    this.saveDataToLocalStorage();
   }
 
 }

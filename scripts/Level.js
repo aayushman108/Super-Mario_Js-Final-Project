@@ -13,6 +13,20 @@ class Level{
             )
         })
 
+        //Bridge.......................
+        level.bridges.forEach((cord) => {
+          this.nature.push(
+            new Bridge(images.tiles, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
+
+        //Miles...........................
+        level.miles.forEach((cord) => {
+          this.nature.push(
+            new Mile(images.tiles, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
+
         //Grasses.........................
         level.grasses.forEach((cord) => {
             this.nature.push(

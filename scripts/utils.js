@@ -18,3 +18,47 @@ function getRandomNumber(min, max) {
 function findRandomNumber(min, max) {
   return Math.random() * (max - min + 1) + min;
 }
+
+//Get Map Coordinate from Local Storage
+// function loadDataFromLocalStorage() {
+//   const savedDataString = localStorage.getItem('mapData');
+//   if (savedDataString) {
+//     const savedData = JSON.parse(savedDataString);
+
+//     brickArray = savedData.brick || [];
+//     groundArray = savedData.ground || [];
+//     stairArray = savedData.stair || [];
+//     coinArray = savedData.coin || [];
+//     mysteryArray = savedData.mystery || [];
+//     milesArray = savedData.miles || [];
+//     bridgeArray = savedData.bridge || [];
+//     console.log()
+//   }
+// }
+
+// loadDataFromLocalStorage();
+
+let savedData;
+
+function getDataFromLocalStorage(key) {
+  return new Promise((resolve, reject) => {
+    try {
+      const data = localStorage.getItem(key);
+      resolve(data);
+    } catch (error) {
+      reject(error);
+    }
+  });
+}
+
+getDataFromLocalStorage('mapData')
+  .then(savedDataString => {
+    if (savedDataString) {
+      savedData = JSON.parse(savedDataString);
+    } else {
+      console.log('No data found in local storage.');
+    }
+  })
+  .catch(error => {
+    console.error('Error fetching data:', error);
+  });

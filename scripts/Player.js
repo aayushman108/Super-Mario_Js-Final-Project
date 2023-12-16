@@ -85,7 +85,7 @@ class Mario{
 
         //horizontal movement
         this.x += this.vx;
-        if(input.includes('ArrowRight') && this.x < 3300){
+        if(input.includes('ArrowRight') && this.x < 4800){
             this.lastKey = [...input];
             this.vx = MARIO_SPEED;
             if(!this.isJumping && animateFrame % 3 === 0){
@@ -178,7 +178,7 @@ class Mario{
         //     this.isDead = true;
         // }
 
-        if(this.x >= 3300){
+        if(this.x >= 4800){
             this.game.gameOver = true;
             complete.play();
         }

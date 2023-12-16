@@ -92,14 +92,12 @@ class MapMaker{
       stair: this.stairArray,
       coin: this.coinArray,
       mystery: this.mysteryArray,
+      miles: this.milesArray, 
+      bridge: this.bridgeArray,
     };
 
     const jsonString = JSON.stringify(savedData);
     localStorage.setItem('mapData', jsonString);
-  }
-
-  clearLocalStorage() {
-    localStorage.removeItem('mapData');
   }
 
   clickHandler(e) {
@@ -254,4 +252,3 @@ class MapMaker{
 
 const mapMaker = new MapMaker("map-canvas", 16);
 mapMaker.drawMap();
-//mapMaker.clearLocalStorage();

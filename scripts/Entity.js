@@ -21,6 +21,30 @@ class Ground extends Entity{
     }
 }
 
+//Bridge.........................................................
+class Bridge extends Entity{
+    constructor(spritesheet, x, y, width, height){
+        let image = new Sprite(spritesheet, 80.5, 0, 16, 16);
+        super(image, "bridge", x, y, width, height);
+    }
+
+    draw(ctx){
+        ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
+    }
+}
+
+//Mile.........................................................
+class Mile extends Entity{
+    constructor(spritesheet, x, y, width, height){
+        let image = new Sprite(spritesheet, 112, 16, 16, 16);
+        super(image, "miles", x, y, width, height);
+    }
+
+    draw(ctx){
+        ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
+    }
+}
+
 //Grasses..........................................................
 class Grasses extends Entity{
     constructor(spritesheet, x, y, width, height){

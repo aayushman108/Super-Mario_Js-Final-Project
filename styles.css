@@ -17,9 +17,15 @@ body{
     border: 2px solid #ccc;
     margin-bottom: 10px;
   }
-
+.heading{
+    font-family: creepster;
+    text-align: center;
+    margin: 20px 20px;
+}
 #imagePalette {
     display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     margin-bottom: 10px;
 }
 

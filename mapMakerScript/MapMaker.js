@@ -16,6 +16,11 @@ class MapMaker{
       this.mysteryArray = [];
       this.milesArray = [];
       this.bridgeArray = [];
+      this.snailArray = [];
+      this.duckArray = [];
+      this.goombaArray = [];
+      this.koopaArray = [];
+      this.pipeArray = [];
 
       //Eventlisteners........
       //handle click on the canvas
@@ -49,6 +54,11 @@ class MapMaker{
       ...this.mysteryArray,
       ...this.milesArray, 
       ...this.bridgeArray,
+      ...this.snailArray,
+      ...this.duckArray,
+      ...this.goombaArray,
+      ...this.koopaArray,
+      ...this.pipeArray,
     ];
   }
   
@@ -94,10 +104,15 @@ class MapMaker{
       mystery: this.mysteryArray,
       miles: this.milesArray, 
       bridge: this.bridgeArray,
+      snail: this.snailArray,
+      duck: this.duckArray,
+      goomba: this.goombaArray,
+      koopa: this.koopaArray,
+      pipe: this.pipeArray,
     };
 
     const jsonString = JSON.stringify(savedData);
-    localStorage.setItem('mapData', jsonString);
+    localStorage.setItem('map2Data', jsonString);
   }
 
   clickHandler(e) {
@@ -126,6 +141,7 @@ class MapMaker{
 
     // Push the coordinates into the appropriate array
     switch (this.currentImage) {
+      
       case './assets/images/brick.png':
         let brickCoordinateFound = false;
         for (let value of this.brickArray) {
@@ -141,6 +157,7 @@ class MapMaker{
           this.draw(x,y);
         }
         break;
+
       case './assets/images/ground.png':
         let groundCoordinateFound = false;
         for (let value of this.groundArray) {
@@ -156,6 +173,7 @@ class MapMaker{
           this.draw(x,y);
         }
         break;
+
       case './assets/images/stair.png':
         let stairCoordinateFound = false;
         for (let value of this.stairArray) {
@@ -171,6 +189,7 @@ class MapMaker{
           this.draw(x,y);
         }
         break;
+
       case './assets/images/coin.png':
         let coinCoordinateFound = false;
         for (let value of this.coinArray) {
@@ -186,6 +205,7 @@ class MapMaker{
           this.draw(x,y);
         }
         break;
+
       case './assets/images/mystery.png':
         let mysteryCoordinateFound = false;
         for (let value of this.mysteryArray) {
@@ -201,6 +221,7 @@ class MapMaker{
           this.draw(x,y);
         }
         break;  
+
         case './assets/images/miles.png':
           let milesCoordinateFound = false;
           for (let value of this.milesArray) {
@@ -216,21 +237,102 @@ class MapMaker{
             this.draw(x,y);
           }
           break;
-          case './assets/images/bridge.png':
-            let bridgeCoordinateFound = false;
-            for (let value of this.bridgeArray) {
-              if (value[0] === x && value[1] === y) {
-                this.bridgeArray.splice(this.bridgeArray.indexOf(value), 1);
-                this.clear(x,y);
-                bridgeCoordinateFound = true;
-                break;
-              }
+
+        case './assets/images/bridge.png':
+          let bridgeCoordinateFound = false;
+          for (let value of this.bridgeArray) {
+            if (value[0] === x && value[1] === y) {
+              this.bridgeArray.splice(this.bridgeArray.indexOf(value), 1);
+              this.clear(x,y);
+              bridgeCoordinateFound = true;
+              break;
             }
-            if (!bridgeCoordinateFound && !isOccupied) {
-              this.bridgeArray.push(coordinate);
-              this.draw(x,y);
+          }
+          if (!bridgeCoordinateFound && !isOccupied) {
+            this.bridgeArray.push(coordinate);
+            this.draw(x,y);
+          }
+          break;
+
+        case './assets/images/snail.png':
+          let snailCoordinateFound = false;
+          for (let value of this.snailArray) {
+            if (value[0] === x && value[1] === y) {
+              this.snailArray.splice(this.snailArray.indexOf(value), 1);
+              this.clear(x,y);
+              snailCoordinateFound = true;
+              break;
             }
-            break;
+          }
+          if (!snailCoordinateFound && !isOccupied) {
+            this.snailArray.push([x, y, 18, 16]);
+            this.draw(x,y);
+          }
+          break;
+
+        case './assets/images/duck.png':
+          let duckCoordinateFound = false;
+          for (let value of this.duckArray) {
+            if (value[0] === x && value[1] === y) {
+              this.duckArray.splice(this.duckArray.indexOf(value), 1);
+              this.clear(x,y);
+              duckCoordinateFound = true;
+              break;
+            }
+          }
+          if (!duckCoordinateFound && !isOccupied) {
+            this.duckArray.push([x, y, 17, 24]);
+            this.draw(x,y);
+          }
+          break;
+
+        case './assets/images/goomba.png':
+          let goombaCoordinateFound = false;
+          for (let value of this.goombaArray) {
+            if (value[0] === x && value[1] === y) {
+              this.goombaArray.splice(this.goombaArray.indexOf(value), 1);
+              this.clear(x,y);
+              goombaCoordinateFound = true;
+              break;
+            }
+          }
+          if (!goombaCoordinateFound && !isOccupied) {
+            this.goombaArray.push([x, y, 16, 16]);
+            this.draw(x,y);
+          }
+          break;
+
+        case './assets/images/koopa.png':
+          let koopaCoordinateFound = false;
+          for (let value of this.koopaArray) {
+            if (value[0] === x && value[1] === y) {
+              this.koopaArray.splice(this.koopaArray.indexOf(value), 1);
+              this.clear(x,y);
+              koopaCoordinateFound = true;
+              break;
+            }
+          }
+          if (!koopaCoordinateFound && !isOccupied) {
+            this.koopaArray.push([x, y, 16, 24]);
+            this.draw(x,y);
+          }
+          break;
+
+        case './assets/images/pipe.png':
+          let pipeCoordinateFound = false;
+          for (let value of this.pipeArray) {
+            if (value[0] === x && value[1] === y) {
+              this.pipeArray.splice(this.pipeArray.indexOf(value), 1);
+              this.clear(x,y);
+              pipeCoordinateFound = true;
+              break;
+            }
+          }
+          if (!pipeCoordinateFound && !isOccupied) {
+            this.pipeArray.push([x, y, 32, 64]);
+            this.draw(x,y);
+          }
+          break;
     }
 
     console.log(`Coordinates: [${x}, ${y}, ${widthOfCompartment}, ${heightOfCompartment}]`);

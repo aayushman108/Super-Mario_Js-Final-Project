@@ -95,6 +95,12 @@ class Koopa extends Entity{
                     speed = HAMMER_SPEED;
                     hammerX = this.x + this.width;
                 }
+
+                // if(mario.x > this.x && this.y + this.height === mario.y + mario.height){
+                //     this.direction = "right";
+                // }else if(mario.x < this.x && this.y + this.height === mario.y + mario.height){
+                //     this.direction = "left";
+                // }
                 
                 if((mario.x < this.x && this.direction === "left") || (mario.x > this.x && this.direction ==="right")){
                     let hammer = new Hammer(this.level, this.spritesheet, hammerX, this.y, HAMMER_WIDTH, HAMMER_HEIGHT, speed);

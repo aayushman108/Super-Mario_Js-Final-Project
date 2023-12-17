@@ -1,5 +1,5 @@
 //Game
-const GAME_SCALE = 2.75;
+const GAME_SCALE = 3;
 
 //Mario height and width
 const SMALL_MARIO_HEIGHT = 16;

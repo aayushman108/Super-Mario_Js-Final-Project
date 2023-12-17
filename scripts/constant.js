@@ -1,5 +1,5 @@
 //Game
-const GAME_SCALE = 2.5;
+const GAME_SCALE = 2.75;
 
 //Mario height and width
 const SMALL_MARIO_HEIGHT = 16;
@@ -29,20 +29,26 @@ const COLLISION_BULLET_WIDTH = 16;
 const BULLET_SPEED = 3;
 const VERTICAL_BULLET_VELOCITY = 4;
 
+//Hammer
+const HAMMER_HEIGHT = 16;
+const HAMMER_WIDTH = 8;
+const HAMMER_SPEED = 5;
+const VERTICAL_HAMMER_VELOCITY = 8;
+
 //Goomba
 const GOOMBA_VERTICAL_VELOCITY = 5;
 const GOOMBA_SPEED = 2;
 
 //Koopa
-const KOOPA_VERTICAL_VELOCITY = 5;
-const KOOPA_SPEED = 0.8;
+const KOOPA_VERTICAL_VELOCITY = 3;
+const KOOPA_SPEED = 0.6;
 
 //Snail
 const SNAIL_VERTICAL_VELOCITY = 5;
 const SNAIL_SPEED = 1;
 
 //Duck
-const DUCK_VERTICAL_VELOCITY = 5;
+const DUCK_VERTICAL_VELOCITY = 1;
 const DUCK_SPEED = 0.8;
 
 //Mushroom

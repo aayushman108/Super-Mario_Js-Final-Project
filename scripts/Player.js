@@ -8,8 +8,8 @@ class Mario{
         this.image = new Sprite(this.spritesheets.marioRight, 80, 32.5, 15, 15);
         this.width = SMALL_MARIO_WIDTH;
         this.height = SMALL_MARIO_HEIGHT;
-        this.x = 0;
-        this.y = 10;
+        this.x = 40;
+        this.y = 170;
         this.vx = 0;
         this.vy = 0;
         this.gravity = GRAVITY;
@@ -78,7 +78,6 @@ class Mario{
 
         //call for collision check
         this.checkCollision();
-        console.log(this.lastKey)
 
         // //call for score check
         // this.checkScore();
@@ -212,11 +211,6 @@ class Mario{
             this.width = LARGE_MARIO_WIDTH;
             this.height = LARGE_MARIO_HEIGHT;
         }
-
-        //position and speed of enemy with respect to mario
-        // this.level.enemies.forEach(item => {
-        //     if(this.x)
-        // })
 
     }
     

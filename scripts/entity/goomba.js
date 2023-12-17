@@ -22,31 +22,36 @@ class Goomba extends Entity{
         };
     }
 
-    update(){
+    update(animateFrame, mario){
 
         //Call for collision check
         this.checkCollision();
 
-        //horizontal motion
-        if(!this.isDead){
-            if(this.direction === "left"){
-                this.x -= this.vx;
-                this.sprite = this.stateObject.movingRight;
+        if(this.x - mario.x <= 270){
+            this.vx = GOOMBA_SPEED;
+            //horizontal motion
+            if(!this.isDead){
+                if(this.direction === "left"){
+                    this.x -= this.vx;
+                    this.sprite = this.stateObject.movingRight;
+                }else{
+                    this.x += this.vx;
+                    this.sprite = this.stateObject.movingLeft;
+                }
             }else{
-                this.x += this.vx;
-                this.sprite = this.stateObject.movingLeft;
+                this.sprite = this.stateObject.goombaDead;
+            }
+
+            //vertical motion
+            this.y += this.vy;
+            if(this.onGround){
+                this.vy = 0;
+                this.onGround = false;
+            }else{
+                this.vy = GOOMBA_VERTICAL_VELOCITY;
             }
         }else{
-            this.sprite = this.stateObject.goombaDead;
-        }
-
-        //vertical motion
-        this.y += this.vy;
-        if(this.onGround){
-            this.vy = 0;
-            this.onGround = false;
-        }else{
-            this.vy = GOOMBA_VERTICAL_VELOCITY;
+            this.vx = 0;
         }
     }
 

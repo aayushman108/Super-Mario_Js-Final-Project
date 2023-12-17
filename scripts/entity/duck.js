@@ -7,6 +7,7 @@ class Duck extends Entity{
         this.level = level;
         this.vy = 0;
         this.vx = DUCK_SPEED;
+        this.gravity = GRAVITY;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;
@@ -32,43 +33,66 @@ class Duck extends Entity{
         };
     }
 
-    update(animateFrame){
+    update(animateFrame, mario){
 
         //call for collision check
         this.checkCollision();
 
-        //horizontal motion
-        if(!this.isDead){
-            if(this.direction === "left"){
-                this.x -= this.vx;
-                if(animateFrame % 8 === 0){
-                    this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
-                    this.stateObject.movingLeft.count++;
-                    if(this.stateObject.movingLeft.count > 1){
-                        this.stateObject.movingLeft.count = 0;
+        if(this.x - mario.x <= 270){
+            this.vx = DUCK_SPEED;
+            //horizontal motion
+            if(!this.isDead){
+                if(this.direction === "left"){
+                    this.x -= this.vx;
+                    if(animateFrame % 8 === 0){
+                        if(this.onGround){
+                            this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
+                            this.stateObject.movingLeft.count++;
+                            if(this.stateObject.movingLeft.count > 1){
+                                this.stateObject.movingLeft.count = 0;
+                            }
+                        }else if(!this.onGround){
+                            this.sprite = this.stateObject.flyingLeft.frames[this.stateObject.flyingLeft.count]
+                            this.stateObject.flyingLeft.count++;
+                            if(this.stateObject.flyingLeft.count > 1){
+                                this.stateObject.flyingLeft.count = 0;
+                            }
+                        }
+                    }
+                }else{
+                    this.x += this.vx;
+                    if(animateFrame % 8 ===0){
+                        if(this.onGround){
+                            this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
+                            this.stateObject.movingRight.count++;
+                            if(this.stateObject.movingRight.count > 1){
+                                this.stateObject.movingRight.count = 0;
+                            }
+                        }else if(!this.onGround){
+                            this.sprite = this.stateObject.flyingRight.frames[this.stateObject.flyingRight.count]
+                            this.stateObject.flyingRight.count++;
+                            if(this.stateObject.flyingRight.count > 1){
+                                this.stateObject.flyingRight.count = 0;
+                            }
+                        }
                     }
                 }
             }else{
-                this.x += this.vx;
-                if(animateFrame % 8 ===0){
-                    this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
-                    this.stateObject.movingRight.count++;
-                    if(this.stateObject.movingRight.count > 1){
-                        this.stateObject.movingRight.count = 0;
-                    }
-                }
+                this.sprite = this.stateObject.dead;
             }
-        }else{
-            this.sprite = this.stateObject.dead;
-        }
 
-        //vertical motion
-        this.y += this.vy;
-        if(this.onGround){
-            this.vy = 0;
-            this.onGround = false;
+            //vertical motion
+            this.y += this.vy;
+            if(this.onGround){
+                this.vy = 0;
+                this.onGround = false;
+            }else{
+                this.vy = DUCK_VERTICAL_VELOCITY;
+                this.vy -= this.gravity;
+            }
+
         }else{
-            this.vy = DUCK_VERTICAL_VELOCITY;
+            this.vx = 0;
         }
     }
 
@@ -81,8 +105,8 @@ class Duck extends Entity{
 
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){
-                //Collision with ground
-                if(item.type === "ground"){
+                //Collision with ground and bricks
+                if(item.type === "ground" || item.type === "brick"){
                     if(this.y < item.y && this.vy >=0){
                         this.y = item.y - this.height + 0.5;
                         this.vy = 0;
@@ -109,7 +133,19 @@ class Duck extends Entity{
                         this.onGround = true;
                     }
                 } 
+            }
+        })
 
+        this.level.rewards.forEach(item => {
+            if(collisionDetection(item, this)){
+                //Collision with mystery box
+                if(item.type === "mystery box"){
+                    if(this.y < item.y && this.vy >=0){
+                        this.y = item.y - this.height + 0.5;
+                        this.vy = 0;
+                        this.onGround = true;
+                    }
+                }
             }
         })
     }

@@ -26,43 +26,48 @@ class Snail extends Entity{
         };
     }
 
-    update(animateFrame){
+    update(animateFrame, mario){
 
         //call for collision check
         this.checkCollision();
 
-        //horizontal motion
-        if(!this.isDead){
-            if(this.direction === "left"){
-                this.x -= this.vx;
-                if(animateFrame % 8 === 0){
-                    this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
-                    this.stateObject.movingLeft.count++;
-                    if(this.stateObject.movingLeft.count > 1){
-                        this.stateObject.movingLeft.count = 0;
+        if(this.x - mario.x <= 270){
+            this.vx = SNAIL_SPEED;
+            //horizontal motion
+            if(!this.isDead){
+                if(this.direction === "left"){
+                    this.x -= this.vx;
+                    if(animateFrame % 8 === 0){
+                        this.sprite = this.stateObject.movingLeft.frames[this.stateObject.movingLeft.count]
+                        this.stateObject.movingLeft.count++;
+                        if(this.stateObject.movingLeft.count > 1){
+                            this.stateObject.movingLeft.count = 0;
+                        }
+                    }
+                }else{
+                    this.x += this.vx;
+                    if(animateFrame % 8 ===0){
+                        this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
+                        this.stateObject.movingRight.count++;
+                        if(this.stateObject.movingRight.count > 1){
+                            this.stateObject.movingRight.count = 0;
+                        }
                     }
                 }
             }else{
-                this.x += this.vx;
-                if(animateFrame % 8 ===0){
-                    this.sprite = this.stateObject.movingRight.frames[this.stateObject.movingRight.count]
-                    this.stateObject.movingRight.count++;
-                    if(this.stateObject.movingRight.count > 1){
-                        this.stateObject.movingRight.count = 0;
-                    }
-                }
+                this.sprite = this.stateObject.dead;
+            }
+
+            //vertical motion
+            this.y += this.vy;
+            if(this.onGround){
+                this.vy = 0;
+                this.onGround = false;
+            }else{
+                this.vy = SNAIL_VERTICAL_VELOCITY;
             }
         }else{
-            this.sprite = this.stateObject.dead;
-        }
-
-        //vertical motion
-        this.y += this.vy;
-        if(this.onGround){
-            this.vy = 0;
-            this.onGround = false;
-        }else{
-            this.vy = SNAIL_VERTICAL_VELOCITY;
+                this.vx = 0;
         }
     }
 

@@ -26,7 +26,7 @@ function startGame(images) {
         this.ctx = ctx;
         this.input = new InputHandler();
         this.images = images;
-        this.level = new Level(levelOne, this.images);
+        this.level = new Level(levelOne, this.images, this);
         this.mario = new Mario(this);
         this.gameOver = false; 
       }

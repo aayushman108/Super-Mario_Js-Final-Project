@@ -350,6 +350,13 @@ const levelOne = {
     [2150, 176, 16, 24],
     [2768, 176, 16, 24],
   ],
+  bridges: [],
+
+  miles: [],
+
+  snails: [],
+
+  ducks: [],
 };
 
 

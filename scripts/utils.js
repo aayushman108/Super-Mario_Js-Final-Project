@@ -19,24 +19,7 @@ function findRandomNumber(min, max) {
   return Math.random() * (max - min + 1) + min;
 }
 
-//Get Map Coordinate from Local Storage
-// function loadDataFromLocalStorage() {
-//   const savedDataString = localStorage.getItem('mapData');
-//   if (savedDataString) {
-//     const savedData = JSON.parse(savedDataString);
 
-//     brickArray = savedData.brick || [];
-//     groundArray = savedData.ground || [];
-//     stairArray = savedData.stair || [];
-//     coinArray = savedData.coin || [];
-//     mysteryArray = savedData.mystery || [];
-//     milesArray = savedData.miles || [];
-//     bridgeArray = savedData.bridge || [];
-//     console.log()
-//   }
-// }
-
-// loadDataFromLocalStorage();
 
 let savedData;
 

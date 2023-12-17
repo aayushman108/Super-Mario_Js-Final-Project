@@ -1,10 +1,12 @@
 
 class Level{
-    constructor(level, images){
+    constructor(level, images, game){
+        this.game = game;
         this.nature = [];
         this.enemies = [];
         this.rewards = [];
         this.bullets = [];
+        this.hammers = [];
 
         //Ground.........................
         level.ground.forEach((cord) => {
@@ -137,7 +139,7 @@ class Level{
     update(animateFrame){
       this.enemies.forEach(item => {
         if(item.type === "goomba" || item.type === "koopa" || item.type === "snail" || item.type === "duck"){
-          item.update(animateFrame);
+          item.update(animateFrame, this.game.mario);
         }
       })
       this.rewards.forEach(item => {
@@ -148,6 +150,9 @@ class Level{
       this.bullets.forEach(item => {
         item.update();
       })
+      this.hammers.forEach(item => {
+        item.update(animateFrame);
+      })
     }
 
     draw(ctx){
@@ -155,5 +160,6 @@ class Level{
         this.enemies.forEach(item => item.draw(ctx));
         this.rewards.forEach(item => item.draw(ctx));
         this.bullets.forEach(item => item.draw(ctx));
+        this.hammers.forEach(item => item.draw(ctx));
     }
 }

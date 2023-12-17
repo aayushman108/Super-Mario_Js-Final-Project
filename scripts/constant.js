@@ -37,6 +37,10 @@ const GOOMBA_SPEED = 2;
 const KOOPA_VERTICAL_VELOCITY = 5;
 const KOOPA_SPEED = 0.8;
 
+//Snail
+const SNAIL_VERTICAL_VELOCITY = 5;
+const SNAIL_SPEED = 1;
+
 //Mushroom
 const MUSHROOM_WIDTH = 16;
 const MUSHROOM_HEIGHT = 16;

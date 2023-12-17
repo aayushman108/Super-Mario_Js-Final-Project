@@ -471,7 +471,7 @@ class Mario{
                     }
                 }
 
-                //Collision with mushroom
+                //Collision with mushroom and flower
                 if(item.type === "mushroom" || item.type === "flower"){
                     if(item.type === "mushroom"){
                         this.marioPowerState = "medium";

@@ -213,6 +213,11 @@ class Mario{
             this.height = LARGE_MARIO_HEIGHT;
         }
 
+        //position and speed of enemy with respect to mario
+        // this.level.enemies.forEach(item => {
+        //     if(this.x)
+        // })
+
     }
     
     //Draw
@@ -297,7 +302,7 @@ class Mario{
             if(collisionDetection(item, this)){
                 
                 //collision with Goomba and Koopa
-                if( (item.type === "goomba" || item.type === "koopa") && item.isDead === false){
+                if( (item.type === "goomba" || item.type === "koopa" || item.type === "snail" || item.type ==="duck") && item.isDead === false){
                     //Left collision
                     if( this.x < item.x && this.vy <= 0){
                         if(this.marioPowerState === "small"){
@@ -320,6 +325,10 @@ class Mario{
                                     item.vx = GOOMBA_SPEED;
                                 }else if(item.type === "koopa"){
                                     item.vx = KOOPA_SPEED;
+                                }else if(item.type === "snail"){
+                                    item.vx = SNAIL_SPEED;
+                                }else if(item.type === "duck"){
+                                    item.vx = DUCK_SPEED;
                                 }
                                 clearInterval(blinkInterval);
                             }, 1500)
@@ -342,6 +351,10 @@ class Mario{
                                     item.vx = GOOMBA_SPEED;
                                 }else if(item.type === "koopa"){
                                     item.vx = KOOPA_SPEED;
+                                }else if(item.type === "snail"){
+                                    item.vx = SNAIL_SPEED;
+                                }else if(item.type === "duck"){
+                                    item.vx = DUCK_SPEED;
                                 }
                                 clearInterval(blinkInterval);
                             }, 1500);
@@ -371,6 +384,10 @@ class Mario{
                                     item.vx = GOOMBA_SPEED;
                                 }else if(item.type === "koopa"){
                                     item.vx = KOOPA_SPEED;
+                                }else if(item.type === "snail"){
+                                    item.vx = SNAIL_SPEED;
+                                }else if(item.type === "duck"){
+                                    item.vx = DUCK_SPEED;
                                 }
                                 clearInterval(blinkInterval);
                             }, 1500);
@@ -393,6 +410,10 @@ class Mario{
                                     item.vx = GOOMBA_SPEED;
                                 }else if(item.type === "koopa"){
                                     item.vx = KOOPA_SPEED;
+                                }else if(item.type === "snail"){
+                                    item.vx = SNAIL_SPEED;
+                                }else if(item.type === "duck"){
+                                    item.vx = DUCK_SPEED;
                                 }
                                 clearInterval(blinkInterval);
                             }, 1500);

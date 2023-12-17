@@ -126,12 +126,17 @@ class Level{
         })
 
         //duck............................
+        level.ducks.forEach((cord) => {
+          this.enemies.push(
+            new Duck(this, images.enemies, cord[0], cord[1], cord[2], cord[3])
+          )
+        })
 
     }
 
     update(animateFrame){
       this.enemies.forEach(item => {
-        if(item.type === "goomba" || item.type === "koopa" || item.type === "snail"){
+        if(item.type === "goomba" || item.type === "koopa" || item.type === "snail" || item.type === "duck"){
           item.update(animateFrame);
         }
       })

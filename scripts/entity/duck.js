@@ -1,12 +1,12 @@
 
 
-class Snail extends Entity{
+class Duck extends Entity{
     constructor(level, spritesheet, x, y, width, height){
-        let image = new Sprite(spritesheet, 300, 94, 16, 16);
-        super(image, "snail", x, y, width, height);
+        let image = new Sprite(spritesheet, 149, 0, 17, 24);
+        super(image, "duck", x, y, width, height);
         this.level = level;
         this.vy = 0;
-        this.vx = SNAIL_SPEED;
+        this.vx = DUCK_SPEED;
         this.spritesheet = spritesheet;
         this.direction = "left";
         this.onGround = true;
@@ -14,15 +14,21 @@ class Snail extends Entity{
 
         //sprites
         this.stateObject = {
-            movingLeft : {frames : [new Sprite(this.spritesheet, 300, 94, 16, 16),
-                                    new Sprite(this.spritesheet, 330, 94, 16, 15)],
+            movingLeft : {frames : [new Sprite(this.spritesheet, 149, 0, 17, 24),
+                                    new Sprite(this.spritesheet, 180, 0, 16, 24)],
+                        count : 0},
+            flyingLeft : {frames : [new Sprite(this.spritesheet, 89, 0, 17, 24),
+                                    new Sprite(this.spritesheet, 119, 0, 17, 23)],
                         count : 0},
         
-            movingRight : {frames : [new Sprite(this.spritesheet, 389, 94, 17, 15),
-                                    new Sprite(this.spritesheet, 420, 94, 16, 16)],
+            movingRight : {frames : [new Sprite(this.spritesheet, 210, 0, 16, 23),
+                                    new Sprite(this.spritesheet, 239, 0, 17, 24)],
                         count : 0},
+            flyingRight : {frames : [new Sprite(this.spritesheet, 270, 0, 16, 23),
+                                    new Sprite(this.spritesheet, 300, 0, 16, 24)],
+            count : 0},
 
-            dead : new Sprite(this.spritesheet, 360, 94, 16, 15),
+            dead : new Sprite(this.spritesheet, 356, 4, 19, 15),
         };
     }
 
@@ -62,7 +68,7 @@ class Snail extends Entity{
             this.vy = 0;
             this.onGround = false;
         }else{
-            this.vy = SNAIL_VERTICAL_VELOCITY;
+            this.vy = DUCK_VERTICAL_VELOCITY;
         }
     }
 
@@ -96,7 +102,6 @@ class Snail extends Entity{
                         this.x = item.x + item.width;
                         this.direction = "right";
                     }
-
                     //top
                     if(this.y < item.y && this.vy >=0){
                         this.y = item.y - this.height + 0.5;

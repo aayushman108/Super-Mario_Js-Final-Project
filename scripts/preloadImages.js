@@ -1,6 +1,9 @@
-//preloaded images
 
-// Function to preload images
+/**
+ * Preloads images and returns a Promise that resolves to an array of Image objects.
+ * @param {Array} imagePaths - An array of image paths to preload.
+ * @returns {Promise<Array<Image>>} - A Promise that resolves to an array of Image objects.
+ */
 function preloadImages(imagePaths) {
     const promises = [];
     for (const path of imagePaths) {

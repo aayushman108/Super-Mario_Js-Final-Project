@@ -16,6 +16,10 @@ class Coin extends Entity{
         };
     }
 
+    /**
+     * This method updates the coin state in the canvas
+     * @param {number} animateFrame - The animation step.
+     */
     update(animateFrame){
 
         if(animateFrame % 10 === 0){
@@ -32,6 +36,10 @@ class Coin extends Entity{
         }
     }
 
+    /**
+     * This method draws the coins in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }

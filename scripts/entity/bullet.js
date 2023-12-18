@@ -13,7 +13,8 @@ class Bullet extends Entity{
         this.vy = -VERTICAL_BULLET_VELOCITY;
     }
 
-    update(ctx){
+    /** This method updates the bullet position, speed and state */
+    update(){
 
         //call for collision check
         this.checkCollision();
@@ -24,10 +25,15 @@ class Bullet extends Entity{
 
     }
 
+    /**
+     * This method draws the bullet in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 
+    /** This method checks the collision between bullet and other entities */
     checkCollision(){
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){

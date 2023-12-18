@@ -13,7 +13,8 @@ class Mushroom extends Entity{
         this.direction = "right";
     }
 
-    update(ctx){
+    /** This method updates the mushroom state */
+    update(){
 
         //call for collision check
         this.checkCollision();
@@ -35,10 +36,15 @@ class Mushroom extends Entity{
         }
     }
 
+    /**
+     * This method draws the mushroom in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 
+    /** This method checks the collision between mushroom and other entities including Mario */
     checkCollision(){
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){

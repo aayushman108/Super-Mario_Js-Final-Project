@@ -16,6 +16,10 @@ class Ground extends Entity{
         super(image, "ground", x, y, width, height);
     }
 
+    /**
+     * This method draws the ground in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -28,6 +32,10 @@ class Bridge extends Entity{
         super(image, "bridge", x, y, width, height);
     }
 
+    /**
+     * This method draws the bridge in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -40,6 +48,10 @@ class Mile extends Entity{
         super(image, "miles", x, y, width, height);
     }
 
+    /**
+     * This method draws the mile in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -51,7 +63,11 @@ class Grasses extends Entity{
         let image = new Sprite(spritesheet, 184, 144.3, 32, 16);
         super(image, "grasses", x, y, width, height);
     }
-
+    
+    /**
+     * This method draws the grasses in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -64,6 +80,10 @@ class LargeCloud extends Entity{
         super(image, "large cloud", x, y, width, height);
     }
 
+    /**
+     * This method draws the large clouds in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -76,6 +96,10 @@ class SmallCloud extends Entity{
         super(image, "small cloud", x, y, width, height);
     }
 
+    /**
+     * This method draws the small cloud in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -88,6 +112,10 @@ class Brick extends Entity{
         super(image, "brick", x, y, width, height);
     }
 
+    /**
+     * This method draws the brick in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -100,6 +128,10 @@ class Pipe extends Entity{
         super(image, "pipe", x, y, width, height);
     }
 
+    /**
+     * This method draws the pipe in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -112,6 +144,10 @@ class Stair extends Entity{
         super(image, "stair", x, y, width, height);
     }
 
+    /**
+     * This method draws the stair in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -136,6 +172,10 @@ class Flagpole extends Entity{
         super(image, "flag pole", x, y, width, height);
     }
 
+    /**
+     * This method draws the flagpole in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -148,6 +188,10 @@ class Castle extends Entity{
         super(image, "castle", x, y, width, height);
     }
 
+    /**
+     * This method draws the castle in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }

@@ -4,6 +4,7 @@ class InputHandler {
       this.keys = [];
       this.isGamePaused = false;
   
+      //Eventlistener for keydown event
       window.addEventListener('keydown', (e) => {
         if ( 
            (e.code === 'ArrowLeft' ||
@@ -15,11 +16,11 @@ class InputHandler {
         }
 
         if (e.code === 'Enter') {
-          console.log("enter");
           this.isGamePaused = !this.isGamePaused;
       }
       });
   
+      //Eventlistener for keyup event
       window.addEventListener('keyup', (e) => {
         if (
           e.code === 'ArrowLeft' ||

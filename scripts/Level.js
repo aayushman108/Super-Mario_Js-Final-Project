@@ -137,6 +137,10 @@ class Level{
 
     }
 
+    /**
+     * This method calls update() method of each items in the map
+     * @param {number} animateFrame - The animation step.
+     */
     update(animateFrame){
       this.enemies.forEach(item => {
         if(item.type === "goomba" || item.type === "koopa" || item.type === "snail" || item.type === "duck"){
@@ -156,6 +160,10 @@ class Level{
       })
     }
 
+    /**
+     * This method calls draw() method of each items in the map
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         this.nature.forEach(item => item.draw(ctx));
         this.enemies.forEach(item => item.draw(ctx));

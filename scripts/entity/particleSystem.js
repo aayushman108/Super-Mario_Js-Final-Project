@@ -7,6 +7,7 @@ class Particle extends Entity{
         this.gravity = GRAVITY;
     }
 
+    /** This method updates the brick particles state */
     update(){
         //horizontzal motion
         this.x += this.vx;
@@ -16,6 +17,10 @@ class Particle extends Entity{
         this.vy += this.gravity;
     }
 
+    /**
+     * This method draws the brick particles in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
@@ -43,6 +48,10 @@ class ParticleSystem{
         }, 500);
     }
 
+    /**
+     * This method calls draw() method of Particle class
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         this.particles.forEach(item => item.draw(ctx));
     }

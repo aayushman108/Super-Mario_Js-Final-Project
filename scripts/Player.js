@@ -73,7 +73,11 @@ class Mario{
 
     }
 
-    //Update
+    /**
+      * This method updates the Mario postion and state.
+      * @param {Array} input - The array of input keys.
+      * @param {number} mario - The animation step.
+      */
     update(input, animateFrame){
         if (this.brickParticle) {
             this.brickParticle.update();
@@ -218,7 +222,10 @@ class Mario{
 
     }
     
-    //Draw
+    /**
+     * This method draws the Mario in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         if(this.visible){
             ctx.drawImage(this.image.image, this.image.sx, this.image.sy, this.image.sw, this.image.sh, this.x, this.y, this.width, this.height);
@@ -228,7 +235,7 @@ class Mario{
         }
     }
 
-    //function to check collision
+    /** This method checks the collision between Mario and other entities */
     checkCollision(){
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){

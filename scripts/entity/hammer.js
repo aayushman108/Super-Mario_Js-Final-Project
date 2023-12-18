@@ -23,6 +23,10 @@ class Hammer extends Entity{
         };
     }
 
+    /**
+      * This method updates the duck postion and state.
+      * @param {number} animateFrame - The animation step.
+      */
     update(animateFrame){
 
         //call for collision check
@@ -44,10 +48,15 @@ class Hammer extends Entity{
 
     }
 
+    /**
+     * This method draws the hammer in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 
+    /** This method checks the collision between hammer and other entities including Mario */
     checkCollision(){
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){
@@ -56,10 +65,8 @@ class Hammer extends Entity{
                 if(item.type === "pipe" || item.type === "stair" || item.type === "brick"){
                     setTimeout(()=> {
                         this.level.hammers.splice(this.level.bullets.indexOf(this), 1);
-                    }, 100);
+                    }, 20);
                 }
-
-                //Collision with enemies
             }
 
         })

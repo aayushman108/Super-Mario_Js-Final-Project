@@ -57,7 +57,7 @@ class MapMaker{
       })
   }
   
-
+  /** This method returns coordinate of all items placed in a Map Maker canvas */
   getAllEntities() {
     return [
       ...this.brickArray,
@@ -77,10 +77,19 @@ class MapMaker{
     ];
   }
   
+  /**
+ * This method draws the map items in the canvas
+ * @param {HTMLImageElement} image - The image of the map items
+ * @param {number} x - The x-coordinate of the map items
+ * @param {number} y - The y-coordinate of the map items
+ * @param {number} width - The width of the map items
+ * @param {number} height - The height of the map items
+ */
   draw(image, x, y, width, height){
     this.ctx.drawImage(image, x, y, width, height);
   }
 
+  /** This method draws the grid lines in the canvas */
   drawGrid() {
     const rows = this.canvas.height / this.compartmentSize;
     const columns = this.canvas.width / this.compartmentSize;
@@ -106,10 +115,12 @@ class MapMaker{
     }
   }
 
+  /** This method clears the canvas */
   clearCanvas(){
     this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
   }
 
+  /** This method calls the draw() method for each items in the canvas */
   drawEntities() {
     this.brickArray.forEach(entity => {
       const image = this.imageArray[0];
@@ -183,6 +194,7 @@ class MapMaker{
     })
   }
 
+  /** This method runs animation loop to clear and draw images in the canvas */
   drawAnimate() {
     const animate = () => {
       // Clear the canvas
@@ -201,6 +213,7 @@ class MapMaker{
     animate();
   }
 
+  /** This method sets the arrays of data to the local storage */
   saveDataToLocalStorage() {
     const savedData = {
       brick: this.brickArray,
@@ -223,6 +236,10 @@ class MapMaker{
     localStorage.setItem('map2Data', jsonString);
   }
 
+  /**
+ * This method runs when click event happens in the canvas
+ * @param {MouseEvent} e - The click event in the canvas
+ */
   clickHandler(e) {
 
     //Coordinate x

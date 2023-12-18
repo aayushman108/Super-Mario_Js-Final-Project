@@ -27,6 +27,11 @@ class Snail extends Entity{
         };
     }
 
+    /**
+      * This method updates the snail postion and state with respect to Mario position.
+      * @param {number} animateFrame - The animation step.
+      * @param {Mario} mario - An instance of the Mario class.
+      */
     update(animateFrame, mario){
 
         //call for collision check
@@ -72,11 +77,15 @@ class Snail extends Entity{
         }
     }
 
+    /**
+     * This method draws the snails in the canvas
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
     draw(ctx){
         ctx.drawImage(this.sprite.image, this.sprite.sx, this.sprite.sy, this.sprite.sw, this.sprite.sh, this.x, this.y, this.width, this.height);
     }
 
-    //function to check collision
+    /** This method checks the collision between snails and other entities */
     checkCollision(){
 
         this.level.nature.forEach( item => {

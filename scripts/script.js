@@ -34,6 +34,23 @@ function startGame(images) {
         this.mario = new Mario(this);
         this.gameOver = false; 
         this.bonusTaken = false;
+        this.nextLevel = false;
+      }
+
+      reset() {
+        // Reset game state for the next level
+        this.level = null; // Clear the current level
+        this.mario = null; // Clear the current player
+        
+        // Initialize a new level
+        this.level = new Level(levelTwo, this.images, this);
+        // Initialize a new player
+        this.mario = new Mario(this);
+        
+        // Reset flags
+        this.gameOver = false;
+        this.bonusTaken = false;
+        this.nextLevel = false;
       }
   
       update(animateFrame) {
@@ -114,9 +131,15 @@ function startGame(images) {
           setTimeout(() => location.reload(), 2000);
         }else if(game.gameOver){
           start.pause();
-          setTimeout(() => location.reload(), 6000);
+          setTimeout(() => game.nextLevel = true, 3000);
           game.gameComplete();
         }
+      }
+
+      //Entering to next level
+      if (game.nextLevel) {
+        // Reset the game for the next level
+        game.reset(); 
       }
 
       if(game.input.isGamePaused){

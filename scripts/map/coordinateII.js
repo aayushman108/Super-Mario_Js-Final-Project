@@ -1,6 +1,6 @@
 
 
-const levelOne = {
+const levelTwo = {
   flag: [],
   flagpole: [],
   castle: [[4064, 82, 100, 110], [0, 102, 90, 90]],

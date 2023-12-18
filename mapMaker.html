@@ -10,7 +10,11 @@
 <body>
 
     <h1 class="heading">Mario Map Maker</h1>
-    <canvas id="map-canvas" width = "6400" height = "480"></canvas>
+    <div class="map-container">
+        <div class="map-canvas_wrapper">
+            <canvas id="map-canvas" width = "6400" height = "480"></canvas>
+        </div>
+    </div>
 
     <div id="imagePalette">
         <div class="image" style="background-image: url('./assets/images/brick.png');"></div>
@@ -27,6 +31,7 @@
         <div class="image" style="background-image: url('./assets/images/goomba.png');"></div>
     </div>
 
-    <script src="./mapMakerScript/MapMaker.js"></script>
+    <script src="./mapMakerScript/MapMaker.js" defer></script>
+    <script src="./mapMakerScript/carousel.js" defer></script>
 </body>
 </html>

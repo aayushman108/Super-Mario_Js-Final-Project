@@ -106,3 +106,26 @@ ul{
 li{
     margin: 5px;
 }
+
+
+.map-container{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    flex-direction: row-reverse;
+    padding: 1em;
+}
+
+.map-canvas_wrapper{
+    width: 70%;
+    height: 480px;
+    position: relative;
+    border: 2px solid rgb(6, 6, 97);
+    overflow-x: scroll;
+    overflow-y: hidden;
+    margin-left: 50px;
+}
+
+#canvas{
+    position: absolute;
+}

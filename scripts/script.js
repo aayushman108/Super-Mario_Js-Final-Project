@@ -37,13 +37,14 @@ function startGame(images) {
         this.nextLevel = false;
       }
 
+      // Reset game state for the next level
       reset() {
-        // Reset game state for the next level
-        this.level = null; // Clear the current level
+        // Clear the current level
+        this.level = null; 
         this.mario = null; // Clear the current player
         
         // Initialize a new level
-        this.level = new Level(levelTwo, this.images, this);
+        this.level = new Level(levelTwo, this.images, this );
         // Initialize a new player
         this.mario = new Mario(this);
         

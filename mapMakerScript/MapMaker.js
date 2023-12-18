@@ -7,6 +7,7 @@ class MapMaker{
       this.paletteImages = [...document.getElementsByClassName('image')];
       this.currentImage = null;
       this.image = new Image();
+      this.imageArray = [];
 
       //entity array
       this.brickArray = [];
@@ -21,6 +22,15 @@ class MapMaker{
       this.goombaArray = [];
       this.koopaArray = [];
       this.pipeArray = [];
+
+      //Array of palette images
+      this.paletteImages.forEach(item => {
+        const imageUrl = item.style.backgroundImage;
+        const sliceUrl = imageUrl.slice(5, -2);
+        const img = new Image();
+        img.src = sliceUrl;
+        this.imageArray.push(img);
+      })
 
       //Eventlisteners........
       //handle click on the canvas
@@ -44,6 +54,7 @@ class MapMaker{
         })
       })
   }
+  
 
   getAllEntities() {
     return [
@@ -62,15 +73,11 @@ class MapMaker{
     ];
   }
   
-  draw(x,y){
-    this.ctx.drawImage(this.image, x, y, this.compartmentSize, this.compartmentSize);
+  draw(image, x, y){
+    this.ctx.drawImage(image, x, y, this.compartmentSize*2, this.compartmentSize*2);
   }
 
-  clear(x,y){
-    this.ctx.clearRect(x, y, this.compartmentSize, this.compartmentSize);
-  }
-
-  drawMap() {
+  drawGrid() {
     const rows = this.canvas.height / this.compartmentSize;
     const columns = this.canvas.width / this.compartmentSize;
 
@@ -93,6 +100,92 @@ class MapMaker{
       this.ctx.lineTo(x, this.canvas.height);
       this.ctx.stroke();
     }
+  }
+
+  clearCanvas(){
+    this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
+  }
+
+  drawEntities() {
+    this.brickArray.forEach(entity => {
+      const image = this.imageArray[0];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.groundArray.forEach(entity => {
+      const image = this.imageArray[1];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.stairArray.forEach(entity => {
+      const image = this.imageArray[2];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.coinArray.forEach(entity => {
+      const image = this.imageArray[3];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.mysteryArray.forEach(entity => {
+      const image = this.imageArray[4];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.milesArray.forEach(entity => {
+      const image = this.imageArray[5];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.bridgeArray.forEach(entity => {
+      const image = this.imageArray[6];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.snailArray.forEach(entity => {
+      const image = this.imageArray[7];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.pipeArray.forEach(entity => {
+      const image = this.imageArray[8];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.koopaArray.forEach(entity => {
+      const image = this.imageArray[9];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.duckArray.forEach(entity => {
+      const image = this.imageArray[10];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    this.goombaArray.forEach(entity => {
+      const image = this.imageArray[11];
+      const [x,y] = entity;
+      this.draw(image, x, y);
+    })
+    
+  }
+
+  drawAnimate() {
+    const animate = () => {
+      // Clear the canvas
+      this.clearCanvas();
+
+      // Draw grid lines
+      this.drawGrid();
+
+      // Draw entities
+      this.drawEntities();
+  
+      requestAnimationFrame(animate);
+    };
+  
+    // Start the animation loop
+    animate();
   }
 
   saveDataToLocalStorage() {
@@ -123,6 +216,7 @@ class MapMaker{
     //Coordinate y
     const y = Math.floor((e.clientY - this.canvas.getBoundingClientRect().top) / this.compartmentSize) * this.compartmentSize;
 
+    //Cell occupies flag
     let isOccupied = false;
 
     for(let value of this.getAllEntities()){
@@ -147,15 +241,14 @@ class MapMaker{
         for (let value of this.brickArray) {
           if (value[0] === x && value[1] === y) {
             this.brickArray.splice(this.brickArray.indexOf(value), 1);
-            this.clear(x,y);
             brickCoordinateFound = true;
             break;
           }
         }
         if (!brickCoordinateFound && !isOccupied) {
           this.brickArray.push(coordinate);
-          this.draw(x,y);
         }
+        this.drawAnimate();
         break;
 
       case './assets/images/ground.png':
@@ -163,15 +256,14 @@ class MapMaker{
         for (let value of this.groundArray) {
           if (value[0] === x && value[1] === y) {
             this.groundArray.splice(this.groundArray.indexOf(value), 1);
-            this.clear(x,y);
             groundCoordinateFound = true;
             break;
           }
         }
         if (!groundCoordinateFound && !isOccupied) {
           this.groundArray.push(coordinate);
-          this.draw(x,y);
         }
+        this.drawAnimate();
         break;
 
       case './assets/images/stair.png':
@@ -179,15 +271,14 @@ class MapMaker{
         for (let value of this.stairArray) {
           if (value[0] === x && value[1] === y) {
             this.stairArray.splice(this.stairArray.indexOf(value), 1);
-            this.clear(x,y);
             stairCoordinateFound = true;
             break;
           }
         }
         if (!stairCoordinateFound && !isOccupied) {
           this.stairArray.push(coordinate);
-          this.draw(x,y);
         }
+        this.drawAnimate();
         break;
 
       case './assets/images/coin.png':
@@ -195,15 +286,14 @@ class MapMaker{
         for (let value of this.coinArray) {
           if (value[0] === x && value[1] === y) {
             this.coinArray.splice(this.coinArray.indexOf(value), 1);
-            this.clear(x,y);
             coinCoordinateFound = true;
             break;
           }
         }
         if (!coinCoordinateFound && !isOccupied) {
           this.coinArray.push(coordinate);
-          this.draw(x,y);
         }
+        this.drawAnimate();
         break;
 
       case './assets/images/mystery.png':
@@ -211,15 +301,14 @@ class MapMaker{
         for (let value of this.mysteryArray) {
           if (value[0] === x && value[1] === y) {
             this.mysteryArray.splice(this.mysteryArray.indexOf(value), 1);
-            this.clear(x,y);
             mysteryCoordinateFound = true;
             break;
           }
         }
         if (!mysteryCoordinateFound && !isOccupied) {
           this.mysteryArray.push(coordinate);
-          this.draw(x,y);
         }
+        this.drawAnimate();
         break;  
 
         case './assets/images/miles.png':
@@ -227,15 +316,14 @@ class MapMaker{
           for (let value of this.milesArray) {
             if (value[0] === x && value[1] === y) {
               this.milesArray.splice(this.milesArray.indexOf(value), 1);
-              this.clear(x,y);
               milesCoordinateFound = true;
               break;
             }
           }
           if (!milesCoordinateFound && !isOccupied) {
             this.milesArray.push(coordinate);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
 
         case './assets/images/bridge.png':
@@ -243,15 +331,14 @@ class MapMaker{
           for (let value of this.bridgeArray) {
             if (value[0] === x && value[1] === y) {
               this.bridgeArray.splice(this.bridgeArray.indexOf(value), 1);
-              this.clear(x,y);
               bridgeCoordinateFound = true;
               break;
             }
           }
           if (!bridgeCoordinateFound && !isOccupied) {
             this.bridgeArray.push(coordinate);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
 
         case './assets/images/snail.png':
@@ -259,15 +346,14 @@ class MapMaker{
           for (let value of this.snailArray) {
             if (value[0] === x && value[1] === y) {
               this.snailArray.splice(this.snailArray.indexOf(value), 1);
-              this.clear(x,y);
               snailCoordinateFound = true;
               break;
             }
           }
           if (!snailCoordinateFound && !isOccupied) {
             this.snailArray.push([x, y, 18, 16]);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
 
         case './assets/images/duck.png':
@@ -275,15 +361,14 @@ class MapMaker{
           for (let value of this.duckArray) {
             if (value[0] === x && value[1] === y) {
               this.duckArray.splice(this.duckArray.indexOf(value), 1);
-              this.clear(x,y);
               duckCoordinateFound = true;
               break;
             }
           }
           if (!duckCoordinateFound && !isOccupied) {
             this.duckArray.push([x, y, 17, 24]);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
 
         case './assets/images/goomba.png':
@@ -291,15 +376,14 @@ class MapMaker{
           for (let value of this.goombaArray) {
             if (value[0] === x && value[1] === y) {
               this.goombaArray.splice(this.goombaArray.indexOf(value), 1);
-              this.clear(x,y);
               goombaCoordinateFound = true;
               break;
             }
           }
           if (!goombaCoordinateFound && !isOccupied) {
             this.goombaArray.push([x, y, 16, 16]);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
 
         case './assets/images/koopa.png':
@@ -307,15 +391,14 @@ class MapMaker{
           for (let value of this.koopaArray) {
             if (value[0] === x && value[1] === y) {
               this.koopaArray.splice(this.koopaArray.indexOf(value), 1);
-              this.clear(x,y);
               koopaCoordinateFound = true;
               break;
             }
           }
           if (!koopaCoordinateFound && !isOccupied) {
             this.koopaArray.push([x, y, 16, 24]);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
 
         case './assets/images/pipe.png':
@@ -323,15 +406,14 @@ class MapMaker{
           for (let value of this.pipeArray) {
             if (value[0] === x && value[1] === y) {
               this.pipeArray.splice(this.pipeArray.indexOf(value), 1);
-              this.clear(x,y);
               pipeCoordinateFound = true;
               break;
             }
           }
           if (!pipeCoordinateFound && !isOccupied) {
             this.pipeArray.push([x, y, 32, 64]);
-            this.draw(x,y);
           }
+          this.drawAnimate();
           break;
     }
 
@@ -353,4 +435,4 @@ class MapMaker{
 }
 
 const mapMaker = new MapMaker("map-canvas", 16);
-mapMaker.drawMap();
+mapMaker.drawGrid();

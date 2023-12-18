@@ -22,6 +22,8 @@ class MapMaker{
       this.goombaArray = [];
       this.koopaArray = [];
       this.pipeArray = [];
+      this.castleArray = [];
+      this.flagpoleArray = [];
 
       //Array of palette images
       this.paletteImages.forEach(item => {
@@ -70,6 +72,8 @@ class MapMaker{
       ...this.goombaArray,
       ...this.koopaArray,
       ...this.pipeArray,
+      ...this.castleArray,
+      ...this.flagpoleArray,
     ];
   }
   
@@ -167,7 +171,16 @@ class MapMaker{
       const [x,y, width, height] = entity;
       this.draw(image, x, y, width, height);
     })
-    
+    this.castleArray.forEach(entity => {
+      const image = this.imageArray[12];
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
+    })
+    this.flagpoleArray.forEach(entity => {
+      const image = this.imageArray[13];
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
+    })
   }
 
   drawAnimate() {
@@ -202,6 +215,8 @@ class MapMaker{
       goomba: this.goombaArray,
       koopa: this.koopaArray,
       pipe: this.pipeArray,
+      castle: this.castleArray,
+      flagpole: this.flagpoleArray,
     };
 
     const jsonString = JSON.stringify(savedData);
@@ -226,12 +241,6 @@ class MapMaker{
         break;
       }
     }
-    // Width and height of the clicked compartment
-    const widthOfCompartment = this.compartmentSize;
-    const heightOfCompartment = this.compartmentSize;
-
-    //Create co-ordinate
-    const coordinate = [x, y, widthOfCompartment, heightOfCompartment];
 
     // Push the coordinates into the appropriate array
     switch (this.currentImage) {
@@ -415,19 +424,37 @@ class MapMaker{
           }
           this.drawAnimate();
           break;
-    }
 
-    // console.log(`Coordinates: [${x}, ${y}, ${widthOfCompartment}, ${heightOfCompartment}]`);
-    // console.log(`Brick Array:`, this.brickArray);
-    // console.log(`Ground Array:`, this.groundArray);
-    // console.log(`Stair Array:`, this.stairArray);
-    // console.log(`Coin Array:`, this.coinArray);
-    // console.log(`Mystery Array:`, this.mysteryArray);
-    // console.log(`Miles Array:`, this.milesArray);
-    // console.log(`Bridge Array:`, this.bridgeArray);
-    // console.log(this.currentImage);
-    // console.log(isOccupied);
-    // console.log(Array.isArray(this.paletteImages));
+        case './assets/images/castle.png':
+          let castleCoordinateFound = false;
+          for (let value of this.castleArray) {
+            if (value[0] === x && value[1] === y) {
+              this.castleArray.splice(this.castleArray.indexOf(value), 1);
+              castleCoordinateFound = true;
+              break;
+            }
+          }
+          if (!castleCoordinateFound && !isOccupied) {
+            this.castleArray.push([x, y, CASTLE_WIDTH, CASTLE_HEIGHT]);
+          }
+          this.drawAnimate();
+          break;
+
+        case './assets/images/flagpole.png':
+          let flagpoleCoordinateFound = false;
+          for (let value of this.flagpoleArray) {
+            if (value[0] === x && value[1] === y) {
+              this.flagpoleArray.splice(this.flagpoleArray.indexOf(value), 1);
+              flagpoleCoordinateFound = true;
+              break;
+            }
+          }
+          if (!flagpoleCoordinateFound && !isOccupied) {
+            this.flagpoleArray.push([x, y, FLAGPOLE_WIDTH, FLAGPOLE_HEIGHT]);
+          }
+          this.drawAnimate();
+          break;
+    }
 
     this.saveDataToLocalStorage();
   }

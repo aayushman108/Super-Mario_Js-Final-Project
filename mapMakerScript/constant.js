@@ -14,5 +14,11 @@ const DUCK_HEIGHT = 24;
 const SNAIL_WIDTH = 18;
 const SNAIL_HEIGHT = 16;
 
+const CASTLE_WIDTH = 80;
+const CASTLE_HEIGHT = 80;
+
+const FLAGPOLE_WIDTH = 10;
+const FLAGPOLE_HEIGHT = 128;
+
 const COMMON_WIDTH = 16;
 const COMMON_HEIGHT = 16;

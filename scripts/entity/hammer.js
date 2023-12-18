@@ -11,7 +11,6 @@ class Hammer extends Entity{
         this.gravity = GRAVITY;
         this.vy = -VERTICAL_HAMMER_VELOCITY;
         this.mario = mario;
-        // this.isConsumed = false;
 
         console.log(this.spritesheet);
         //sprites

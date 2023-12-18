@@ -12,7 +12,7 @@ class Flower extends Entity{
 
     update(ctx){
         
-        //Removes mushroom if it is consumed
+        //Removes flower if it is consumed
         if(this.isConsumed){
             this.level.rewards.splice(this.level.rewards.indexOf(this), 1);
         }

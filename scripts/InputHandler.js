@@ -17,7 +17,6 @@ class InputHandler {
         if (e.code === 'Enter') {
           console.log("enter");
           this.isGamePaused = !this.isGamePaused;
-          console.log(this.isGamePaused);
       }
       });
   

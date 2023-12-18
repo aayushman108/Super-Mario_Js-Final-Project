@@ -22,10 +22,6 @@ class Bullet extends Entity{
         this.y += this.vy;
         this.vy += this.gravity;
 
-        // //Removes mushroom if it is consumed
-        // if(this.isConsumed){
-        //     this.level.rewards.splice(this.level.rewards.indexOf(this), 1);
-        // }
     }
 
     draw(ctx){
@@ -38,7 +34,6 @@ class Bullet extends Entity{
 
                 //Collision with grounds
                 if(item.type === "ground"){
-                    console.log("ground");
                     if(this.y < item.y && this.vy >= 0){
                         this.y = item.y - this.height;
                         this.vy = -VERTICAL_BULLET_VELOCITY;

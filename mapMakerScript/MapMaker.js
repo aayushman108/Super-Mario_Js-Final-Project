@@ -73,8 +73,8 @@ class MapMaker{
     ];
   }
   
-  draw(image, x, y){
-    this.ctx.drawImage(image, x, y, this.compartmentSize*2, this.compartmentSize*2);
+  draw(image, x, y, width, height){
+    this.ctx.drawImage(image, x, y, width, height);
   }
 
   drawGrid() {
@@ -109,63 +109,63 @@ class MapMaker{
   drawEntities() {
     this.brickArray.forEach(entity => {
       const image = this.imageArray[0];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.groundArray.forEach(entity => {
       const image = this.imageArray[1];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.stairArray.forEach(entity => {
       const image = this.imageArray[2];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.coinArray.forEach(entity => {
       const image = this.imageArray[3];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.mysteryArray.forEach(entity => {
       const image = this.imageArray[4];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.milesArray.forEach(entity => {
       const image = this.imageArray[5];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.bridgeArray.forEach(entity => {
       const image = this.imageArray[6];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.snailArray.forEach(entity => {
       const image = this.imageArray[7];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.pipeArray.forEach(entity => {
       const image = this.imageArray[8];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.koopaArray.forEach(entity => {
       const image = this.imageArray[9];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.duckArray.forEach(entity => {
       const image = this.imageArray[10];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     this.goombaArray.forEach(entity => {
       const image = this.imageArray[11];
-      const [x,y] = entity;
-      this.draw(image, x, y);
+      const [x,y, width, height] = entity;
+      this.draw(image, x, y, width, height);
     })
     
   }
@@ -246,7 +246,7 @@ class MapMaker{
           }
         }
         if (!brickCoordinateFound && !isOccupied) {
-          this.brickArray.push(coordinate);
+          this.brickArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
         }
         this.drawAnimate();
         break;
@@ -261,7 +261,7 @@ class MapMaker{
           }
         }
         if (!groundCoordinateFound && !isOccupied) {
-          this.groundArray.push(coordinate);
+          this.groundArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
         }
         this.drawAnimate();
         break;
@@ -276,7 +276,7 @@ class MapMaker{
           }
         }
         if (!stairCoordinateFound && !isOccupied) {
-          this.stairArray.push(coordinate);
+          this.stairArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
         }
         this.drawAnimate();
         break;
@@ -291,7 +291,7 @@ class MapMaker{
           }
         }
         if (!coinCoordinateFound && !isOccupied) {
-          this.coinArray.push(coordinate);
+          this.coinArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
         }
         this.drawAnimate();
         break;
@@ -306,7 +306,7 @@ class MapMaker{
           }
         }
         if (!mysteryCoordinateFound && !isOccupied) {
-          this.mysteryArray.push(coordinate);
+          this.mysteryArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
         }
         this.drawAnimate();
         break;  
@@ -321,7 +321,7 @@ class MapMaker{
             }
           }
           if (!milesCoordinateFound && !isOccupied) {
-            this.milesArray.push(coordinate);
+            this.milesArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
           }
           this.drawAnimate();
           break;
@@ -336,7 +336,7 @@ class MapMaker{
             }
           }
           if (!bridgeCoordinateFound && !isOccupied) {
-            this.bridgeArray.push(coordinate);
+            this.bridgeArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
           }
           this.drawAnimate();
           break;
@@ -351,7 +351,7 @@ class MapMaker{
             }
           }
           if (!snailCoordinateFound && !isOccupied) {
-            this.snailArray.push([x, y, 18, 16]);
+            this.snailArray.push([x, y, SNAIL_WIDTH, SNAIL_HEIGHT]);
           }
           this.drawAnimate();
           break;
@@ -366,7 +366,7 @@ class MapMaker{
             }
           }
           if (!duckCoordinateFound && !isOccupied) {
-            this.duckArray.push([x, y, 17, 24]);
+            this.duckArray.push([x, y, DUCK_WIDTH, DUCK_HEIGHT]);
           }
           this.drawAnimate();
           break;
@@ -381,7 +381,7 @@ class MapMaker{
             }
           }
           if (!goombaCoordinateFound && !isOccupied) {
-            this.goombaArray.push([x, y, 16, 16]);
+            this.goombaArray.push([x, y, GOOMBA_WIDTH, GOOMBA_HEIGHT]);
           }
           this.drawAnimate();
           break;
@@ -396,7 +396,7 @@ class MapMaker{
             }
           }
           if (!koopaCoordinateFound && !isOccupied) {
-            this.koopaArray.push([x, y, 16, 24]);
+            this.koopaArray.push([x, y, KOOPA_WIDTH, KOOPA_HEIGHT]);
           }
           this.drawAnimate();
           break;
@@ -411,23 +411,23 @@ class MapMaker{
             }
           }
           if (!pipeCoordinateFound && !isOccupied) {
-            this.pipeArray.push([x, y, 32, 64]);
+            this.pipeArray.push([x, y, PIPE_WIDTH, PIPE_HEIGHT]);
           }
           this.drawAnimate();
           break;
     }
 
-    console.log(`Coordinates: [${x}, ${y}, ${widthOfCompartment}, ${heightOfCompartment}]`);
-    console.log(`Brick Array:`, this.brickArray);
-    console.log(`Ground Array:`, this.groundArray);
-    console.log(`Stair Array:`, this.stairArray);
-    console.log(`Coin Array:`, this.coinArray);
-    console.log(`Mystery Array:`, this.mysteryArray);
-    console.log(`Miles Array:`, this.milesArray);
-    console.log(`Bridge Array:`, this.bridgeArray);
-    console.log(this.currentImage);
-    console.log(isOccupied);
-    console.log(Array.isArray(this.paletteImages));
+    // console.log(`Coordinates: [${x}, ${y}, ${widthOfCompartment}, ${heightOfCompartment}]`);
+    // console.log(`Brick Array:`, this.brickArray);
+    // console.log(`Ground Array:`, this.groundArray);
+    // console.log(`Stair Array:`, this.stairArray);
+    // console.log(`Coin Array:`, this.coinArray);
+    // console.log(`Mystery Array:`, this.mysteryArray);
+    // console.log(`Miles Array:`, this.milesArray);
+    // console.log(`Bridge Array:`, this.bridgeArray);
+    // console.log(this.currentImage);
+    // console.log(isOccupied);
+    // console.log(Array.isArray(this.paletteImages));
 
     this.saveDataToLocalStorage();
   }

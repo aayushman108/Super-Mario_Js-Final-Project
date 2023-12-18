@@ -1,0 +1,18 @@
+
+const PIPE_WIDTH = 32;
+const PIPE_HEIGHT = 64;
+
+const KOOPA_WIDTH = 16;
+const KOOPA_HEIGHT = 24;
+
+const GOOMBA_WIDTH = 16;
+const GOOMBA_HEIGHT = 16;
+
+const DUCK_WIDTH = 17;
+const DUCK_HEIGHT = 24;
+
+const SNAIL_WIDTH = 18;
+const SNAIL_HEIGHT = 16;
+
+const COMMON_WIDTH = 16;
+const COMMON_HEIGHT = 16;

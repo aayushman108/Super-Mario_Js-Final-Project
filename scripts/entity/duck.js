@@ -12,6 +12,7 @@ class Duck extends Entity{
         this.direction = "left";
         this.onGround = true;
         this.isDead = false;
+        this.bulletConsumed = 0;
 
         //sprites
         this.stateObject = {

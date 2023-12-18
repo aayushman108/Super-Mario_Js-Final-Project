@@ -356,7 +356,7 @@ const levelOne = {
 
   snails: [],
 
-  ducks: [],
+  ducks: [[2080, 35, 17, 24], [3040, 35, 17, 24],],
 };
 
 

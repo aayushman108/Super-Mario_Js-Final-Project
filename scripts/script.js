@@ -18,6 +18,10 @@ function startGame(images) {
     //Animate frame
     let animateFrame = 0;
 
+    //Game start time 
+    let startTime = Date.now();
+    let targetTime = 300;
+
     //Creating game class
     class Game {
       constructor(width, height) {
@@ -29,6 +33,7 @@ function startGame(images) {
         this.level = new Level(levelOne, this.images, this);
         this.mario = new Mario(this);
         this.gameOver = false; 
+        this.bonusTaken = false;
       }
   
       update(animateFrame) {
@@ -38,14 +43,11 @@ function startGame(images) {
         // Update camera position based on target position
         if (camera.target) {
           camera.x = Math.max(0, camera.target.x - canvas.width / (2 * scaleFactor));
-
-          // // Track Mario's y-position when entering the underground
-          // if (camera.target.y > canvas.height / (2 * scaleFactor)) {
-          //   camera.y = Math.max(0, camera.target.y - canvas.height / (2 * scaleFactor));
-          // }
         }
-  
+
+        //level update
         this.level.update(animateFrame);
+        //Mario update
         this.mario.update(this.input.keys, animateFrame);
       }
   
@@ -62,12 +64,17 @@ function startGame(images) {
 
       //function to display gameover banner
       gameComplete(){
-        ctx.fillStyle = 'Green';
-        ctx.fillRect(canvas.width/2 - 250, canvas.height/2 - 150, 500, 300);
-        ctx.fillStyle = '#000';
+        if(!this.bonusTaken){
+          const elapsedTimeInSeconds = Math.floor((Date.now() - startTime) / 1000);
+          const timeBonus = Math.max(0, targetTime - elapsedTimeInSeconds);
+          this.mario.score += timeBonus; 
+          this.bonusTaken = true;
+        }
+        ctx.fillStyle = 'black';
         ctx.font = '400 30px Creepster, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Game Over', canvas.width / 2, canvas.height/2);
+        ctx.fillText('Game Over', canvas.width / 2, canvas.height/3);
+        ctx.fillText(`Score : ${this.mario.score}`, canvas.width/2, canvas.height/2.5);
       }
     }
 
@@ -90,8 +97,14 @@ function startGame(images) {
         // Draw game objects
         game.draw(ctx);
 
-        //Score
-        ctx.fillText(`score: ${game.mario.score}`, 70, 50);
+        if(!game.gameOver){
+          //Score
+          ctx.fillText(`score: ${game.mario.score}`, 70, 50);
+          //Time
+          const elapsedTimeInSeconds = Math.floor((Date.now() - startTime) / 1000);
+          ctx.fillText("Time: " + Math.ceil(elapsedTimeInSeconds) + " seconds", 300, 50);
+          ctx.fillText(`Target Time: ${targetTime} seconds`, 600, 50);
+        }
 
         //game sound
         if(!game.mario.isDead && !game.gameOver){

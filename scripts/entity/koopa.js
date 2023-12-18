@@ -12,6 +12,7 @@ class Koopa extends Entity{
         this.direction = "left";
         this.onGround = true;
         this.isDead = false;
+        this.bulletConsumed = 0;
         this.throwingHammer = false;
 
         //sprites
@@ -84,6 +85,7 @@ class Koopa extends Entity{
         this.vx = 0;
         }
 
+        //Generate hammer if...
         if (this.x - mario.x <= 200 && !this.isDead && animateFrame% 12 === 0) {
             if (this.throwingHammer) {
                 let speed;
@@ -103,10 +105,9 @@ class Koopa extends Entity{
                 // }
                 
                 if((mario.x < this.x && this.direction === "left") || (mario.x > this.x && this.direction ==="right")){
-                    let hammer = new Hammer(this.level, this.spritesheet, hammerX, this.y, HAMMER_WIDTH, HAMMER_HEIGHT, speed);
+                    let hammer = new Hammer(this.level, this.spritesheet, hammerX, this.y, HAMMER_WIDTH, HAMMER_HEIGHT, speed, mario);
 
                     this.level.hammers.push(hammer);
-                    console.log(this.level.hammers);
                 }
                 this.throwingHammer = false;
                 
@@ -117,7 +118,7 @@ class Koopa extends Entity{
                     if(this.level.hammers.length === 10){
                         this.level.hammers = [];
                     }
-                }, 800);
+                }, 500);
             }
         }
     }

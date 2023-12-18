@@ -1,29 +1,9 @@
 
-// let brickArray = [];
-// let groundArray = [];
-// let stairArray = [];
-// let coinArray = [];
-// let mysteryArray = [];
-// let milesArray = [];
-// let bridgeArray = [];
-
-// const savedDataString = localStorage.getItem('mapData');
-// if (savedDataString) {
-//   const savedData = JSON.parse(savedDataString);
-
-//   brickArray = savedData.brick || [];
-//   groundArray = savedData.ground || [];
-//   stairArray = savedData.stair || [];
-//   coinArray = savedData.coin || [];
-//   mysteryArray = savedData.mystery || [];
-//   milesArray = savedData.miles || [];
-//   bridgeArray = savedData.bridge || [];
-// }
 
 const levelOne = {
   flag: [],
   flagpole: [],
-  castle: [[0, 102, 90, 90], [4064, 82, 100, 110]],
+  castle: [[4064, 82, 100, 110], [0, 102, 90, 90]],
 
   smallClouds: [
     [311, 16, 32, 24],

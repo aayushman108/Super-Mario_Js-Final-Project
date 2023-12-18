@@ -18,7 +18,10 @@ class Mario{
         this.isJumping = false;
         this.isDead = false;
         this.score = 0;
+        this.scoreTaken = false;
         this.marioPowerState = "small"; //"small", "medium", "large"
+        //game end
+        this.gameEnd = this.level.levelCords.castle[0][0] + 45;
 
         //blinking effect of mario on power gain
         this.visible = true;
@@ -79,12 +82,9 @@ class Mario{
         //call for collision check
         this.checkCollision();
 
-        // //call for score check
-        // this.checkScore();
-
         //horizontal movement
         this.x += this.vx;
-        if(input.includes('ArrowRight') && this.x < 4800){
+        if(input.includes('ArrowRight') && this.x < this.gameEnd){
             this.lastKey = [...input];
             this.vx = MARIO_SPEED;
             if(!this.isJumping && animateFrame % 3 === 0){
@@ -168,17 +168,21 @@ class Mario{
             this.isDead = true;
         }
 
+        //Mario dead and scoring
         if(this.isDead){
             this.score = 0;
             marioDeath.play();
         }
 
-        // if(this.score < -10){
-        //     this.isDead = true;
-        // }
+        if(this.score < -500){
+            this.isDead = true;
+        }
 
-        if(this.x >= 4800){
+        //Game complete scoring
+        if(this.x >= this.gameEnd && this.scoreTaken === false){
             this.game.gameOver = true;
+            this.score += 500;
+            this.scoreTaken = true;
             complete.play();
         }
 
@@ -194,7 +198,7 @@ class Mario{
                 bulletX = this.x + this.width;
             }
                 
-            let bullet = new Bullet(this.level, this.spritesheets.enemies, bulletX, this.y + this.height/3, BULLET_WIDTH, BULLET_HEIGHT, speed);
+            let bullet = new Bullet(this.level, this.spritesheets.enemies, bulletX, this.y + this.height/3, BULLET_WIDTH, BULLET_HEIGHT, speed, this);
 
             this.level.bullets.push(bullet);
             this.isBulletFired = false;
@@ -228,15 +232,15 @@ class Mario{
     checkCollision(){
         this.level.nature.forEach( item => {
             if(collisionDetection(item, this)){
+                
+                if(!this.isDead){
 
                 //Collision with grounds
                 if(item.type === "ground"){
                     if(this.y < item.y && this.vy >=0){
-                        if(!this.isDead){
-                            this.y = item.y - this.height + 0.5;
-                            this.vy = 0;
-                            this.isJumping = false;
-                        }
+                        this.y = item.y - this.height + 0.5;
+                        this.vy = 0;
+                        this.isJumping = false;
                     }
                 }
 
@@ -287,6 +291,7 @@ class Mario{
                     }
 
                 }
+                }
             }
 
         })
@@ -299,6 +304,7 @@ class Mario{
                 if( (item.type === "goomba" || item.type === "koopa" || item.type === "snail" || item.type ==="duck") && item.isDead === false){
                     //Left collision
                     if( this.x < item.x && this.vy <= 0){
+                        this.score -= 300;
                         if(this.marioPowerState === "small"){
                             this.isDead = true;
                         }else if(this.marioPowerState === "medium"){
@@ -358,6 +364,7 @@ class Mario{
                     }
                     //Right collision
                     if( this.x > item.x && this.vy <= 0){
+                        this.score -= 300;
                         if(this.marioPowerState === "small"){
                             this.isDead = true;
                         }else if(this.marioPowerState === "medium"){
@@ -418,7 +425,7 @@ class Mario{
                     if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy > 0){
                         item.isDead = true;
                         item.vx = 0;
-                        //this.score = this.score + 10;
+                        this.score += 200;
                         killEnemy.currentTime = 0;
                         killEnemy.play();
                     }
@@ -432,7 +439,7 @@ class Mario{
                 //collision with coin
                 if(item.type === "coin"){
                     item.removeCoin = true;
-                    //this.score = this.score + 10;
+                    this.score += 100;
                     coin.currentTime = 0;
                     coin.play();
                 }
@@ -441,7 +448,8 @@ class Mario{
                 if(item.type === "mystery box"){
 
                     //top collision
-                    if(this.y < item.y){
+
+                    if(this.y < item.y && this.x + this.width > item.x && item.x + item.width > this.x && this.vy >= 0){
                         this.y = item.y - this.height + 0.5;
                         this.vy = 0;
                         this.isJumping = false;
@@ -509,45 +517,14 @@ class Mario{
                     }, 1500);
         
                     item.isConsumed = true;
-                    //this.score = this.score + 25;
+                    this.score += 300;
                     mushroom.currentTime = 0;
                     mushroom.play();
                 }
             }
         })
 
+        //
+
     }
-
-    // //Check power up and play sound
-    // checkPowerUp(score) {
-    //     if (this.powerUpOccurred[score] === false) {
-    //         powerUp.play();
-    //         this.powerUpOccurred[score] = true;
-
-    //         //Mario blinking during power increase
-    //         let blinkInterval = setInterval(() => {
-    //             this.visible = !this.visible;
-    //         }, 50);
-        
-    //         // After blinkDuration, make Mario completely visible
-    //         setTimeout(() => {
-    //             this.visible = true;
-    //             clearInterval(blinkInterval);
-    //         }, 1500);
-    //     }
-    // }
-    // //Check score 
-    // checkScore() {
-    //     if (this.score >= 50) {
-    //         this.width = 20;
-    //         this.height = 20;
-    //         this.checkPowerUp(50);
-    //     }
-    //     if (this.score >= 100) {
-    //         this.checkPowerUp(100);
-    //     }
-    //     if (this.score >= 200) {
-    //         this.checkPowerUp(200);
-    //     }
-    // }
 }

@@ -1,6 +1,7 @@
 
 class Level{
     constructor(level, images, game){
+        this.levelCords = level;
         this.game = game;
         this.nature = [];
         this.enemies = [];

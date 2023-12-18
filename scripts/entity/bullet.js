@@ -2,15 +2,15 @@
 
 
 class Bullet extends Entity{
-    constructor(level,spritesheet, x, y, width, height, speed){
+    constructor(level,spritesheet, x, y, width, height, speed, mario){
         let image = new Sprite(spritesheet, 363, 187, 10, 9);
         super(image, "bullet", x, y, width, height);
         this.spritesheet = spritesheet;
         this.level = level;
+        this.mario = mario;
         this.speed = speed;
         this.gravity = GRAVITY;
         this.vy = -VERTICAL_BULLET_VELOCITY;
-        // this.isConsumed = false;
     }
 
     update(ctx){
@@ -53,10 +53,23 @@ class Bullet extends Entity{
                         this.level.bullets.splice(this.level.bullets.indexOf(this), 1);
                     }, 100);
                 }
-
-                //Collision with enemies
             }
 
+        })
+
+        this.level.enemies.forEach(item => {
+            if(collisionDetection(item, this)){
+                this.level.bullets.splice(this.level.bullets.indexOf(this), 1);
+                item.bulletConsumed++;
+                if(item.bulletConsumed >=3){
+                    this.width = COLLISION_BULLET_WIDTH;
+                    this.height = COLLISION_BULLET_HEIGHT;
+                    item.isDead = true;
+                    killEnemy.currentTime = 0;
+                    killEnemy.play();
+                    this.mario.score +=200;
+                }
+            }
         })
     }
 }

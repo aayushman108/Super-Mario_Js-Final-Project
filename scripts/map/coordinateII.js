@@ -78,3 +78,39 @@ const levelTwo = {
   ],
 };
 
+
+const buildLevel = {
+  flag: [],
+  flagpole: [...savedData2.flagpole],
+  castle: [...savedData2.castle],
+
+  smallClouds: [],
+
+  largeClouds: [],
+  
+  bricks: [...savedData2.brick],
+
+  ground: [...savedData2.ground],
+
+  stairs: [...savedData2.stair],
+
+  pipes: [...savedData2.pipe],
+ 
+  mysteryBoxes: [...savedData2.mystery],
+
+  coins: [...savedData2.coin],
+
+  bridges: [...savedData2.bridge],
+
+  miles: [...savedData2.miles],
+
+  snails: [...savedData2.snail],
+
+  ducks: [...savedData2.duck],
+
+  goombas: [...savedData2.goomba],
+
+  koopas: [...savedData2.koopa],
+
+  grasses: [],
+}

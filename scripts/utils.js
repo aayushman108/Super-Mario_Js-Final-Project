@@ -37,6 +37,7 @@ function findRandomNumber(min, max) {
 
 //data for next levels from local storage
 let savedData;
+let savedData2;
 
 /**
  * Retrieves data from local storage for the given key.
@@ -54,10 +55,24 @@ function getDataFromLocalStorage(key) {
   });
 }
 
+// To get 'mapData' data
 getDataFromLocalStorage('mapData')
   .then(savedDataString => {
     if (savedDataString) {
       savedData = JSON.parse(savedDataString);
+    } else {
+      alert('No data found in local storage.');
+    }
+  })
+  .catch(error => {
+    alert('Error fetching data:', error);
+  });
+
+  //To get 'map2Data' data
+  getDataFromLocalStorage('map2Data')
+  .then(savedDataString => {
+    if (savedDataString) {
+      savedData2 = JSON.parse(savedDataString);
     } else {
       alert('No data found in local storage.');
     }

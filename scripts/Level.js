@@ -1,8 +1,10 @@
 
 class Level{
-    constructor(level, images, game){
+    constructor(level, images, game, power, score){
         this.levelCords = level;
         this.game = game;
+        this.marioPowerState = power || "small";
+        this.score = score || 0;
         this.nature = [];
         this.enemies = [];
         this.rewards = [];

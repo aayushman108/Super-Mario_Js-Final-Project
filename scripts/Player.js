@@ -504,8 +504,12 @@ class Mario{
                 //Collision with mushroom and flower
                 if(item.type === "mushroom" || item.type === "flower"){
                     if(item.type === "mushroom"){
-                        this.marioPowerState = "medium";
                         this.noOfMushroomConsumed++;
+                        if(this.marioPowerState === "small" || this.marioPowerState === "medium"){
+                            this.marioPowerState = "medium"
+                        }else{
+                            this.marioPowerState = "large";
+                        }
                     } else{
                         this.marioPowerState = "large";
                         this.noOfFlowerConsumed++;

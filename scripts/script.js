@@ -32,6 +32,8 @@ function startGame(images) {
         this.images = images;
         this.level = new Level(levelOne, this.images, this);
         this.mario = new Mario(this);
+        this.score = 0;
+        this.powerState = null;
         this.gameOver = false; 
         this.bonusTaken = false;
         this.nextLevel = false;
@@ -39,15 +41,25 @@ function startGame(images) {
 
       // Reset game state for the next level
       reset() {
+
+        const currentScore = this.score;
+        const currentPower = this.powerState;
+
         // Clear the current level
         this.level = null; 
-        this.mario = null; // Clear the current player
+        //this.mario = null; // Clear the current player
         
         // Initialize a new level
-        this.level = new Level(levelTwo, this.images, this );
+        this.level = new Level(levelTwo, this.images, this);
         // Initialize a new player
         this.mario = new Mario(this);
-        
+
+        //set Mario score
+        this.mario.score = currentScore;
+
+        //set Mario Power
+        this.mario.marioPowerState = currentPower;
+
         // Reset flags
         this.gameOver = false;
         this.bonusTaken = false;
@@ -65,8 +77,15 @@ function startGame(images) {
 
         //level update
         this.level.update(animateFrame);
+
         //Mario update
         this.mario.update(this.input.keys, animateFrame);
+        
+        //Mario score
+        this.score = this.mario.score;
+
+        //Mario power
+        this.powerState = this.mario.marioPowerState;
       }
   
       draw(ctx) {
@@ -92,7 +111,7 @@ function startGame(images) {
         ctx.font = '400 30px Creepster, sans-serif';
         ctx.textAlign = 'center';
         ctx.fillText('Game Over', canvas.width / 2, canvas.height/3);
-        ctx.fillText(`Score : ${this.mario.score}`, canvas.width/2, canvas.height/2.5);
+        ctx.fillText(`Score : ${this.score}`, canvas.width/2, canvas.height/2.5);
       }
     }
 
@@ -117,7 +136,7 @@ function startGame(images) {
 
         if(!game.gameOver){
           //Score
-          ctx.fillText(`score: ${game.mario.score}`, 70, 50);
+          ctx.fillText(`score: ${game.score}`, 70, 50);
           //Time
           const elapsedTimeInSeconds = Math.floor((Date.now() - startTime) / 1000);
           ctx.fillText("Time: " + Math.ceil(elapsedTimeInSeconds) + " seconds", 300, 50);
@@ -126,7 +145,7 @@ function startGame(images) {
 
         //game sound
         if(!game.mario.isDead && !game.gameOver){
-          start.play();
+          start.play()
         }else if(game.mario.isDead && !game.gameOver){
           start.pause();
           setTimeout(() => location.reload(), 2000);

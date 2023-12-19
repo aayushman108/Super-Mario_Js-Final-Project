@@ -35,7 +35,6 @@ class ParticleSystem{
         this.particles = [];
 
         for (let i = 0; i < this.noOfParticles; i++) {
-            console.log(this.noOfParticles);
             this.particles.push(new Particle(this.sprite, this.x, this.y, 8, 8));
 
         }

@@ -1,5 +1,8 @@
 
-// Start the game
+/**
+ * This function initiates the game.
+ * @param {Array} images - The array of preloaded image objects.
+ */
 function startGame(images) {
     // Get the canvas element and its context
     const canvas = document.getElementById("canvas");
@@ -39,7 +42,7 @@ function startGame(images) {
         this.nextLevel = false;
       }
 
-      // Reset game state for the next level
+      /** This method resets the game for next level */
       reset() {
 
         const currentScore = this.score;
@@ -66,6 +69,10 @@ function startGame(images) {
         this.nextLevel = false;
       }
   
+      /**
+      * This method calls the update() method of the various entities.
+      * @param {number} animateFrame - The animation step.
+      */
       update(animateFrame) {
         // Set the camera target to the Mario character
         camera.target = this.mario;
@@ -88,6 +95,10 @@ function startGame(images) {
         this.powerState = this.mario.marioPowerState;
       }
   
+      /**
+     * This method calls the draw() method of various entities
+     * @param {CanvasRenderingContext2D} ctx - The canvas rendering context.
+     */
       draw(ctx) {
         // Translate the context based on the camera position
         ctx.translate(-camera.x, -camera.y);
@@ -99,7 +110,7 @@ function startGame(images) {
         ctx.setTransform(1, 0, 0, 1, 0, 0);
       }
 
-      //function to display gameover banner
+      /** This method runs when the game completes or wins */
       gameComplete(){
         if(!this.bonusTaken){
           const elapsedTimeInSeconds = Math.floor((Date.now() - startTime) / 1000);
@@ -110,7 +121,7 @@ function startGame(images) {
         ctx.fillStyle = 'black';
         ctx.font = '400 30px Creepster, sans-serif';
         ctx.textAlign = 'center';
-        ctx.fillText('Game Over', canvas.width / 2, canvas.height/3);
+        ctx.fillText('Game Win', canvas.width / 2, canvas.height/3);
         ctx.fillText(`Score : ${this.score}`, canvas.width/2, canvas.height/2.5);
       }
     }
@@ -118,7 +129,7 @@ function startGame(images) {
     //Game object
     const game = new Game(canvas.width, canvas.height);
   
-    // Game loop
+    /** This method runs the animation loop */
     function gameLoop() {
 
       if(!game.input.isGamePaused){

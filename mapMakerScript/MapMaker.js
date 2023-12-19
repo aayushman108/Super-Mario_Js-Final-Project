@@ -8,22 +8,12 @@ class MapMaker{
       this.currentImage = null;
       this.image = new Image();
       this.imageArray = [];
+      this.entityNames =  ['brick', 'ground', 'stair', 'coin', 'mystery', 'miles', 'bridge', 'snail','pipe', 'koopa','duck', 'goomba', 'castle', 'flagpole'];
 
       //entity array
-      this.brickArray = [];
-      this.groundArray = [];
-      this.stairArray = [];
-      this.coinArray = [];
-      this.mysteryArray = [];
-      this.milesArray = [];
-      this.bridgeArray = [];
-      this.snailArray = [];
-      this.duckArray = [];
-      this.goombaArray = [];
-      this.koopaArray = [];
-      this.pipeArray = [];
-      this.castleArray = [];
-      this.flagpoleArray = [];
+      this.entityNames.forEach(item => {
+        this[item + 'Array'] = [];
+      });
 
       //Array of palette images
       this.paletteImages.forEach(item => {
@@ -120,78 +110,26 @@ class MapMaker{
     this.ctx.clearRect(0,0, this.canvas.width, this.canvas.height);
   }
 
-  /** This method calls the draw() method for each items in the canvas */
-  drawEntities() {
-    this.brickArray.forEach(entity => {
-      const image = this.imageArray[0];
-      const [x,y, width, height] = entity;
+  /** 
+   * This method draws the entities in the canvas based on the array and image index.
+   * @param {Array} entityArray - The array of entities to be drawn
+   * @param {number} imageIndex - The index of the image in the imageArray
+   */
+  drawEntitiesFromArray(entityArray, imageIndex) {
+    entityArray.forEach(item => {
+      const image = this.imageArray[imageIndex];
+      const [x, y, width, height] = item;
       this.draw(image, x, y, width, height);
-    })
-    this.groundArray.forEach(entity => {
-      const image = this.imageArray[1];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.stairArray.forEach(entity => {
-      const image = this.imageArray[2];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.coinArray.forEach(entity => {
-      const image = this.imageArray[3];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.mysteryArray.forEach(entity => {
-      const image = this.imageArray[4];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.milesArray.forEach(entity => {
-      const image = this.imageArray[5];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.bridgeArray.forEach(entity => {
-      const image = this.imageArray[6];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.snailArray.forEach(entity => {
-      const image = this.imageArray[7];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.pipeArray.forEach(entity => {
-      const image = this.imageArray[8];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.koopaArray.forEach(entity => {
-      const image = this.imageArray[9];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.duckArray.forEach(entity => {
-      const image = this.imageArray[10];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.goombaArray.forEach(entity => {
-      const image = this.imageArray[11];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.castleArray.forEach(entity => {
-      const image = this.imageArray[12];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
-    this.flagpoleArray.forEach(entity => {
-      const image = this.imageArray[13];
-      const [x,y, width, height] = entity;
-      this.draw(image, x, y, width, height);
-    })
+    });
+  }
+
+  /** This method draws all entities from different arrays in the canvas */
+  drawAllEntities() {
+
+    // Draw entities for each array
+    this.entityNames.forEach((item, index) => {
+      this.drawEntitiesFromArray(this[item + 'Array'], index);
+    });
   }
 
   /** This method runs animation loop to clear and draw images in the canvas */
@@ -204,7 +142,7 @@ class MapMaker{
       this.drawGrid();
 
       // Draw entities
-      this.drawEntities();
+      this.drawAllEntities();
   
       requestAnimationFrame(animate);
     };
@@ -234,6 +172,36 @@ class MapMaker{
 
     const jsonString = JSON.stringify(savedData);
     localStorage.setItem('map2Data', jsonString);
+  }
+
+  /** This method retrieves and draws the data stored in local storage */
+  loadDataFromLocalStorage() {
+    const savedDataString = localStorage.getItem('map2Data');
+
+    if (savedDataString) {
+      const savedData = JSON.parse(savedDataString);
+
+      // Apply data to the arrays
+      this.entityNames.forEach(item => {
+        this[item + 'Array'] = savedData[item] || [];
+      });
+
+      // Redraw the canvas with the loaded map
+      this.drawAnimate();
+    }
+  }
+
+  /** This method clears the "map2Data" from local storage */
+  clearLocalStorage() {
+    localStorage.removeItem('map2Data');
+
+    // Clear each array
+    this.entityNames.forEach(item => {
+      this[item + 'Array'] = [];
+    });
+
+    // Redraw the canvas with the updated map
+    this.drawAnimate();
   }
 
   /**
@@ -480,3 +448,13 @@ class MapMaker{
 
 const mapMaker = new MapMaker("map-canvas", 16);
 mapMaker.drawGrid();
+
+/** This function runs to clear the "map2Data" from local storage */
+function resetMap(){
+  mapMaker.clearLocalStorage();
+}
+
+/** This function runs to clear the "map2Data" from local storage */
+function prevMap(){
+  mapMaker.loadDataFromLocalStorage();
+}

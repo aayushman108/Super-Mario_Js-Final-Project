@@ -300,7 +300,7 @@ class MapMaker{
           }
         }
         if (!mysteryCoordinateFound && !isOccupied) {
-          this.mysteryArray.push([x, y, COMMON_WIDTH, COMMON_HEIGHT]);
+          this.mysteryArray.push([x, y, MYSTERY_WIDTH, MYSTERY_HEIGHT]);
         }
         this.drawAnimate();
         break;  

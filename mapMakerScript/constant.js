@@ -26,6 +26,10 @@ const CASTLE_HEIGHT = 80;
 const FLAGPOLE_WIDTH = 10;
 const FLAGPOLE_HEIGHT = 128;
 
-//ground, brick, mystery, stair
+//ground, brick, stair
 const COMMON_WIDTH = 16;
 const COMMON_HEIGHT = 16;
+
+//mystery box
+const MYSTERY_WIDTH = 16;
+const MYSTERY_HEIGHT = 16.5;

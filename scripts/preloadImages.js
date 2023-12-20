@@ -1,4 +1,5 @@
 
+
 /**
  * Preloads images and returns a Promise that resolves to an array of Image objects.
  * @param {Array} imagePaths - An array of image paths to preload.
@@ -15,7 +16,7 @@ function preloadImages(imagePaths) {
         });
         promises.push(promise);
     }
-    return Promise.all(promises);
+    return (Promise.all(promises));
 }
 
 // Array of image paths to preload

@@ -1,3 +1,9 @@
+//Function to extract query parameters from the URL
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  console.log(urlParams);
+  return urlParams.get(param);
+}
 
 /**
  * This function initiates the game.
@@ -25,6 +31,17 @@ function startGame(images) {
     let startTime = Date.now();
     let targetTime = 300;
 
+    const level = getQueryParam('level');
+    let goLevel = null;
+    switch(level){
+      case "levelOne":
+        goLevel = levelOne;
+        break;
+      case "buildLevel":
+        goLevel = buildLevel;
+        break;
+    }
+
     //Creating game class
     class Game {
       constructor(width, height) {
@@ -33,7 +50,7 @@ function startGame(images) {
         this.ctx = ctx;
         this.input = new InputHandler();
         this.images = images;
-        this.level = new Level(levelOne, this.images, this);
+        this.level = new Level(goLevel, this.images, this);
         this.mario = new Mario(this);
         this.score = 0;
         this.powerState = null;
@@ -74,6 +91,7 @@ function startGame(images) {
       * @param {number} animateFrame - The animation step.
       */
       update(animateFrame) {
+        // const level = getQueryParam('level');
         // Set the camera target to the Mario character
         camera.target = this.mario;
   

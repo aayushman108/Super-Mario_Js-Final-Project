@@ -128,13 +128,16 @@ li{
     position: absolute;
 }
 
-.map-button{
+.map-button, .go-play{
     border: 2px solid rgb(6, 6, 97);
     background: none;
     padding: 12px 25px;
+    font-family: sans-serif;
+    font-size: 17px;
 }
-.map-button:hover{
+.map-button:hover, .go-play:hover{
     border: none;
     background-color: rgb(6, 6, 97);
     color: white;
+    font-family: sans-serif;
 }

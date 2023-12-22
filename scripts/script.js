@@ -1,9 +1,4 @@
 //Function to extract query parameters from the URL
-function getQueryParam(param) {
-  const urlParams = new URLSearchParams(window.location.search);
-  console.log(urlParams);
-  return urlParams.get(param);
-}
 
 /**
  * This function initiates the game.

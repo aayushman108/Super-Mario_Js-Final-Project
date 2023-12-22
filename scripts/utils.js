@@ -15,6 +15,16 @@ function collisionDetection(a, b) {
 }
 
 /**
+ * Retrieves the value of a query parameter from the current URL.
+ * @param {string} param - The name of the query parameter to retrieve.
+ * @returns {?string} - The value of the specified query parameter, or null if the parameter is not present.
+ */
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
+}
+
+/**
  * Generates a random integer between the specified minimum and maximum values (inclusive).
  * @param {number} min - The minimum value (inclusive).
  * @param {number} max - The maximum value (inclusive).

@@ -1,4 +1,3 @@
-
 /**
  * Detects collision between two objects.
  * @param {Object} a - The first object with properties x, y, width, and height.
@@ -6,12 +5,12 @@
  * @returns {boolean} - True if there is a collision, false otherwise.
  */
 function collisionDetection(a, b) {
-    return (
-      a.x < b.x + b.width &&
-      a.x + a.width > b.x &&
-      a.y < b.y + b.height &&
-      a.y + a.height > b.y
-    );
+  return (
+    a.x < b.x + b.width &&
+    a.x + a.width > b.x &&
+    a.y < b.y + b.height &&
+    a.y + a.height > b.y
+  );
 }
 
 /**
@@ -44,7 +43,6 @@ function findRandomNumber(min, max) {
   return Math.random() * (max - min + 1) + min;
 }
 
-
 //data for next levels from local storage
 let savedData;
 let savedData2;
@@ -66,30 +64,27 @@ function getDataFromLocalStorage(key) {
 }
 
 // To get 'mapData' data
-getDataFromLocalStorage('mapData')
-  .then(savedDataString => {
+getDataFromLocalStorage("mapData")
+  .then((savedDataString) => {
     if (savedDataString) {
       savedData = JSON.parse(savedDataString);
     } else {
-      alert('No data found in local storage.');
+      alert("No data found in local storage.");
     }
   })
-  .catch(error => {
-    alert('Error fetching data:', error);
+  .catch((error) => {
+    alert("Error fetching data:", error);
   });
 
-  //To get 'map2Data' data
-  getDataFromLocalStorage('map2Data')
-  .then(savedDataString => {
+//To get 'map2Data' data
+getDataFromLocalStorage("map2Data")
+  .then((savedDataString) => {
     if (savedDataString) {
       savedData2 = JSON.parse(savedDataString);
     } else {
-      alert('No data found in local storage.');
+      alert("No data found in local storage.");
     }
   })
-  .catch(error => {
-    alert('Error fetching data:', error);
+  .catch((error) => {
+    alert("Error fetching data:", error);
   });
-
-
-  

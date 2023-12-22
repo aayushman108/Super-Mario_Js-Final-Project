@@ -63,6 +63,7 @@ function startGame(images) {
 
       // Initialize a new level
       this.level = new Level(levelTwo, this.images, this);
+      console.log(levelTwo);
       // Initialize a new player
       this.mario = new Mario(this);
 
